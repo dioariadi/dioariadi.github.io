@@ -12,7 +12,7 @@
 <img src="images/dummy_thumbnail.jpg?raw=true"/>
 
 ---
-[Project 3 Title](datawizart.github.io/fashion-brand-color-analysis.html)
+[Project 3 Title](/fashion-brand-color-analysis.html)
 <img src="images/dummy_thumbnail.jpg?raw=true"/>
 
 ---
