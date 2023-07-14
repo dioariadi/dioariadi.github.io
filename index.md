@@ -2,10 +2,12 @@
 
 ---
 
-### Category Name 1 
+### Analysis
 
-[Project 1 Title](/sample_page)
+[Covid-19](/covid_19.html)
 <img src="images/dummy_thumbnail.jpg?raw=true"/>
+
+Rewrited code from 
 
 ---
 [Who and When KPOP Group Win](/Who-and-when-KPOP-group-win.html)
