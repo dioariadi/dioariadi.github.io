@@ -35,7 +35,7 @@ To investigate this we looked at the fashion show in the Vogue website and extra
 
 ### Tutorial
 
-- [Geofacet Indonesia Using R](dioariadi.github.io/geofacet_indo)
+- [Geofacet Indonesia Using R](/geofacet_indo)
 
 
 ---
