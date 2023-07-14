@@ -9,11 +9,11 @@
 
 ---
 [Who and When KPOP Group Win](/Who-and-when-KPOP-group-win.html)
-<img src="images/dummy_thumbnail.jpg?raw=true"/>
+<img src="images/twice.jpeg?raw=true"/>
 
 ---
 [Fashion Brand Color Analysis](/fashion-brand-color-analysis.html)
-<img src="images/dummy_thumbnail.jpg?raw=true"/>
+<img src="images/fashion.png?raw=true"/>
 
 ---
 
