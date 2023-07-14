@@ -1,10 +1,7 @@
 title: Data Wizart | Dio Ariadi # your name (or website title) here
-logo: "/images/logo.png?raw=true" # your photo (or logo) here
+logo: "/images/2.png?raw=true" # your photo (or logo) here
 description: > # your text below (remove <br> elements if you don't need line breaks)
-  # First description 
-  # <br><br>
-  # Second description 
-  # <br><br>
+
   <a href="https://www.linkedin.com/in/dioariadi/">View My LinkedIn Profile</a> 
   
 remote_theme: pages-themes/minimal@v0.2.0
