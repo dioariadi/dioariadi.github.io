@@ -15,8 +15,7 @@ Replicated from Financial Times Dashboard on how to create covid graph using R c
 <br>
 For whose doesn’t know about South Korean music show this is the place where Kpop artist will perform their song and compete each other in the broadcasting place such as SBS, MBC, and other. In the end of the show they will announce who win the show based on some criteria. Winning the music show for the first time can be leading indicator a greater chance for the artist and agency that public notice the artist and the song they produced. The positive side effect can be be generated more fans and translated into increasing sales album or merchandise
 
-We take a look on some variable that available that might effect the chance the group to win the show, some of the variable provided by pudding.cool on this article [Why are K-pop groups so big?].
-(https://pudding.cool/2020/10/kpop/)
+We take a look on some variable that available that might effect the chance the group to win the show, some of the variable provided by pudding.cool on this article [Why are K-pop groups so big?](https://pudding.cool/2020/10/kpop/).
 
 Based on decision tree method, the result are type of agency will have the greatest impact following by if there is an international casting at least one in the group.
 
@@ -34,13 +33,10 @@ To investigate this we looked at the fashion show in the Vogue website and extra
 
 ---
 
-### Category Name 2
+### Tutorial
 
-- [Project 1 Title](http://example.com/)
-- [Project 2 Title](http://example.com/)
-- [Project 3 Title](http://example.com/)
-- [Project 4 Title](http://example.com/)
-- [Project 5 Title](http://example.com/)
+- [Geofacet Indonesia Using R](dioariadi.github.io/geofacet_indo)
+
 
 ---
 
