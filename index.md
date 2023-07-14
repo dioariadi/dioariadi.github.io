@@ -8,11 +8,11 @@
 <img src="images/dummy_thumbnail.jpg?raw=true"/>
 
 ---
-[Project 2 Title](/pdf/sample_presentation.pdf)
+[Who and When KPOP Group Win](/Who-and-when-KPOP-group-win.html)
 <img src="images/dummy_thumbnail.jpg?raw=true"/>
 
 ---
-[Project 3 Title](/fashion-brand-color-analysis.html)
+[Fashion Brand Color Analysis](/fashion-brand-color-analysis.html)
 <img src="images/dummy_thumbnail.jpg?raw=true"/>
 
 ---
