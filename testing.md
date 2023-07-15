@@ -28,6 +28,11 @@ if (isAwesome){
 
 ### 4. Provide a basis for further data collection through surveys or experiments
 
+<iframe src="https://public.tableau.com/views/GameofThroneScreenTimeAnalysis/Top2ScreenTimeAnalysis?:showVizHome=no&:embed=true"
+ width="645" height="955"></iframe>
+
+https://public.tableau.com/views/GameofThroneScreenTimeAnalysis/Top2ScreenTimeAnalysis?:language=en-US&:display_count=n&:origin=viz_share_link
+
 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
