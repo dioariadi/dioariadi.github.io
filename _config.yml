@@ -3,9 +3,9 @@ logo: "/images/2.png?raw=true" # your photo (or logo) here
 description: > # your text below (remove <br> elements if you don't need line breaks)
 
   <a href="https://www.linkedin.com/in/dioariadi/">View My LinkedIn Profile</a> 
-  
+  <br>
   <a href="https://www.instagram.com/data_wizart/">Data Wizart Instagram Portfolio</a>
-  
+  <br>
   <a href="https://dioariadi.github.io/instagram">Simple Analysis Page on Instagram</a> 
   
 remote_theme: pages-themes/minimal@v0.2.0
