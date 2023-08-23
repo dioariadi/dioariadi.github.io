@@ -41,7 +41,7 @@ To investigate this we looked at the fashion show in the Vogue website and extra
 ---
 
 ### Tutorial
-
+- [R ggplot Datawizart](https://dioariadi.github.io/quick-analysis-datawizart)
 - [Geofacet Indonesia Using R](https://dioariadi.github.io/geofacet_indo)
 - [Create Confidence Interval Graph for A/B Testing in Tableau](https://medium.com/@dioariadi/create-confidence-interval-graph-for-a-b-testing-in-tableau-576fb2367ae)
 <img src="images/ab-testing-confidence-interval.png?raw=true"/>
