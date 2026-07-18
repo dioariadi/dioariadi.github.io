@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DataWizart · Cerita di Balik Angka</title>
+<meta name="description" content="DataWizart — studio jurnalisme data milik Dio Ariadi. Mengubah data publik Indonesia menjadi infografik sejak 2018.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400;1,9..40,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#F2C438; --gold-dk:#C99E18; --charcoal:#474747; --deep:#2E2E2E; --black:#111111;
+  --teal:#3DC9C0; --teal-dk:#27A39B; --green:#5DB96B; --sand:#C4A882; --red:#E05A5A;
+  --g100:#F7F7F7; --g200:#EFEFEF; --g300:#DCDCDC; --g400:#B0B0B0; --g500:#808080;
+  --g600:#555555; --g800:#2A2A2A; --white:#FFFFFF; --cream:#F5F1E8;
+  --display:'Oswald',sans-serif; --body:'DM Sans',sans-serif; --mono:'DM Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--white);color:var(--g800);font-family:var(--body)}
+a{cursor:pointer}
+button{cursor:pointer}
+img{display:block}
+
+/* ── MASTHEAD ─────────────────────────────────────── */
+.mast{border-top:8px solid var(--deep);border-bottom:1px solid var(--deep);
+  padding:24px 56px 20px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px}
+.mast-meta{font-family:var(--mono);font-size:11px;color:var(--g600);line-height:1.6;letter-spacing:.04em}
+.mast-title{font-family:var(--display);font-weight:700;font-size:72px;letter-spacing:.02em;
+  color:var(--deep);line-height:.95;text-align:center}
+.mast-right{font-family:var(--mono);font-size:11px;color:var(--g600);line-height:1.6;letter-spacing:.04em;text-align:right}
+
+.nav{border-bottom:2px solid var(--deep);padding:12px 56px;display:flex;justify-content:space-between;
+  align-items:center;font-family:var(--body);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.nav-links{display:flex;gap:28px;color:var(--deep)}
+.nav-links a{color:var(--deep);text-decoration:none}
+.nav-accent{color:var(--gold);font-family:var(--mono);letter-spacing:.02em;text-transform:none;font-weight:400;font-size:11px}
+
+/* ── HERO ─────────────────────────────────────────── */
+.hero{padding:56px 56px 48px;border-bottom:1px solid var(--g300)}
+.hero-grid{display:grid;grid-template-columns:340px 1fr;gap:48px;align-items:end}
+.kicker{font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--teal-dk);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.kicker-line{width:36px;height:1px;background:var(--teal-dk);display:inline-block}
+.headline-id{font-family:var(--display);font-weight:700;font-size:64px;line-height:.96;color:var(--deep);
+  letter-spacing:-.01em;margin-bottom:18px;text-wrap:balance}
+.headline-en{font-family:var(--body);font-style:italic;font-weight:300;font-size:19px;line-height:1.35;
+  color:var(--g600);margin-bottom:28px;text-wrap:pretty}
+.standfirst{font-family:var(--body);font-size:14px;line-height:1.65;color:var(--g800);margin-bottom:24px;max-width:340px}
+.hero-ctas{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+.btn-primary{background:var(--deep);color:var(--white);padding:12px 18px;font-family:var(--body);
+  font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;border:none;text-decoration:none;display:inline-block}
+.btn-ghost{background:transparent;color:var(--deep);padding:12px 18px;font-family:var(--body);
+  font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;border:1.5px solid var(--deep);text-decoration:none;display:inline-block}
+.byline{font-family:var(--mono);font-size:11px;color:var(--g600);border-top:1px solid var(--g300);
+  padding-top:12px;letter-spacing:.03em}
+
+.chart-card{background:var(--white);border:1px solid var(--g300);padding:24px 24px 16px;min-width:0}
+.chart-title-block{border-bottom:1px solid var(--g300);padding-bottom:14px;margin-bottom:16px}
+.chart-title{font-family:var(--display);font-weight:600;font-size:24px;color:var(--deep);letter-spacing:-.005em;margin-bottom:4px}
+.chart-subtitle{font-family:var(--body);font-style:italic;font-weight:400;font-size:13px;color:var(--g600)}
+.chart-card svg.ridge{display:block;width:100%;height:auto}
+.chart-footer{display:flex;justify-content:space-between;align-items:center;padding-top:12px;margin-top:4px;
+  border-top:1px solid var(--g300);font-family:var(--mono);font-size:10.5px;color:var(--g500);letter-spacing:.04em;flex-wrap:wrap;gap:8px}
+.legend{display:flex;gap:18px;align-items:center}
+.swatch{width:12px;height:12px;display:inline-block;margin-right:6px;vertical-align:middle}
+
+/* ── STATS ────────────────────────────────────────── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--g300);background:var(--white)}
+.stat{padding:28px 32px;border-right:1px solid var(--g300)}
+.stat:last-child{border-right:none}
+.stat-value{font-family:var(--display);font-weight:600;font-size:52px;line-height:1;color:var(--deep);letter-spacing:-.01em}
+.stat-label{font-family:var(--mono);font-size:11px;color:var(--g500);letter-spacing:.06em;margin-top:10px;text-transform:uppercase}
+.stat-en{font-family:var(--body);font-style:italic;font-size:12px;color:var(--g500);margin-top:4px}
+
+/* ── SECTIONS ─────────────────────────────────────── */
+.section{padding:88px 56px 0}
+.section-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:48px;
+  padding-bottom:16px;border-bottom:1px solid var(--deep);gap:24px}
+.section-kicker{font-family:var(--mono);font-size:11px;color:var(--g500);letter-spacing:.06em;margin-bottom:8px}
+.section-title{font-family:var(--display);font-weight:700;font-size:48px;line-height:1;letter-spacing:-.01em;color:var(--deep)}
+.section-title-en{font-family:var(--body);font-style:italic;font-weight:300;font-size:18px;color:var(--g500);margin-top:6px}
+.section-right{font-family:var(--body);font-size:13px;color:var(--g600);text-align:right;max-width:320px;line-height:1.5}
+
+/* ── MOSAIC ───────────────────────────────────────── */
+.mosaic{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:130px;gap:20px}
+.tile{background:var(--white);border:1px solid var(--g300);padding:20px 22px;display:flex;
+  flex-direction:column;cursor:pointer;position:relative;overflow:hidden;color:inherit;text-decoration:none}
+.tile:hover .tile-title,.tile:hover .tile-title-lg{text-decoration:underline}
+.t-green{border-top:3px solid var(--green)} .t-teal{border-top:3px solid var(--teal)}
+.t-gold{border-top:3px solid var(--gold)} .t-sand{border-top:3px solid var(--sand)}
+.s7r4{grid-column:span 7;grid-row:span 4} .s5r4{grid-column:span 5;grid-row:span 4}
+.s4r4{grid-column:span 4;grid-row:span 4} .s8r3{grid-column:span 8;grid-row:span 3}
+.s4r3{grid-column:span 4;grid-row:span 3}
+.tile-img{width:100%;flex:1;object-fit:cover;object-position:center;margin-top:12px;min-height:0}
+.tile-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.tile-no{font-family:var(--mono);font-size:11px;color:var(--g400);letter-spacing:.06em}
+.tile-tag{font-family:var(--body);font-weight:700;font-size:9.5px;letter-spacing:.14em;color:var(--deep);padding:3px 7px}
+.bg-green{background:var(--green)} .bg-teal{background:var(--teal)} .bg-gold{background:var(--gold)} .bg-sand{background:var(--sand)}
+.tile-title{font-family:var(--display);font-weight:600;font-size:22px;color:var(--deep);line-height:1.1;text-wrap:balance}
+.tile-title-lg{font-family:var(--display);font-weight:700;font-size:32px;color:var(--deep);line-height:1.04;
+  letter-spacing:-.005em;text-wrap:balance}
+.tile-en{font-family:var(--body);font-style:italic;font-weight:300;font-size:13px;color:var(--g600);line-height:1.4;margin-top:4px}
+.tile-desc{font-family:var(--body);font-size:13px;color:var(--g600);line-height:1.55;margin-top:10px}
+.tile-footer{font-family:var(--mono);font-size:10.5px;color:var(--g500);letter-spacing:.04em;margin-top:12px;
+  padding-top:10px;border-top:1px solid var(--g200);display:flex;justify-content:space-between}
+.tile-split{display:grid;grid-template-columns:1fr 220px;gap:20px;align-items:center;flex:1;min-height:0}
+.tile-split img{width:100%;height:100%;object-fit:cover}
+.tile-archive{justify-content:space-between}
+.tile-archive .btn-primary{align-self:flex-start;margin-top:16px}
+
+/* ── TUTORIALS ────────────────────────────────────── */
+.tut-wrap{padding:72px 56px 0}
+.tut-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.tut-card{padding:24px 26px;background:var(--white);border:1px solid var(--g300);border-left:3px solid var(--teal);
+  cursor:pointer;display:grid;grid-template-columns:160px 1fr auto;align-items:center;gap:20px;color:inherit;text-decoration:none}
+.tut-tool{background:var(--deep);color:var(--gold);font-family:var(--body);font-size:9.5px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;display:inline-block}
+.tut-label{display:flex;gap:10px;align-items:center;font-family:var(--mono);font-size:10.5px;color:var(--g500);
+  letter-spacing:.04em;margin-bottom:6px}
+.tut-title{font-family:var(--display);font-weight:500;font-size:19px;color:var(--deep);line-height:1.15}
+.tut-en{font-family:var(--body);font-style:italic;font-weight:300;font-size:12.5px;color:var(--g600);margin-top:4px}
+.tut-arrow{font-size:20px;color:var(--deep)}
+
+/* ── FOOTER ───────────────────────────────────────── */
+.foot{margin-top:88px;padding:60px 56px;background:var(--deep);color:var(--g300)}
+.foot-top{display:grid;grid-template-columns:auto 1fr auto;gap:48px;align-items:start;
+  padding-bottom:32px;border-bottom:1px solid var(--charcoal)}
+.foot-headline{font-family:var(--display);font-weight:600;font-size:36px;color:var(--white);line-height:1.05;max-width:540px}
+.foot-headline-en{font-family:var(--body);font-style:italic;font-weight:300;font-size:15px;color:var(--g400);margin-top:8px}
+.foot-word{font-family:var(--body);font-weight:300;font-size:22px;letter-spacing:.22em;color:var(--white);margin-top:14px}
+.foot-links{display:flex;flex-direction:column;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.04em}
+.foot-links a{color:var(--gold);text-decoration:none}
+.foot-bottom{padding-top:24px;display:flex;justify-content:space-between;font-family:var(--mono);
+  font-size:11px;color:var(--g500);letter-spacing:.04em;flex-wrap:wrap;gap:8px}
+
+/* ── RESPONSIVE ───────────────────────────────────── */
+@media (max-width:1100px){
+  .hero-grid{grid-template-columns:1fr;align-items:start}
+  .standfirst{max-width:none}
+}
+@media (max-width:900px){
+  .mast,.nav,.hero,.section,.tut-wrap,.foot{padding-left:24px;padding-right:24px}
+  .mast{grid-template-columns:1fr;gap:8px}
+  .mast-meta,.mast-right{text-align:center}
+  .mast-title{font-size:48px}
+  .headline-id{font-size:44px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:none}
+  .stat{border-bottom:1px solid var(--g300)}
+  .mosaic{display:flex;flex-direction:column}
+  .mosaic .tile{min-height:280px}
+  .tile-split{grid-template-columns:1fr}
+  .section-header{flex-direction:column;align-items:flex-start}
+  .section-right{text-align:left;max-width:none}
+  .tut-grid{grid-template-columns:1fr}
+  .tut-card{grid-template-columns:1fr auto}
+  .tut-spark{display:none}
+  .foot-top{grid-template-columns:1fr;gap:28px}
+  .section{padding-top:56px}
+  .nav-accent{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<header class="mast">
+  <div class="mast-meta">VOL · IV<br>ISSUE 24 · MEI 2026</div>
+  <div class="mast-title">DATAWIZART</div>
+  <div class="mast-right">DATA JOURNALISM<br>STUDIO · JAKARTA</div>
+</header>
+
+<nav class="nav">
+  <div class="nav-links">
+    <a href="#karya">Karya</a>
+    <a href="#karya">Arsip</a>
+    <a href="#tutorial">Tutorial</a>
+    <a href="#tentang">Tentang</a>
+  </div>
+  <div class="nav-accent">@data_wizart · datawizart.com</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="tentang">
+  <div class="hero-grid">
+    <div>
+      <div class="kicker"><span class="kicker-line"></span>STUDIO JURNALISME DATA · SEJAK 2018</div>
+      <h1 class="headline-id">Cerita di Balik Angka.</h1>
+      <div class="headline-en">The stories hiding inside Indonesian data — visualised, week by week.</div>
+      <p class="standfirst">DataWizart adalah studio jurnalisme data milik <b>Dio Ariadi</b>. Sejak 2018 kami mengubah data publik Indonesia menjadi infografik yang dibaca lebih dari 30.000 orang di Instagram.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="#karya">Lihat Karya →</a>
+        <a class="btn-ghost" href="#tutorial">Tutorial</a>
+      </div>
+      <div class="byline">OLEH DIO ARIADI · EDISI 24 · MEI 2026</div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-title-block">
+        <div class="chart-title">Tren Tahunan Pencarian "Marjan" di Google</div>
+        <div class="chart-subtitle">How Indonesia Googles syrup before Ramadhan — 9 tahun, 9 puncak</div>
+      </div>
+      <div id="ridge-chart"></div>
+      <div class="chart-footer">
+        <div class="legend">
+          <span><span class="swatch" style="background:var(--g300)"></span>Minggu biasa</span>
+          <span><span class="swatch" style="background:var(--green)"></span>Minggu Ramadhan</span>
+        </div>
+        <div>SUMBER: GOOGLE TRENDS 2014–2022</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stat"><div class="stat-value">34</div><div class="stat-label">Karya dipublikasi</div><div class="stat-en">visualisations published</div></div>
+  <div class="stat"><div class="stat-value">30k+</div><div class="stat-label">Pengikut Instagram</div><div class="stat-en">followers on @data_wizart</div></div>
+  <div class="stat"><div class="stat-value">11</div><div class="stat-label">Topik diteliti</div><div class="stat-en">domains covered</div></div>
+  <div class="stat"><div class="stat-value">7</div><div class="stat-label">Tahun aktif</div><div class="stat-en">years in operation</div></div>
+</section>
+
+<!-- MOSAIC WORK -->
+<section class="section" id="karya">
+  <div class="section-header">
+    <div>
+      <div class="section-kicker">§ 01 · KARYA TERPILIH</div>
+      <div class="section-title">Karya Terpilih.</div>
+      <div class="section-title-en">Selected work, 2019 — 2022</div>
+    </div>
+    <div class="section-right">Six pieces that show what we look for: a clear question, a clean chart, and a single sentence to anchor it.</div>
+  </div>
+
+  <div class="mosaic">
+    <a class="tile t-green s7r4">
+      <div class="tile-header"><span class="tile-tag bg-green">GOOGLE TRENDS</span><span class="tile-no">№ 01 · 2022</span></div>
+      <div class="tile-title-lg">Tren Tahunan Pencarian "Marjan"</div>
+      <div class="tile-en">How Indonesia Googles Syrup Before Ramadhan</div>
+      <div class="tile-desc">Puncak pencarian Marjan selalu jatuh satu minggu sebelum atau minggu pertama Ramadhan — pola yang konsisten selama sembilan tahun.</div>
+      <img class="tile-img" src="assets/sample-marjan.png" alt="Ridge chart tren pencarian Marjan">
+      <div class="tile-footer"><span>R · ggridges</span><span>READ →</span></div>
+    </a>
+
+    <a class="tile t-teal s5r4">
+      <div class="tile-header"><span class="tile-tag bg-teal">IMDB vs ROTTEN TOMATOES</span><span class="tile-no">№ 02 · 2021</span></div>
+      <div class="tile-title">Scatter Plot Film Studio Ghibli</div>
+      <div class="tile-en">Miyazaki films always cluster in the top-right</div>
+      <img class="tile-img" src="assets/sample-ghibli.png" alt="Scatter plot film Studio Ghibli">
+      <div class="tile-footer"><span>R · ggplot2</span><span>READ →</span></div>
+    </a>
+
+    <a class="tile t-teal s4r4">
+      <div class="tile-header"><span class="tile-tag bg-teal">PUBLIC HEALTH</span><span class="tile-no">№ 03</span></div>
+      <div class="tile-title">Efektivitas Vaksin Covid-19 vs Delta</div>
+      <div class="tile-en">Which Covid vaccines held up against Delta</div>
+      <img class="tile-img" src="assets/sample-covid-vaccine.png" alt="Dumbbell chart efektivitas vaksin">
+    </a>
+
+    <a class="tile t-gold s4r4">
+      <div class="tile-header"><span class="tile-tag bg-gold">VOGUE RUNWAY</span><span class="tile-no">№ 04</span></div>
+      <div class="tile-title">Fashion Brand Color Analysis</div>
+      <div class="tile-en">Seven years of runway color, by brand</div>
+      <img class="tile-img" src="assets/sample-fashion.png" alt="Analisis warna fashion brand">
+    </a>
+
+    <a class="tile t-sand s4r4">
+      <div class="tile-header"><span class="tile-tag bg-sand">OLAHRAGA</span><span class="tile-no">№ 05</span></div>
+      <div class="tile-title">Waktu Tempuh 100m — Zohri vs 10 Olimpiade</div>
+      <div class="tile-en">Zohri's sprint vs 40 years of Olympic finals</div>
+      <img class="tile-img" src="assets/sample-zohri.png" alt="Grafik waktu tempuh 100m Zohri">
+    </a>
+
+    <a class="tile t-teal s8r3">
+      <div class="tile-header"><span class="tile-tag bg-teal">TECH KARIR</span><span class="tile-no">№ 06 · 2021</span></div>
+      <div class="tile-split">
+        <div>
+          <div class="tile-title-lg">Revamp Revou — Glassdoor vs Jobstreet</div>
+          <div class="tile-en">Where Indonesian tech companies cluster on rating</div>
+          <div class="tile-desc">Scatterplot rating perusahaan tech Indonesia di dua platform berbeda — siapa unggul di mata karyawan vs pencari kerja.</div>
+        </div>
+        <img src="assets/sample-revou.png" alt="Scatterplot rating perusahaan tech">
+      </div>
+    </a>
+
+    <a class="tile t-gold s4r3 tile-archive">
+      <div>
+        <div class="tile-header"><span class="tile-no">ARSIP LENGKAP</span></div>
+        <div class="tile-title-lg">28 karya lainnya, tersusun rapi.</div>
+        <div class="tile-en">Browse the full archive →</div>
+      </div>
+      <span class="btn-primary">Buka Arsip →</span>
+    </a>
+  </div>
+</section>
+
+<!-- TUTORIALS -->
+<section class="tut-wrap" id="tutorial">
+  <div class="section-header">
+    <div>
+      <div class="section-kicker">§ 02 · TUTORIAL</div>
+      <div class="section-title">Tutorial.</div>
+      <div class="section-title-en">Build the charts yourself, in R or Tableau</div>
+    </div>
+  </div>
+  <div class="tut-grid" id="tut-grid"></div>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="foot-top">
+    <svg width="56" height="62" viewBox="0 0 100 110" fill="none" aria-label="DataWizart logo">
+      <path d="M50 6 L92 60 Q80 100 50 104 Q20 100 8 60 Z" stroke="#F2C438" stroke-width="2.6" fill="none" stroke-linejoin="round"/>
+      <path d="M22 38 L36 78 L50 50 L64 78 L78 38" stroke="#F2C438" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+      <line x1="68" y1="14" x2="68" y2="34" stroke="#F2C438" stroke-width="3.4" stroke-linecap="round"/>
+    </svg>
+    <div>
+      <div class="foot-headline">Punya pertanyaan yang butuh grafik?</div>
+      <div class="foot-headline-en">Have a question that needs a chart? Let's talk.</div>
+      <div class="foot-word">DATAWIZART</div>
+    </div>
+    <div class="foot-links">
+      <a href="https://instagram.com/data_wizart" target="_blank" rel="noopener">INSTAGRAM ↗</a>
+      <a href="https://github.com/dioariadi" target="_blank" rel="noopener">GITHUB ↗</a>
+      <a href="https://www.linkedin.com/in/dioariadi" target="_blank" rel="noopener">LINKEDIN ↗</a>
+      <a href="mailto:dioariadi2025@gmail.com">EMAIL ↗</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 DATAWIZART · DIO ARIADI</span>
+    <span>JAKARTA · INDONESIA</span>
+  </div>
+</footer>
+
+<script>
+/* ── Ridge chart (faithful port of HeroRidgeChart from the design prototype) ── */
+(function () {
+  const DW = { g200:'#EFEFEF', g300:'#DCDCDC', g500:'#808080', g600:'#555555',
+               charcoal:'#474747', deep:'#2E2E2E', green:'#5DB96B' };
+  const W = 680, H = 380, accent = DW.green;
+  const years = ['2014','2015','2016','2017','2018','2019','2020','2021','2022'];
+  const peakWeeks = [27,25,23,21,19,17,15,13,11];
+  const padL = 70, padR = 30, padT = 32, padB = 56;
+  const innerW = W - padL - padR;
+  const rowH = (H - padT - padB) / years.length;
+  const overlap = 14;
+
+  function ridgePoints(peakWeek) {
+    const pts = [];
+    for (let w = 1; w <= 52; w++) {
+      const x = padL + ((w - 1) / 51) * innerW;
+      const dist = w - peakWeek;
+      const peak = Math.exp(-(dist * dist) / 6) * (rowH + overlap) * 0.95;
+      const baseline = 4 + 2 * Math.sin(w * 0.7 + peakWeek * 0.3) + 2 * Math.cos(w * 0.3);
+      pts.push([x, Math.max(baseline, peak)]);
+    }
+    return pts;
+  }
+
+  let s = '';
+  for (let i = 0; i < 12; i++) {
+    const x = padL + (i / 11) * innerW;
+    s += `<line x1="${x}" y1="${padT}" x2="${x}" y2="${H - padB}" stroke="${DW.g200}" stroke-width="1"/>`;
+  }
+  years.forEach((year, i) => {
+    const baseY = padT + (i + 1) * rowH;
+    const pts = ridgePoints(peakWeeks[i]);
+    const path = `M ${padL},${baseY} ` + pts.map(([x, v]) => `L ${x},${baseY - v}`).join(' ') + ` L ${padL + innerW},${baseY} Z`;
+    const peakIdx = peakWeeks[i] - 1;
+    const peakX = padL + (peakIdx / 51) * innerW;
+    const band = pts.slice(Math.max(0, peakIdx - 2), Math.min(52, peakIdx + 3));
+    const bandPath = `M ${band[0][0]},${baseY} ` + band.map(([x, v]) => `L ${x},${baseY - v}`).join(' ') + ` L ${band[band.length - 1][0]},${baseY} Z`;
+    s += `<path d="${path}" fill="${DW.g300}" stroke="${DW.charcoal}" stroke-width="1" fill-opacity="0.55"/>`;
+    s += `<path d="${bandPath}" fill="${accent}" fill-opacity="0.95"/>`;
+    s += `<line x1="${peakX}" y1="${baseY}" x2="${peakX}" y2="${baseY - 4}" stroke="${DW.deep}" stroke-width="1"/>`;
+    s += `<text x="${padL - 12}" y="${baseY - 4}" text-anchor="end" font-family="DM Sans" font-size="12" fill="${DW.g600}" font-weight="500">${year}</text>`;
+  });
+  ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agt','Sep','Okt','Nov','Des'].forEach((m, i) => {
+    const x = padL + (i / 11) * innerW;
+    s += `<text x="${x}" y="${H - padB + 22}" font-family="DM Sans" font-size="11" fill="${DW.g500}" text-anchor="middle">${m}</text>`;
+  });
+  const p0 = padL + (peakWeeks[0] - 1) / 51 * innerW;
+  s += `<line x1="${p0}" y1="${padT + rowH - 14}" x2="${p0 + 60}" y2="${padT - 6}" stroke="${DW.deep}" stroke-width="1"/>`;
+  s += `<text x="${p0 + 66}" y="${padT - 8}" font-family="DM Sans" font-size="11" fill="${DW.deep}">peak: minggu Ramadhan →</text>`;
+
+  document.getElementById('ridge-chart').innerHTML =
+    `<svg class="ridge" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">${s}</svg>`;
+})();
+
+/* ── Tutorial cards + sparklines (port of TUTORIALS + sparkFor) ── */
+(function () {
+  const DW = { teal:'#3DC9C0', gold:'#F2C438', green:'#5DB96B', sand:'#C4A882',
+               g200:'#EFEFEF', g300:'#DCDCDC', g400:'#B0B0B0' };
+
+  function sparkScatter(w, h) {
+    const dots = [[12,28],[24,22],[34,30],[44,12],[56,20],[66,8],[78,16],[92,12],[104,18],[118,10],[128,14]];
+    let s = `<line x1="4" y1="${h-4}" x2="${w-4}" y2="${h-4}" stroke="${DW.g300}"/>`;
+    dots.forEach(([x, y], i) => {
+      s += `<circle cx="${x}" cy="${y}" r="2.5" fill="${i % 3 === 0 ? DW.teal : DW.g400}"/>`;
+    });
+    return `<svg width="${w}" height="${h}">${s}</svg>`;
+  }
+  function sparkBar(w, h) {
+    const hs = [12,22,8,28,18,24,14,30,20];
+    let s = '';
+    hs.forEach((bh, i) => {
+      s += `<rect x="${6 + i * 14}" y="${h - bh - 2}" width="10" height="${bh}" fill="${i === 3 || i === 7 ? DW.teal : DW.g300}"/>`;
+    });
+    return `<svg width="${w}" height="${h}">${s}</svg>`;
+  }
+  function sparkFacet(w, h) {
+    const cells = [[2,2],[38,2],[74,2],[110,2],[2,20],[38,20],[74,20],[110,20]];
+    const cols = [DW.teal, DW.gold, DW.green, DW.sand];
+    let s = '';
+    cells.forEach(([x, y], i) => {
+      s += `<rect x="${x}" y="${y}" width="28" height="14" fill="${DW.g200}" stroke="${DW.g300}" stroke-width="0.5"/>`;
+      s += `<path d="M ${x+2} ${y+12} Q ${x+10} ${y+4} ${x+26} ${y+8}" stroke="${cols[i % 4]}" stroke-width="1" fill="none"/>`;
+    });
+    return `<svg width="${w}" height="${h}">${s}</svg>`;
+  }
+  const sparkFor = k => k === 'scatter' ? sparkScatter(140, 44)
+                    : k === 'bar' ? sparkBar(140, 44)
+                    : sparkFacet(140, 44); // 'map' and 'facet' both use facet
+
+  const TUTORIALS = [
+    { title:'Membuat Scatterplot Interaktif dengan ggplot2', titleEn:'Interactive scatterplots in R', tool:'R · ggplot2', level:'Beginner', mins:8, chart:'scatter' },
+    { title:'Geofacet Peta Indonesia per Provinsi', titleEn:'Indonesian provincial geofacet maps', tool:'R · geofacet', level:'Intermediate', mins:12, chart:'map' },
+    { title:'Confidence Interval untuk A/B Testing di Tableau', titleEn:'CI charts for A/B tests in Tableau', tool:'Tableau', level:'Intermediate', mins:10, chart:'bar' },
+    { title:'Facet Grid per Wilayah di Tableau', titleEn:'Facet grids by region in Tableau', tool:'Tableau', level:'Beginner', mins:6, chart:'facet' },
+  ];
+
+  document.getElementById('tut-grid').innerHTML = TUTORIALS.map(t => `
+    <a class="tut-card">
+      <div class="tut-spark">${sparkFor(t.chart)}</div>
+      <div>
+        <div class="tut-label">
+          <span class="tut-tool">${t.tool}</span>
+          <span>· ${t.level.toUpperCase()}</span>
+          <span>· ${t.mins} MIN</span>
+        </div>
+        <div class="tut-title">${t.title}</div>
+        <div class="tut-en">${t.titleEn}</div>
+      </div>
+      <div class="tut-arrow">↗</div>
+    </a>`).join('');
+})();
+</script>
+</body>
+</html>
