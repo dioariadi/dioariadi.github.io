@@ -88,10 +88,10 @@ img{display:block}
   flex-direction:column;cursor:pointer;position:relative;overflow:hidden;color:inherit;text-decoration:none}
 .tile:hover .tile-title,.tile:hover .tile-title-lg{text-decoration:underline}
 .t-green{border-top:3px solid var(--green)} .t-teal{border-top:3px solid var(--teal)}
-.t-gold{border-top:3px solid var(--gold)} .t-sand{border-top:3px solid var(--sand)}
+.t-gold{border-top:3px solid var(--gold)} .t-sand{border-top:3px solid var(--sand)} .t-red{border-top:3px solid var(--red)}
 .s7r4{grid-column:span 7;grid-row:span 4} .s5r4{grid-column:span 5;grid-row:span 4}
 .s4r4{grid-column:span 4;grid-row:span 4} .s8r3{grid-column:span 8;grid-row:span 3}
-.s4r3{grid-column:span 4;grid-row:span 3}
+.s4r3{grid-column:span 4;grid-row:span 3} .s12r2{grid-column:span 12;grid-row:span 2}
 .tile-img{width:100%;flex:1;object-fit:cover;object-position:center;margin-top:12px;min-height:0}
 .tile-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
 .tile-no{font-family:var(--mono);font-size:11px;color:var(--g400);letter-spacing:.06em}
@@ -250,14 +250,14 @@ img{display:block}
       <div class="tile-footer"><span>R · ggplot2</span><span>READ →</span></div>
     </a>
 
-    <a class="tile t-teal s4r4">
+    <a class="tile t-teal s4r4" href="covid_19.html">
       <div class="tile-header"><span class="tile-tag bg-teal">PUBLIC HEALTH</span><span class="tile-no">№ 03</span></div>
       <div class="tile-title">Efektivitas Vaksin Covid-19 vs Delta</div>
       <div class="tile-en">Which Covid vaccines held up against Delta</div>
       <img class="tile-img" src="assets/sample-covid-vaccine.png" alt="Dumbbell chart efektivitas vaksin">
     </a>
 
-    <a class="tile t-gold s4r4">
+    <a class="tile t-gold s4r4" href="fashion-brand-color-analysis.html">
       <div class="tile-header"><span class="tile-tag bg-gold">VOGUE RUNWAY</span><span class="tile-no">№ 04</span></div>
       <div class="tile-title">Fashion Brand Color Analysis</div>
       <div class="tile-en">Seven years of runway color, by brand</div>
@@ -283,7 +283,15 @@ img{display:block}
       </div>
     </a>
 
-    <a class="tile t-gold s4r3 tile-archive">
+    <a class="tile t-red s4r3" href="Who-and-when-KPOP-group-win.html">
+      <div class="tile-header"><span class="tile-tag" style="background:var(--red);color:var(--white)">MUSIK</span><span class="tile-no">№ 07 · 2021</span></div>
+      <div class="tile-title">Siapa &amp; Kapan Grup K-Pop Menang</div>
+      <div class="tile-en">Who and when K-pop groups win</div>
+      <div class="tile-desc">Analisis kemenangan grup K-Pop di acara musik — siapa yang paling sering juara, dan di momen apa mereka menang.</div>
+      <div class="tile-footer"><span>R · analysis</span><span>READ →</span></div>
+    </a>
+
+    <a class="tile t-gold s12r2 tile-archive">
       <div>
         <div class="tile-header"><span class="tile-no">ARSIP LENGKAP</span></div>
         <div class="tile-title-lg">28 karya lainnya, tersusun rapi.</div>
@@ -309,11 +317,7 @@ img{display:block}
 <!-- FOOTER -->
 <footer class="foot">
   <div class="foot-top">
-    <svg width="56" height="62" viewBox="0 0 100 110" fill="none" aria-label="DataWizart logo">
-      <path d="M50 6 L92 60 Q80 100 50 104 Q20 100 8 60 Z" stroke="#F2C438" stroke-width="2.6" fill="none" stroke-linejoin="round"/>
-      <path d="M22 38 L36 78 L50 50 L64 78 L78 38" stroke="#F2C438" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-      <line x1="68" y1="14" x2="68" y2="34" stroke="#F2C438" stroke-width="3.4" stroke-linecap="round"/>
-    </svg>
+    <img src="assets/logo-mark.png" width="56" height="62" style="object-fit:contain" alt="DataWizart logo">
     <div>
       <div class="foot-headline">Punya pertanyaan yang butuh grafik?</div>
       <div class="foot-headline-en">Have a question that needs a chart? Let's talk.</div>
