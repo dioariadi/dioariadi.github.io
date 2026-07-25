@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pengaruh Hayao Miyazaki dalam Rating Film Studio Ghibli · DataWizart</title>
+<meta name="description" content="Apakah film Studio Ghibli yang ditulis dan disutradarai Hayao Miyazaki punya rating berbeda? Sebuah scrollytelling dari rating IMDB & Rotten Tomatoes 21 film Ghibli. A DataWizart story.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400;1,9..40,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#F2C438; --gold-dk:#C99E18; --charcoal:#474747; --deep:#2E2E2E; --black:#111111;
+  --teal:#3DC9C0; --teal-dk:#27A39B; --green:#5DB96B; --sand:#C4A882; --red:#E05A5A;
+  --g100:#F7F7F7; --g200:#EFEFEF; --g300:#DCDCDC; --g400:#B0B0B0; --g500:#808080;
+  --g600:#555555; --g800:#2A2A2A; --white:#FFFFFF;
+  --box-teal:#D4EBE8; --box-grey:#E6E6E4;
+  --display:'Oswald',sans-serif; --body:'DM Sans',sans-serif; --mono:'DM Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{background:var(--white);color:var(--g800);font-family:var(--body)}
+a{cursor:pointer}
+img{display:block;max-width:100%}
+
+/* ── MASTHEAD / NAV ───────────────────────────────── */
+.mast{border-top:8px solid var(--deep);border-bottom:1px solid var(--deep);
+  padding:16px 56px;display:flex;justify-content:space-between;align-items:center;gap:24px}
+.mast-title{font-family:var(--display);font-weight:700;font-size:28px;letter-spacing:.02em;color:var(--deep)}
+.mast-title a{color:var(--deep);text-decoration:none}
+.mast-meta{font-family:var(--mono);font-size:11px;color:var(--g600);letter-spacing:.04em}
+.nav{border-bottom:2px solid var(--deep);padding:10px 56px;display:flex;justify-content:space-between;
+  align-items:center;font-family:var(--body);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.nav-links{display:flex;gap:28px}
+.nav-links a{color:var(--deep);text-decoration:none}
+.nav-links a.active{color:var(--teal-dk)}
+.nav-accent{color:var(--gold);font-family:var(--mono);letter-spacing:.02em;text-transform:none;font-weight:400;font-size:11px}
+
+/* ── COVER ────────────────────────────────────────── */
+.cover{position:relative;overflow:hidden;padding:84px 56px 92px;border-bottom:1px solid var(--g300)}
+.cover-jp{position:absolute;left:-3%;bottom:-9%;font-family:var(--display);font-weight:700;
+  font-size:24vw;line-height:.8;color:var(--g100);letter-spacing:.02em;z-index:0;user-select:none;pointer-events:none}
+.cover-inner{position:relative;z-index:1;max-width:1140px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 400px;gap:56px;align-items:center}
+.cover-art{align-self:center}
+.cover-art img{width:100%;height:auto;filter:drop-shadow(0 12px 26px rgba(0,0,0,.05))}
+.kicker{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--teal-dk);margin-bottom:22px;display:flex;align-items:center;gap:12px}
+.kicker-line{width:36px;height:1px;background:var(--teal-dk);display:inline-block}
+.cover h1{font-family:var(--display);font-weight:700;font-size:60px;line-height:1.0;color:var(--deep);
+  letter-spacing:-.01em;margin-bottom:26px;text-wrap:balance;max-width:15ch}
+.cover h1 .accent{color:var(--teal-dk)}
+.cover .lede{font-size:19px;line-height:1.65;color:var(--g800);max-width:60ch;margin-bottom:30px;font-weight:300}
+.cover .byline{font-family:var(--mono);font-size:12px;color:var(--g600);border-top:1px solid var(--g300);
+  border-bottom:1px solid var(--g300);padding:10px 0;letter-spacing:.03em;max-width:60ch;margin-bottom:40px}
+.scrollcue{display:inline-flex;align-items:center;gap:12px;font-family:var(--body);font-size:12px;
+  font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--deep)}
+.scrollcue .arrow{display:inline-block;width:34px;height:34px;border:1.5px solid var(--deep);border-radius:50%;
+  position:relative;animation:bob 1.8s ease-in-out infinite}
+.scrollcue .arrow::after{content:"";position:absolute;left:50%;top:44%;width:8px;height:8px;
+  border-right:1.5px solid var(--deep);border-bottom:1.5px solid var(--deep);transform:translate(-50%,-50%) rotate(45deg)}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+/* ── SCROLLYTELLING ───────────────────────────────── */
+.scrolly-intro{max-width:880px;margin:0 auto;padding:72px 24px 8px;text-align:center}
+.scrolly-intro .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--g500);text-transform:uppercase;margin-bottom:14px}
+.scrolly-intro h2{font-family:var(--display);font-weight:600;font-size:34px;color:var(--deep);line-height:1.08;text-wrap:balance}
+
+.scrolly{position:relative;max-width:1240px;margin:0 auto;padding:0 56px;
+  display:grid;grid-template-columns:1fr 380px;gap:64px;align-items:start}
+.graphic{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.chart-shell{border:1px solid var(--g300);background:var(--white);padding:16px 18px 12px}
+.chart-cap{border-bottom:1px solid var(--g200);padding-bottom:12px;margin-bottom:6px}
+.chart-cap .ck{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--teal-dk);text-transform:uppercase;margin-bottom:4px}
+.chart-cap .ct{font-family:var(--display);font-weight:600;font-size:22px;color:var(--deep);line-height:1.05}
+svg#chart{width:100%;height:auto;display:block;overflow:visible}
+.chart-legend{display:flex;gap:22px;align-items:center;flex-wrap:wrap;
+  font-family:var(--body);font-size:12px;color:var(--g600);padding-top:8px;border-top:1px solid var(--g200);margin-top:6px}
+.chart-legend .sw{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:7px;vertical-align:-1px}
+.chart-src{font-family:var(--mono);font-size:10px;color:var(--g400);letter-spacing:.04em;margin-left:auto}
+
+.steps{padding:38vh 0 42vh}
+.step{min-height:78vh;display:flex;align-items:center}
+.step-card{background:var(--white);border:1px solid var(--g300);border-left:3px solid var(--teal);padding:26px 28px}
+.step-card.is-active{border-left-color:var(--teal-dk);box-shadow:0 8px 30px -18px rgba(0,0,0,.35)}
+.step-num{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--g500);margin-bottom:12px}
+.step-card h3{font-family:var(--display);font-weight:600;font-size:25px;color:var(--deep);line-height:1.12;margin-bottom:12px}
+.step-card p{font-size:16px;line-height:1.68;color:var(--g800)}
+.step-card p + p{margin-top:12px}
+.step-card b{color:var(--teal-dk);font-weight:600}
+.step-card .stat-row{display:flex;gap:24px;margin-top:18px;padding-top:16px;border-top:1px solid var(--g200)}
+.step-card .stat-row .s .v{font-family:var(--display);font-weight:600;font-size:34px;color:var(--deep);line-height:1}
+.step-card .stat-row .s .k{font-family:var(--mono);font-size:10.5px;color:var(--g500);letter-spacing:.04em;margin-top:6px}
+
+/* tooltip */
+#tt{position:fixed;pointer-events:none;z-index:50;background:var(--deep);color:#fff;padding:8px 11px;
+  font-family:var(--body);font-size:12px;line-height:1.4;border-radius:4px;opacity:0;transition:opacity .12s;max-width:220px}
+#tt .tt-t{font-weight:600;margin-bottom:3px}
+#tt .tt-m{font-family:var(--mono);font-size:11px;color:var(--gold)}
+
+/* ── CONCLUSION ───────────────────────────────────── */
+.conclusion{background:var(--g100);border-top:1px solid var(--g300);border-bottom:1px solid var(--g300);
+  padding:104px 24px;margin-top:16px}
+.conclusion-inner{max-width:760px;margin:0 auto}
+.conclusion h2{font-family:var(--display);font-weight:700;font-size:46px;color:var(--deep);margin-bottom:28px}
+.conclusion p{font-size:19px;line-height:1.68;color:var(--g800);margin-bottom:20px;font-weight:300}
+.conclusion p b{font-weight:600;color:var(--teal-dk)}
+.conclusion .signoff{display:flex;align-items:center;gap:30px;margin-top:42px;padding-top:32px;
+  border-top:1px solid var(--g300);flex-wrap:wrap}
+.conclusion .portrait{width:172px;height:auto;flex:none;border:1px solid var(--g300);border-radius:8px;
+  background:#fff;box-shadow:0 12px 28px -16px rgba(0,0,0,.4)}
+.conclusion .kicker-close{font-family:var(--display);font-weight:600;font-size:30px;color:var(--deep);line-height:1.06}
+.conclusion .kicker-close .accent{color:var(--teal-dk)}
+.conclusion .sign{font-family:var(--mono);font-size:12px;color:var(--g500);letter-spacing:.04em;margin-top:14px}
+
+.method{max-width:760px;margin:0 auto;padding:64px 24px}
+.method h3{font-family:var(--display);font-weight:600;font-size:22px;color:var(--deep);margin-bottom:14px}
+.method p{font-size:14.5px;line-height:1.7;color:var(--g600);margin-bottom:14px}
+.method a{color:var(--teal-dk)}
+.method .tbl{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.method .tbl th,.method .tbl td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--g200)}
+.method .tbl th{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--g500);text-transform:uppercase;font-weight:400}
+.method .tbl td.n{font-family:var(--mono);text-align:right}
+
+/* ── FOOTER ───────────────────────────────────────── */
+.foot{margin-top:0;padding:36px 56px;background:var(--deep);color:var(--g300)}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.foot-word{font-family:var(--body);font-weight:300;font-size:18px;letter-spacing:.22em;color:var(--white)}
+.foot-links{display:flex;gap:22px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;flex-wrap:wrap}
+.foot-links a{color:var(--gold);text-decoration:none}
+
+/* ── RESPONSIVE ───────────────────────────────────── */
+@media (max-width:1000px){
+  .cover-inner{grid-template-columns:1fr;gap:24px}
+  .cover-art{max-width:300px;margin:6px auto 0;order:2}
+  .scrolly{grid-template-columns:1fr;gap:0;padding:0}
+  .graphic{position:sticky;top:0;height:64vh;background:var(--white);z-index:5;
+    border-bottom:1px solid var(--g300);padding:10px 16px;justify-content:center}
+  .steps{padding:16vh 16px 24vh}
+  .step{min-height:82vh}
+  .step-card{background:rgba(255,255,255,.94);backdrop-filter:blur(5px)}
+}
+@media (max-width:900px){
+  .mast,.nav,.cover,.foot{padding-left:20px;padding-right:20px}
+  .nav-links{gap:16px}
+  .nav-accent{display:none}
+  .cover{padding-top:64px;padding-bottom:72px}
+  .cover h1{font-size:40px}
+  .cover .lede{font-size:17px}
+  .scrolly-intro h2{font-size:26px}
+  .conclusion{padding:72px 20px}
+  .conclusion h2{font-size:34px}
+  .conclusion p{font-size:17px}
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="mast-title"><a href="../index.html">DATAWIZART</a></div>
+  <div class="mast-meta">DATA STORYTELLING STUDIO · JAKARTA</div>
+</header>
+
+<nav class="nav">
+  <div class="nav-links">
+    <a href="../index.html">Home</a>
+    <a href="../index.html#stories" class="active">Storytelling</a>
+    <a href="../index.html#dataviz">Data Visualization</a>
+    <a href="../index.html#tutorials">Tutorials</a>
+  </div>
+  <div class="nav-accent">@data_wizart · datawizart.com</div>
+</nav>
+
+<!-- ── COVER (slide 51) ─────────────────────────────── -->
+<section class="cover">
+  <div class="cover-jp">ジブリ</div>
+  <div class="cover-inner">
+    <div class="cover-text">
+      <div class="kicker"><span class="kicker-line"></span>STORYTELLING · № 04 · STUDIO GHIBLI</div>
+      <h1>Pengaruh <span class="accent">Hayao Miyazaki</span> dalam Rating Film Studio Ghibli</h1>
+      <p class="lede">Hayao Miyazaki diakui sebagai legenda dalam pembuatan film animasi. Beberapa karyanya yang fenomenal tercermin dari rating IMDB dan Rotten Tomatoes. Tapi apakah, secara data, film Studio Ghibli yang <b>ditulis dan disutradarai langsung</b> oleh sosok ini benar-benar memberi perbedaan rating? Mari kita telusuri titik demi titik.</p>
+      <div class="byline">BY DIO ARIADI · DATAWIZART.COM · 21 FILM STUDIO GHIBLI · IMDB &amp; ROTTEN TOMATOES</div>
+      <a class="scrollcue" href="#mulai"><span class="arrow"></span>Scroll untuk mulai</a>
+    </div>
+    <div class="cover-art">
+      <img src="../assets/ghibli/totoro.png" alt="Ilustrasi garis Totoro — Studio Ghibli" width="1100" height="1136">
+    </div>
+  </div>
+</section>
+
+<!-- ── SCROLLY INTRO ────────────────────────────────── -->
+<div class="scrolly-intro" id="mulai">
+  <div class="lbl">Scatter Plot · Setiap titik = satu film</div>
+  <h2>Kita mulai dari 21 film Studio Ghibli, dipetakan dari rating IMDB dan Rotten Tomatoes.</h2>
+</div>
+
+<!-- ── SCROLLY ──────────────────────────────────────── -->
+<section class="scrolly" id="scrolly">
+  <!-- Sticky graphic -->
+  <div class="graphic">
+    <div class="chart-shell">
+      <div class="chart-cap">
+        <div class="ck" id="chart-kicker">Scatter Plot Film Studio Ghibli</div>
+        <div class="ct" id="chart-title">IMDB × Rotten Tomatoes</div>
+      </div>
+      <svg id="chart" viewBox="0 0 760 580" role="img" aria-label="Chart of Studio Ghibli film ratings"></svg>
+      <div class="chart-legend">
+        <span><span class="sw" style="background:var(--teal-dk)"></span>Ditulis &amp; disutradarai Miyazaki</span>
+        <span><span class="sw" style="background:var(--g500)"></span>Karya orang lain</span>
+        <span class="chart-src">SUMBER: WIKIPEDIA · IMDB · ROTTEN TOMATOES</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Steps -->
+  <div class="steps">
+    <div class="step" data-step="0">
+      <div class="step-card">
+        <div class="step-num">01 — SEMUA FILM</div>
+        <h3>Setiap titik adalah satu film</h3>
+        <p>Ada <b>21 film</b> Studio Ghibli dari daftar <i>Feature films</i> di Wikipedia. Posisi <b>mendatar</b> menunjukkan rating IMDB, posisi <b>tegak</b> menunjukkan rating Rotten Tomatoes. Makin ke kanan-atas, makin tinggi dua-duanya.</p>
+      </div>
+    </div>
+
+    <div class="step" data-step="1">
+      <div class="step-card">
+        <div class="step-num">02 — SOROT MIYAZAKI</div>
+        <h3>Mana yang benar-benar karya Miyazaki?</h3>
+        <p>Kita tandai film yang <b>ditulis dan disutradarai langsung</b> oleh Hayao Miyazaki — ada <b>10 dari 21 film</b>. Sisanya digarap sutradara lain seperti Isao Takahata, Yoshifumi Kondō, atau Gorō Miyazaki.</p>
+      </div>
+    </div>
+
+    <div class="step" data-step="2">
+      <div class="step-card">
+        <div class="step-num">03 — SATU KELOMPOK</div>
+        <h3>Film Miyazaki berkumpul di satu sudut</h3>
+        <p>Titik-titik teal mengumpul rapat di <b>kanan-atas</b> — rating tinggi di kedua sumbu. Dapat diartikan rating yang ia dapat <b>selalu konsisten</b>, jarang ada yang jeblok.</p>
+      </div>
+    </div>
+
+    <div class="step" data-step="3">
+      <div class="step-card">
+        <div class="step-num">04 — BOX-PLOT</div>
+        <h3>Median lebih tinggi, sebaran lebih rapat</h3>
+        <p>Dibuat box-plot, median IMDB Miyazaki <b>80,5</b> — di atas median karya orang lain <b>(76)</b>, selisih 4,5. Box-nya pun lebih sempit: nilainya stabil.</p>
+        <p>Pola sama muncul di Rotten Tomatoes, walau selisih median-nya lebih kecil.</p>
+        <div class="stat-row">
+          <div class="s"><div class="v">+4,5</div><div class="k">SELISIH MEDIAN IMDB</div></div>
+          <div class="s"><div class="v">10 vs 11</div><div class="k">MIYAZAKI vs ORANG LAIN</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONCLUSION (slide 54) ────────────────────────── -->
+<section class="conclusion">
+  <div class="conclusion-inner">
+    <h2>Kesimpulan</h2>
+    <p>Secara data, kombinasi rating IMDB dan Rotten Tomatoes untuk film yang <b>ditulis dan disutradarai Hayao Miyazaki</b> memiliki nilai median lebih tinggi daripada karya yang digarap orang lain — dengan variansi nilai yang lebih kecil.</p>
+    <p>Mungkin inilah standar yang dipertahankan Miyazaki untuk setiap karya filmnya.</p>
+    <div class="signoff">
+      <img class="portrait" src="../assets/ghibli/miyazaki.jpg" alt="Foto Hayao Miyazaki" width="470" height="606">
+      <div class="signoff-meta">
+        <div class="kicker-close">Long life <span class="accent">Hayao Miyazaki</span>!!</div>
+        <div class="sign">@DATA_WIZART · DIO ARIADI · DATAWIZART.COM</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── METHOD / DATA ────────────────────────────────── -->
+<div class="method">
+  <h3>Catatan data</h3>
+  <p>Daftar film diambil dari <a href="https://en.wikipedia.org/wiki/List_of_Studio_Ghibli_works" target="_blank" rel="noopener">Wikipedia — List of Studio Ghibli works</a>, bagian <i>Feature films</i> (21 film). Sebuah film dihitung sebagai "karya Miyazaki" jika ia tercatat sebagai <b>sutradara sekaligus penulis skenario</b>. Rating IMDB (skala 0–10) di sini dikalikan 10 agar sejajar dengan skala Rotten Tomatoes (0–100).</p>
+  <p>Median IMDB: Miyazaki 80,5 vs orang lain 76 (n = 10 vs 11). Median Rotten Tomatoes: Miyazaki 93,5 vs orang lain 91. Rating dapat berubah sewaktu-waktu; angka mencerminkan snapshot saat data dikumpulkan.</p>
+</div>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-word">DATAWIZART</div>
+    <div class="foot-links">
+      <a href="../index.html">HOME</a>
+      <a href="https://instagram.com/data_wizart" target="_blank" rel="noopener">INSTAGRAM ↗</a>
+      <a href="https://github.com/dioariadi" target="_blank" rel="noopener">GITHUB ↗</a>
+      <a href="mailto:dioariadi2025@gmail.com">EMAIL ↗</a>
+    </div>
+  </div>
+</footer>
+
+<div id="tt"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script>
+(function () {
+  "use strict";
+
+  /* ── Data (from DataWizart Ghibli dataset) ─────────────────────
+     imdb = IMDB rating 0–10 ; rt = Rotten Tomatoes 0–100
+     m = ditulis & disutradarai Hayao Miyazaki                     */
+  const FILMS = [
+    { t:"Nausicaä of the Valley of the Wind", s:"Nausicaä",            imdb:8.1, rt:88,  m:true  },
+    { t:"Castle in the Sky",                  s:"Castle in the Sky",   imdb:8.0, rt:96,  m:true  },
+    { t:"Grave of the Fireflies",             s:"Grave of the Fireflies", imdb:8.5, rt:100, m:false },
+    { t:"My Neighbor Totoro",                 s:"Totoro",              imdb:8.2, rt:94,  m:true  },
+    { t:"Kiki's Delivery Service",            s:"Kiki's Delivery Service", imdb:7.8, rt:98, m:true },
+    { t:"Only Yesterday",                     s:"Only Yesterday",      imdb:7.6, rt:100, m:false },
+    { t:"Porco Rosso",                        s:"Porco Rosso",         imdb:7.7, rt:95,  m:true  },
+    { t:"Pom Poko",                           s:"Pom Poko",            imdb:7.3, rt:85,  m:false },
+    { t:"Whisper of the Heart",               s:"Whisper of the Heart",imdb:7.9, rt:94,  m:false },
+    { t:"Princess Mononoke",                  s:"Princess Mononoke",   imdb:8.4, rt:93,  m:true  },
+    { t:"My Neighbors the Yamadas",           s:"The Yamadas",         imdb:7.2, rt:78,  m:false },
+    { t:"Spirited Away",                      s:"Spirited Away",       imdb:8.6, rt:97,  m:true  },
+    { t:"The Cat Returns",                    s:"The Cat Returns",     imdb:7.2, rt:90,  m:false },
+    { t:"Howl's Moving Castle",               s:"Howl's Moving Castle",imdb:8.2, rt:87,  m:true  },
+    { t:"Tales from Earthsea",                s:"Tales from Earthsea", imdb:6.4, rt:43,  m:false },
+    { t:"Ponyo",                              s:"Ponyo",               imdb:7.7, rt:92,  m:true  },
+    { t:"Arrietty",                           s:"Arrietty",            imdb:7.6, rt:95,  m:false },
+    { t:"From Up on Poppy Hill",              s:"Poppy Hill",          imdb:7.4, rt:86,  m:false },
+    { t:"The Wind Rises",                     s:"The Wind Rises",      imdb:7.8, rt:88,  m:true  },
+    { t:"The Tale of the Princess Kaguya",    s:"Princess Kaguya",     imdb:8.0, rt:100, m:false },
+    { t:"When Marnie Was There",              s:"When Marnie Was There",imdb:7.7, rt:91, m:false }
+  ];
+  // Which films get a persistent label on the scatter (all Miyazaki + 2 anchors)
+  const LABELLED = new Set(["Grave of the Fireflies","Tales from Earthsea"]);
+  FILMS.forEach((d, i) => {
+    d.i = i;
+    d.x10 = d.imdb * 10;                       // IMDB on 0–100 scale
+    d.jit = Math.sin(i * 12.9898) ;            // deterministic −1..1 jitter seed
+    d.label = d.m || LABELLED.has(d.t);
+  });
+
+  const TEAL = "#27A39B", GREY = "#808080", DEEP = "#2E2E2E",
+        G200 = "#EFEFEF", G300 = "#DCDCDC", G400 = "#B0B0B0", G500 = "#808080",
+        BOX_TEAL = "#D4EBE8", BOX_GREY = "#E6E6E4";
+
+  const W = 760, H = 580;
+
+  /* ── Scatter scales ─────────────────────────────── */
+  const sM = { l:56, r:150, t:40, b:56 };
+  const xS = d3.scaleLinear().domain([62.5, 87.5]).range([sM.l, W - sM.r]);
+  const yS = d3.scaleLinear().domain([40, 102]).range([H - sM.b, sM.t]);
+
+  /* ── Box-plot layout (two facets, own y-scales) ─── */
+  const bM = { l:60, r:28, t:74, b:60 };
+  const innerBW = W - bM.l - bM.r;
+  const gap = 56;
+  const facetW = (innerBW - gap) / 2;
+  const facetX0 = [bM.l, bM.l + facetW + gap];        // left edge of each facet
+  const boxT = bM.t, boxB = H - bM.b;
+  const yImdb = d3.scaleLinear().domain([62.5, 87.5]).range([boxB, boxT]);
+  const yRt   = d3.scaleLinear().domain([40, 102]).range([boxB, boxT]);
+  const catFrac = [0.30, 0.70];                        // Miyazaki, Orang Lain within facet
+  const jitW = facetW * 0.11;
+  const halfBox = facetW * 0.17;
+
+  function catX(facetIdx, groupIdx){ return facetX0[facetIdx] + facetW * catFrac[groupIdx]; }
+  const FACETS = [
+    { key:"imdb", title:"Rating IMDB",            y:yImdb, val:d=>d.x10, ticks:[65,70,75,80,85] },
+    { key:"rt",   title:"Rating Rotten Tomatoes", y:yRt,   val:d=>d.rt,  ticks:[40,60,80,100] }
+  ];
+
+  function boxStats(vals){
+    const s = vals.slice().sort(d3.ascending);
+    const q1 = d3.quantile(s, .25), q2 = d3.quantile(s, .5), q3 = d3.quantile(s, .75);
+    const iqr = q3 - q1;
+    const lo = d3.min(s.filter(v => v >= q1 - 1.5 * iqr));
+    const hi = d3.max(s.filter(v => v <= q3 + 1.5 * iqr));
+    return { q1, q2, q3, lo, hi };
+  }
+
+  // Precompute the 4 boxes: facet(2) × group(2)
+  const BOXES = [];
+  FACETS.forEach((f, fi) => {
+    [true, false].forEach((mflag, gi) => {
+      const vals = FILMS.filter(d => d.m === mflag).map(f.val);
+      BOXES.push({ fi, gi, m:mflag, cx:catX(fi, gi), y:f.y, st:boxStats(vals) });
+    });
+  });
+
+  /* ── Position helpers ───────────────────────────── */
+  function scatterXY(d){ return [xS(d.x10), yS(d.rt)]; }
+  function facetXY(d, fi){
+    const f = FACETS[fi];
+    const gi = d.m ? 0 : 1;
+    return [ catX(fi, gi) + d.jit * jitW, f.y(f.val(d)) ];
+  }
+
+  /* ── Build SVG layers ───────────────────────────── */
+  const svg = d3.select("#chart");
+  const gGrid   = svg.append("g").attr("class", "grid");
+  const gAxS    = svg.append("g").attr("class", "ax-scatter");
+  const gAxB    = svg.append("g").attr("class", "ax-box").attr("opacity", 0);
+  const gHull   = svg.append("g").attr("class", "hull").attr("opacity", 0);
+  const gBoxes  = svg.append("g").attr("class", "boxes").attr("opacity", 0);
+  const gDotsRt = svg.append("g").attr("class", "dots-rt");
+  const gDots   = svg.append("g").attr("class", "dots");
+  const gLabels = svg.append("g").attr("class", "labels");
+
+  const FS = "font-family:'DM Sans',sans-serif";
+  const FM = "font-family:'DM Mono',monospace";
+
+  /* Scatter gridlines + axes */
+  xS.ticks(6).forEach(t => {
+    gGrid.append("line").attr("x1", xS(t)).attr("x2", xS(t)).attr("y1", sM.t).attr("y2", H - sM.b)
+      .attr("stroke", G200).attr("stroke-width", 1);
+  });
+  yS.ticks(6).forEach(t => {
+    gGrid.append("line").attr("x1", sM.l).attr("x2", W - sM.r).attr("y1", yS(t)).attr("y2", yS(t))
+      .attr("stroke", G200).attr("stroke-width", 1);
+  });
+  // scatter x-axis
+  xS.ticks(6).forEach(t => {
+    gAxS.append("text").attr("x", xS(t)).attr("y", H - sM.b + 20).attr("text-anchor", "middle")
+      .attr("style", FS).attr("font-size", 12).attr("fill", G500).text(t);
+  });
+  gAxS.append("text").attr("x", (sM.l + W - sM.r) / 2).attr("y", H - 10).attr("text-anchor", "middle")
+    .attr("style", FS).attr("font-size", 13).attr("font-weight", 600).attr("fill", DEEP).text("Rating IMDB →");
+  // scatter y-axis
+  yS.ticks(6).forEach(t => {
+    gAxS.append("text").attr("x", sM.l - 12).attr("y", yS(t) + 4).attr("text-anchor", "end")
+      .attr("style", FS).attr("font-size", 12).attr("fill", G500).text(t);
+  });
+  gAxS.append("text").attr("transform", `translate(16,${(sM.t + H - sM.b) / 2}) rotate(-90)`)
+    .attr("text-anchor", "middle").attr("style", FS).attr("font-size", 13).attr("font-weight", 600)
+    .attr("fill", DEEP).text("Rating Rotten Tomatoes →");
+
+  /* Box-plot axes: facet titles, y ticks, category labels */
+  FACETS.forEach((f, fi) => {
+    // facet title banner
+    gAxB.append("rect").attr("x", facetX0[fi]).attr("y", boxT - 34).attr("width", facetW).attr("height", 24)
+      .attr("fill", G200);
+    gAxB.append("text").attr("x", facetX0[fi] + facetW / 2).attr("y", boxT - 17)
+      .attr("text-anchor", "middle").attr("style", FS).attr("font-size", 13).attr("font-weight", 600)
+      .attr("fill", DEEP).text(f.title);
+    // y ticks
+    f.ticks.forEach(t => {
+      gAxB.append("text").attr("x", facetX0[fi] - 8).attr("y", f.y(t) + 4).attr("text-anchor", "end")
+        .attr("style", FS).attr("font-size", 11).attr("fill", G500).text(t);
+      gAxB.append("line").attr("x1", facetX0[fi]).attr("x2", facetX0[fi] + facetW)
+        .attr("y1", f.y(t)).attr("y2", f.y(t)).attr("stroke", G200).attr("stroke-width", 1);
+    });
+    // category labels
+    ["Hayao Miyazaki", "Orang Lain"].forEach((c, gi) => {
+      gAxB.append("text").attr("x", catX(fi, gi)).attr("y", boxB + 22).attr("text-anchor", "middle")
+        .attr("style", FS).attr("font-size", 12).attr("fill", gi === 0 ? TEAL : G600())
+        .attr("font-weight", gi === 0 ? 600 : 400).text(c);
+    });
+  });
+  function G600(){ return "#555555"; }
+
+  /* Boxes (drawn once, revealed on state 3) */
+  BOXES.forEach(b => {
+    const g = gBoxes.append("g");
+    const x = b.cx, y = b.y;
+    const stroke = b.m ? TEAL : "#8A8A86";
+    const fill = b.m ? BOX_TEAL : BOX_GREY;
+    // whisker line
+    g.append("line").attr("x1", x).attr("x2", x).attr("y1", y(b.st.lo)).attr("y2", y(b.st.hi))
+      .attr("stroke", stroke).attr("stroke-width", 1);
+    // caps
+    [b.st.lo, b.st.hi].forEach(v => {
+      g.append("line").attr("x1", x - halfBox * 0.4).attr("x2", x + halfBox * 0.4)
+        .attr("y1", y(v)).attr("y2", y(v)).attr("stroke", stroke).attr("stroke-width", 1);
+    });
+    // box
+    g.append("rect").attr("x", x - halfBox).attr("width", halfBox * 2)
+      .attr("y", y(b.st.q3)).attr("height", Math.max(1, y(b.st.q1) - y(b.st.q3)))
+      .attr("fill", fill).attr("stroke", stroke).attr("stroke-width", 1.2);
+    // median
+    g.append("line").attr("x1", x - halfBox).attr("x2", x + halfBox)
+      .attr("y1", y(b.st.q2)).attr("y2", y(b.st.q2)).attr("stroke", stroke).attr("stroke-width", 2.4);
+    // median value label
+    g.append("text").attr("x", x + halfBox + 6).attr("y", y(b.st.q2) + 4)
+      .attr("style", FM).attr("font-size", 11).attr("fill", b.m ? TEAL : "#6A6A66")
+      .text(Number.isInteger(b.st.q2) ? b.st.q2 : b.st.q2.toFixed(1).replace(".", ","));
+  });
+  // "median" callout on the IMDB / Miyazaki box (facet 0, group 0)
+  (function () {
+    const b = BOXES[0];
+    const x = b.cx, y = b.y(b.st.q2);
+    const g = gBoxes.append("g");
+    g.append("path").attr("d", `M ${x + halfBox + 34} ${y - 30} Q ${x + halfBox + 20} ${y - 6} ${x + halfBox + 2} ${y}`)
+      .attr("fill", "none").attr("stroke", DEEP).attr("stroke-width", 1).attr("marker-end", "url(#arr)");
+    g.append("text").attr("x", x + halfBox + 30).attr("y", y - 36).attr("text-anchor", "start")
+      .attr("style", FS).attr("font-size", 12).attr("fill", DEEP).text("median");
+  })();
+  // arrowhead marker
+  svg.append("defs").html('<marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="none" stroke="#2E2E2E" stroke-width="1.2"/></marker>');
+
+  /* Dots — main (IMDB / scatter) */
+  const dot = gDots.selectAll("circle").data(FILMS).join("circle")
+    .attr("cx", d => scatterXY(d)[0]).attr("cy", d => scatterXY(d)[1])
+    .attr("r", 5).attr("fill", GREY).attr("stroke", "#fff").attr("stroke-width", 1)
+    .attr("opacity", 0)                       // hidden until the intro reveals them
+    .style("cursor", "pointer");
+
+  /* Dots — RT facet (revealed on state 3) */
+  const dotRt = gDotsRt.selectAll("circle").data(FILMS).join("circle")
+    .attr("cx", d => scatterXY(d)[0]).attr("cy", d => scatterXY(d)[1])
+    .attr("r", 4.5).attr("fill", d => d.m ? TEAL : GREY).attr("stroke", "#fff").attr("stroke-width", 1)
+    .attr("opacity", 0);
+
+  /* Persistent scatter labels */
+  const lab = gLabels.selectAll("text").data(FILMS.filter(d => d.label)).join("text")
+    .attr("x", d => scatterXY(d)[0]).attr("y", d => scatterXY(d)[1] - 9)
+    .attr("text-anchor", d => scatterXY(d)[0] > W - sM.r - 60 ? "end" : "middle")
+    .attr("dx", d => scatterXY(d)[0] > W - sM.r - 60 ? 8 : 0)
+    .attr("style", FS).attr("font-size", 11).attr("font-weight", 600)
+    .attr("fill", GREY).attr("opacity", 0).style("pointer-events", "none")
+    .text(d => d.s);
+
+  /* Convex hull around Miyazaki scatter points */
+  const hullPts = FILMS.filter(d => d.m).map(scatterXY);
+  const hull = d3.polygonHull(hullPts);
+  const hullPath = gHull.append("path")
+    .attr("d", "M" + hull.map(p => p.join(",")).join("L") + "Z")
+    .attr("fill", TEAL).attr("fill-opacity", 0.12).attr("stroke", TEAL)
+    .attr("stroke-width", 1.5).attr("stroke-dasharray", "1 0").attr("stroke-linejoin", "round");
+
+  /* ── Tooltip ────────────────────────────────────── */
+  const tt = document.getElementById("tt");
+  function showTT(ev, d){
+    tt.innerHTML = `<div class="tt-t">${d.t}</div><div class="tt-m">IMDB ${d.imdb.toFixed(1)} · RT ${d.rt}</div>`;
+    tt.style.opacity = 1; moveTT(ev);
+  }
+  function moveTT(ev){ tt.style.left = (ev.clientX + 14) + "px"; tt.style.top = (ev.clientY + 14) + "px"; }
+  function hideTT(){ tt.style.opacity = 0; }
+  dot.on("mouseenter", showTT).on("mousemove", moveTT).on("mouseleave", hideTT);
+  dotRt.on("mouseenter", showTT).on("mousemove", moveTT).on("mouseleave", hideTT);
+
+  /* ── State machine ──────────────────────────────── */
+  let cur = -1;
+  let introPlayed = false;
+  const T = () => d3.transition().duration(750).ease(d3.easeCubicInOut);
+
+  const CAP = [
+    { k:"Scatter Plot Film Studio Ghibli", t:"IMDB × Rotten Tomatoes" },
+    { k:"Scatter Plot Film Studio Ghibli", t:"Karya Miyazaki, disorot" },
+    { k:"Scatter Plot Film Studio Ghibli", t:"Satu kelompok di kanan-atas" },
+    { k:"Box-Plot Film Studio Ghibli",     t:"Distribusi rating: Miyazaki vs orang lain" }
+  ];
+
+  function setState(s){
+    if (s === cur) return;
+    cur = s;
+    document.getElementById("chart-kicker").textContent = CAP[s].k;
+    document.getElementById("chart-title").textContent = CAP[s].t;
+    // active step card styling
+    document.querySelectorAll(".step-card").forEach((c, i) =>
+      c.classList.toggle("is-active", i === s));
+
+    const boxMode = s === 3;
+
+    // dots (main): position + color + size
+    dot.transition(T())
+      .attr("cx", d => boxMode ? facetXY(d, 0)[0] : scatterXY(d)[0])
+      .attr("cy", d => boxMode ? facetXY(d, 0)[1] : scatterXY(d)[1])
+      .attr("fill", d => (s === 0) ? GREY : (d.m ? TEAL : GREY))
+      .attr("r", boxMode ? 4.5 : (s === 0 ? 5 : (d => d.m ? 6 : 5)));
+
+    // dots (RT facet): appear only in box mode
+    dotRt.transition(T())
+      .attr("cx", d => boxMode ? facetXY(d, 1)[0] : scatterXY(d)[0])
+      .attr("cy", d => boxMode ? facetXY(d, 1)[1] : scatterXY(d)[1])
+      .attr("opacity", boxMode ? 1 : 0);
+
+    // labels: visible states 0–2 (once intro has run), colored by group from state 1
+    lab.transition(T())
+      .attr("opacity", (boxMode || !introPlayed) ? 0 : 1)
+      .attr("fill", d => (s >= 1 && d.m) ? TEAL : GREY);
+
+    // hull only on state 2
+    gHull.transition(T()).attr("opacity", s === 2 ? 1 : 0);
+
+    // axes + grid cross-fade
+    gAxS.transition(T()).attr("opacity", boxMode ? 0 : 1);
+    gGrid.transition(T()).attr("opacity", boxMode ? 0 : 1);
+    gAxB.transition(T()).attr("opacity", boxMode ? 1 : 0);
+    gBoxes.transition(T()).attr("opacity", boxMode ? 1 : 0);
+  }
+
+  /* ── Scroll driver ──────────────────────────────── */
+  const steps = document.querySelectorAll(".step");
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting){ playIntro(); setState(+e.target.dataset.step); } });
+  }, { root: null, rootMargin: "-45% 0px -45% 0px", threshold: 0 });
+  steps.forEach(s => io.observe(s));
+
+  /* ── Intro: titik muncul satu per satu, urutan acak, cepat, sekali saja ──
+     Dipicu oleh step-observer di atas (pertama kali chart masuk layar).
+     Pakai transition bernama "intro" (khusus opacity) supaya tidak bentrok
+     dengan transisi setState (cx/cy/fill/r). Tidak diputar ulang saat
+     scroll balik ke atas. */
+  const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function playIntro(){
+    if (introPlayed) return;
+    introPlayed = true;
+    if (reduceMotion){ dot.attr("opacity", 1); lab.attr("opacity", cur === 3 ? 0 : 1); return; }
+    const order = d3.shuffle(d3.range(FILMS.length));       // urutan acak
+    const rank = []; order.forEach((fi, pos) => rank[fi] = pos);
+    const per = 38;                                         // jeda antar titik (ms) → ~0,8s total
+    dot.interrupt("intro").attr("opacity", 0)
+      .transition("intro").delay(d => rank[d.i] * per).duration(240).ease(d3.easeCubicOut)
+        .attr("opacity", 1);
+    if (cur !== 3){                                         // label ikut muncul menyusul titiknya
+      lab.interrupt("intro").attr("opacity", 0)
+        .transition("intro").delay(d => rank[d.i] * per + 90).duration(280).ease(d3.easeCubicOut)
+          .attr("opacity", 1);
+    }
+  }
+  // Pemicu utama: begitu chart benar-benar tampil di layar (threshold 0 +
+  // margin bawah, jadi tahan terhadap chart yang lebih tinggi dari viewport).
+  // Step-observer di atas jadi cadangan bila ini terlewat.
+  const introObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting){ playIntro(); introObs.disconnect(); } });
+  }, { threshold: 0, rootMargin: "0px 0px -30% 0px" });
+  introObs.observe(document.querySelector(".chart-shell"));
+
+  setState(0);   // initial (titik masih tersembunyi sampai intro berjalan)
+})();
+</script>
+</body>
+</html>
