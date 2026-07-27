@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta
+      name="description"
+      content="Interactive Indonesian EV comparison table and configurable scatter plot."
+    />
+    <title>EV Field Guide — Indonesia, July 2026</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2311120f'/%3E%3Cpath d='M13 18h38v10H23v4h22v9H23v5h28v10H13z' fill='%23dfff45'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to comparison</a>
+
+    <header class="masthead">
+      <div class="brand-lockup" aria-label="EV Field Guide">
+        <span class="brand-slash">EV//</span>
+        <span>FIELD GUIDE</span>
+      </div>
+      <div class="masthead-meta">
+        <span>INDONESIA</span>
+        <span>JUL 2026</span>
+        <span>OTR JAKARTA</span>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="intro-grid" aria-labelledby="page-title">
+        <div class="intro-copy">
+          <p class="eyebrow">A live comparison instrument</p>
+          <h1 id="page-title">
+            Find the EV that fits
+            <span>your numbers.</span>
+          </h1>
+          <p class="intro-deck">
+            Search the market, line up variants, then choose any two numeric
+            fields to see the trade-off.
+          </p>
+
+          <div class="population-strip" aria-label="Dataset coverage">
+            <div>
+              <strong id="sourceVariantCount">—</strong>
+              <span>source variants</span>
+            </div>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <div>
+              <strong id="filteredVariantCount">—</strong>
+              <span>after filters</span>
+            </div>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <div>
+              <strong id="plottedVariantCount">—</strong>
+              <span>plotted now</span>
+            </div>
+          </div>
+        </div>
+
+        <article class="spotlight-card" id="seresSpotlight">
+          <div class="spotlight-label">IMAGE TEST · SERES E1</div>
+          <div class="car-stage">
+            <span class="model-ghost" aria-hidden="true">E1</span>
+            <img
+              src="assets/seres-e1-1.webp"
+              alt="Seres E1 in Fairy Green, side profile"
+            />
+          </div>
+          <div class="spotlight-copy">
+            <div>
+              <p>Compact city EV</p>
+              <h2>Seres E1</h2>
+            </div>
+            <button class="text-button" id="selectSeres" type="button">
+              Compare both variants ↗
+            </button>
+          </div>
+          <div class="spotlight-specs" id="seresSpecs"></div>
+          <a
+            class="image-credit"
+            href="https://www.dfskmotors.co.id/Passenger/E1.html"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Official vehicle image · DFSK Motor Indonesia ↗
+          </a>
+        </article>
+      </section>
+
+      <section class="workbench" aria-label="EV comparison workbench">
+        <section id="compareShelf" class="compare-shelf" aria-label="Selected cars">
+          <div class="shelf-head">
+            <div>
+              <p class="eyebrow">Pinned comparison</p>
+              <h2>Up to four variants</h2>
+            </div>
+            <button class="text-button" id="clearSelection" type="button">
+              Clear all
+            </button>
+          </div>
+          <div class="compare-cards" id="compareCards"></div>
+        </section>
+
+        <section id="tableView" class="view-panel table-view">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">01 · Filter & compare</p>
+              <h2>Vehicle table</h2>
+            </div>
+            <p id="tableStatus" aria-live="polite"></p>
+          </div>
+
+          <div class="table-filters" aria-label="Table filters">
+            <label class="search-control">
+              <span>Model, brand, variant</span>
+              <input
+                id="searchInput"
+                type="search"
+                placeholder="Try “BYD”, “city car”, “Seres”…"
+                autocomplete="off"
+              />
+            </label>
+
+            <label>
+              <span>Vehicle type</span>
+              <select id="vehicleTypeFilter">
+                <option value="">All types</option>
+              </select>
+            </label>
+
+            <label class="slider-control">
+              <span>
+                Max price
+                <output id="maxPriceOutput" for="maxPriceSlider">Any price</output>
+              </span>
+              <input
+                id="maxPriceSlider"
+                type="range"
+                min="0"
+                max="100"
+                step="1"
+                value="100"
+              />
+            </label>
+
+            <label class="slider-control">
+              <span>
+                Minimum range
+                <output id="minRangeOutput" for="minRangeSlider">Any range</output>
+              </span>
+              <input
+                id="minRangeSlider"
+                type="range"
+                min="0"
+                max="900"
+                step="25"
+                value="0"
+              />
+            </label>
+
+            <button class="reset-button" id="resetFilters" type="button">
+              Reset filters
+            </button>
+          </div>
+
+          <p class="filter-bridge">
+            All 29 source-sheet fields are shown. Scroll sideways to inspect
+            every column; these filters also control the scatter plot below.
+            <a href="#scatterView">Jump to filtered scatter ↓</a>
+          </p>
+
+          <div class="table-shell">
+            <table id="comparisonTable">
+              <thead>
+                <tr id="tableHeadRow"></tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="scatterView" class="view-panel scatter-view">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">02 · Explore the result</p>
+              <h2>Filtered scatter</h2>
+            </div>
+            <p id="scatterStatus" aria-live="polite"></p>
+          </div>
+
+          <div class="plot-controls">
+            <label>
+              <span>X axis</span>
+              <select id="xAxis"></select>
+            </label>
+            <button
+              class="swap-button"
+              id="swapAxes"
+              type="button"
+              aria-label="Swap X and Y axes"
+              title="Swap axes"
+            >
+              ⇄
+            </button>
+            <label>
+              <span>Y axis</span>
+              <select id="yAxis"></select>
+            </label>
+            <label>
+              <span>Colour</span>
+              <select id="colourBy">
+                <option value="vehicle_type">Vehicle type</option>
+                <option value="brand">Brand</option>
+                <option value="assembly">Assembly</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="plot-frame">
+            <svg
+              id="scatterPlot"
+              viewBox="0 0 1000 600"
+              role="img"
+              aria-labelledby="plotTitle plotDescription"
+            >
+              <title id="plotTitle">EV comparison scatter plot</title>
+              <desc id="plotDescription">
+                Choose X and Y metrics. Each circle represents one EV variant.
+              </desc>
+            </svg>
+            <div id="plotTooltip" class="plot-tooltip" hidden></div>
+          </div>
+          <div id="plotLegend" class="plot-legend"></div>
+          <p class="plot-note">
+            Only variants with numeric values for both chosen axes are plotted.
+            Click a dot to pin or unpin it in the comparison shelf.
+          </p>
+        </section>
+      </section>
+
+      <section class="source-note">
+        <p class="eyebrow">Source & boundaries</p>
+        <h2>One row means one variant.</h2>
+        <p>
+          Source population is the complete <strong>2026 EV</strong> tab for
+          July 2026. Price means OTR Jakarta. “Range” and other specifications
+          retain the source workbook’s definitions; this page does not
+          standardize test cycles or independently validate manufacturer claims.
+        </p>
+        <a
+          id="sourceLink"
+          href="https://docs.google.com/spreadsheets/d/1WUZdKXS6owPmdaRPF7AGf6nQn044Sd5X/edit?gid=1556880113"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Open source workbook ↗
+        </a>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="cars.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
