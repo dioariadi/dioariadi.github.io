@@ -14,8 +14,6 @@
     vehicleType: "",
     maxPrice: null,
     minRange: 0,
-    sortField: "price_idr",
-    sortDirection: "asc",
     xField: "price_idr",
     yField: "range_km",
     colourBy: "vehicle_type",
@@ -119,6 +117,10 @@
     "#6f58dd",
     "#a2687e",
   ];
+  let comparisonTable = null;
+  let tableReady = false;
+  let activeRows = [...rows];
+  let resizeTimer = null;
 
   const el = {
     sourceVariantCount: byId("sourceVariantCount"),
@@ -135,8 +137,7 @@
     scatterView: byId("scatterView"),
     tableStatus: byId("tableStatus"),
     scatterStatus: byId("scatterStatus"),
-    tableHeadRow: byId("tableHeadRow"),
-    tableBody: byId("tableBody"),
+    comparisonTable: byId("comparisonTable"),
     compareCards: byId("compareCards"),
     compareShelf: byId("compareShelf"),
     clearSelection: byId("clearSelection"),
@@ -162,11 +163,12 @@
     populateFilters();
     configureSliders();
     populateMetricSelectors();
-    populateTableHeader();
     renderSeresSpotlight();
     selectSeresVariants(false);
     bindEvents();
-    render();
+    initialiseTable();
+    renderCompareShelf();
+    syncActiveRows(rows);
   }
 
   function populateFilters() {
@@ -203,19 +205,151 @@
     el.yAxis.value = state.yField;
   }
 
-  function populateTableHeader() {
-    el.tableHeadRow.innerHTML = [
-      '<th class="check-cell"><span class="sr-only">Select</span></th>',
-      ...tableColumns.map(
-        (column) => `
-          <th
-            class="${column.numeric ? "num" : ""} field-${column.field.replaceAll("_", "-")}"
-            data-sort="${column.field}"
-            scope="col"
-          >${escapeHtml(column.label)}</th>
-        `,
-      ),
-    ].join("");
+  function initialiseTable() {
+    if (typeof window.Tabulator !== "function") {
+      el.comparisonTable.innerHTML =
+        '<p class="table-error">Could not load the local table library.</p>';
+      return;
+    }
+
+    const columns = [
+      {
+        title: "",
+        field: "_selected",
+        width: 54,
+        minWidth: 54,
+        frozen: true,
+        headerSort: false,
+        hozAlign: "center",
+        formatter: selectionFormatter,
+        cellClick: (event, cell) => {
+          const button = event.target.closest("[data-select-id]");
+          if (button) toggleSelection(cell.getRow().getData().id);
+        },
+      },
+      ...tableColumns.map(tabulatorColumn),
+    ];
+
+    comparisonTable = new window.Tabulator(el.comparisonTable, {
+      data: rows,
+      index: "id",
+      height: window.matchMedia("(max-width: 700px)").matches ? "560px" : "730px",
+      layout: "fitDataTable",
+      placeholder: "No variants match these filters.",
+      placeholderHeaderFilter: "No variants match these column filters.",
+      headerFilterLiveFilterDelay: 220,
+      initialSort: [{ column: "price_idr", dir: "asc" }],
+      movableColumns: true,
+      columnDefaults: {
+        headerSortTristate: true,
+        resizable: true,
+      },
+      rowFormatter: (row) => {
+        row
+          .getElement()
+          .classList.toggle("selected", state.selected.has(row.getData().id));
+      },
+      columns,
+    });
+    window.carComparisonTable = comparisonTable;
+
+    comparisonTable.on("tableBuilt", () => {
+      tableReady = true;
+      comparisonTable.setFilter(quickFilterRow);
+      syncActiveRows(comparisonTable.getData("active"));
+    });
+    comparisonTable.on("dataFiltered", (_filters, filteredRowComponents) => {
+      syncActiveRows(filteredRowComponents.map((row) => row.getData()));
+    });
+  }
+
+  function tabulatorColumn(column) {
+    const widthByField = {
+      no: 72,
+      country_flag: 76,
+      model: 285,
+      brand: 190,
+      announcement_date: 160,
+      price_idr: 205,
+      variant: 210,
+      vehicle_type: 170,
+      assembly: 170,
+      atpm: 210,
+      motor: 160,
+      battery_type: 170,
+      other_powertrain: 210,
+    };
+    const cssClasses = [
+      column.numeric ? "num" : "",
+      column.field === "price_idr" ? "price" : "",
+      `field-${column.field.replaceAll("_", "-")}`,
+    ]
+      .filter(Boolean)
+      .join(" ");
+
+    return {
+      title: column.label,
+      field: column.field,
+      width: widthByField[column.field] || (column.numeric ? 140 : 175),
+      minWidth: column.field === "model" ? 260 : 110,
+      sorter: column.numeric ? numericSorter : "string",
+      hozAlign: column.numeric ? "right" : "left",
+      headerHozAlign: column.numeric ? "right" : "left",
+      cssClass: cssClasses,
+      headerFilter: "input",
+      headerFilterFunc: "smarter",
+      headerFilterPlaceholder: column.numeric ? "e.g. >=300" : "Filter…",
+      formatter:
+        column.field === "model"
+          ? modelFormatter
+          : (cell) => formatSheetField(cell.getValue(), column.field),
+    };
+  }
+
+  function selectionFormatter(cell) {
+    const row = cell.getRow().getData();
+    const selected = state.selected.has(row.id);
+    return `
+      <button
+        class="row-check ${selected ? "selected" : ""}"
+        type="button"
+        data-select-id="${escapeAttr(row.id)}"
+        aria-label="${selected ? "Remove" : "Add"} ${escapeAttr(row.model)} ${escapeAttr(row.variant || "")}"
+        aria-pressed="${selected}"
+      >✓</button>
+    `;
+  }
+
+  function numericSorter(a, b, _aRow, _bRow, _column, dir) {
+    const aIsNumeric = isNumeric(a);
+    const bIsNumeric = isNumeric(b);
+    if (aIsNumeric && bIsNumeric) return a - b;
+    if (!aIsNumeric && !bIsNumeric) {
+      return String(a ?? "").localeCompare(String(b ?? ""), undefined, {
+        numeric: true,
+        sensitivity: "base",
+      });
+    }
+    if (!aIsNumeric && bIsNumeric) return dir === "asc" ? 1 : -1;
+    return dir === "asc" ? -1 : 1;
+  }
+
+  function modelFormatter(cell) {
+    const row = cell.getRow().getData();
+    const image = row.image
+      ? `<img class="model-thumb" src="${escapeAttr(row.image)}" alt="${escapeAttr(row.image_alt || `${row.model} vehicle`)}" />`
+      : `<span class="model-monogram">${escapeHtml(monogram(row.brand))}</span>`;
+    const visual = row.image_source_url
+      ? `<a class="model-visual" href="${escapeAttr(row.image_source_url)}" target="_blank" rel="noreferrer" title="Open image source">${image}</a>`
+      : `<span class="model-visual">${image}</span>`;
+    return `
+      <div class="model-cell">
+        ${visual}
+        <div class="model-info">
+          <strong>${escapeHtml(row.model || "—")}</strong>
+        </div>
+      </div>
+    `;
   }
 
   function renderSeresSpotlight() {
@@ -237,12 +371,12 @@
   function bindEvents() {
     el.searchInput.addEventListener("input", (event) => {
       state.search = event.target.value.trim().toLowerCase();
-      render();
+      refreshQuickFilters();
     });
 
     el.vehicleTypeFilter.addEventListener("change", (event) => {
       state.vehicleType = event.target.value;
-      render();
+      refreshQuickFilters();
     });
 
     el.maxPriceSlider.addEventListener("input", (event) => {
@@ -250,56 +384,72 @@
       state.maxPrice =
         index >= priceValues.length ? null : priceValues[Math.max(0, index)];
       updateSliderLabels();
-      render();
+      refreshQuickFilters();
     });
 
     el.minRangeSlider.addEventListener("input", (event) => {
       state.minRange = Number(event.target.value);
       updateSliderLabels();
-      render();
+      refreshQuickFilters();
     });
 
     el.resetFilters.addEventListener("click", resetFilters);
     el.clearSelection.addEventListener("click", () => {
       state.selected.clear();
-      render();
+      renderSelection();
     });
     el.selectSeres.addEventListener("click", () => {
       selectSeresVariants(true);
-      render();
+      renderSelection();
       el.compareShelf.scrollIntoView({ behavior: "smooth", block: "center" });
     });
 
     el.xAxis.addEventListener("change", (event) => {
       state.xField = event.target.value;
-      render();
+      syncActiveRows(activeRows);
     });
     el.yAxis.addEventListener("change", (event) => {
       state.yField = event.target.value;
-      render();
+      syncActiveRows(activeRows);
     });
     el.colourBy.addEventListener("change", (event) => {
       state.colourBy = event.target.value;
-      render();
+      syncActiveRows(activeRows);
     });
     el.swapAxes.addEventListener("click", () => {
       [state.xField, state.yField] = [state.yField, state.xField];
       el.xAxis.value = state.xField;
       el.yAxis.value = state.yField;
-      render();
+      syncActiveRows(activeRows);
     });
 
-    document.querySelectorAll("th[data-sort]").forEach((header) => {
-      header.addEventListener("click", () => {
-        const field = header.dataset.sort;
-        if (state.sortField === field) {
-          state.sortDirection = state.sortDirection === "asc" ? "desc" : "asc";
-        } else {
-          state.sortField = field;
-          state.sortDirection = field === "model" ? "asc" : "desc";
-        }
-        renderTable(filteredRows());
-      });
+    document.addEventListener("pointerdown", (event) => {
+      if (el.plotTooltip.hidden) return;
+      if (
+        event.target.closest("#plotTooltip") ||
+        event.target.closest(".plot-point")
+      ) {
+        return;
+      }
+      hideTooltip();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") hideTooltip();
+    });
+    window.addEventListener(
+      "scroll",
+      () => {
+        hideTooltip();
+      },
+      { passive: true, capture: true },
+    );
+    window.addEventListener("resize", () => {
+      hideTooltip();
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        renderScatter(activeRows);
+        if (tableReady) comparisonTable.redraw(true);
+      }, 140);
     });
   }
 
@@ -313,7 +463,8 @@
     el.maxPriceSlider.value = String(priceValues.length);
     el.minRangeSlider.value = "0";
     updateSliderLabels();
-    render();
+    if (tableReady) comparisonTable.clearHeaderFilter();
+    refreshQuickFilters();
   }
 
   function updateSliderLabels() {
@@ -331,127 +482,47 @@
       .forEach((row) => state.selected.add(row.id));
   }
 
-  function filteredRows() {
-    return rows.filter((row) => {
-      const haystack = [
-        row.model,
-        row.brand,
-        row.variant,
-        row.vehicle_type,
-        row.assembly,
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
-      const searchMatch = !state.search || haystack.includes(state.search);
-      const typeMatch = !state.vehicleType || row.vehicle_type === state.vehicleType;
-      const priceMatch =
-        !state.maxPrice || (isNumeric(row.price_idr) && row.price_idr <= state.maxPrice);
-      const rangeMatch =
-        !state.minRange || (isNumeric(row.range_km) && row.range_km >= state.minRange);
-      return searchMatch && typeMatch && priceMatch && rangeMatch;
-    });
+  function quickFilterRow(row) {
+    const haystack = [
+      row.model,
+      row.brand,
+      row.variant,
+      row.vehicle_type,
+      row.assembly,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+    const searchMatch = !state.search || haystack.includes(state.search);
+    const typeMatch = !state.vehicleType || row.vehicle_type === state.vehicleType;
+    const priceMatch =
+      !state.maxPrice || (isNumeric(row.price_idr) && row.price_idr <= state.maxPrice);
+    const rangeMatch =
+      !state.minRange || (isNumeric(row.range_km) && row.range_km >= state.minRange);
+    return searchMatch && typeMatch && priceMatch && rangeMatch;
   }
 
-  function render() {
-    const filtered = filteredRows();
+  function refreshQuickFilters() {
+    if (tableReady) {
+      comparisonTable.refreshFilter();
+      return;
+    }
+    syncActiveRows(rows.filter(quickFilterRow));
+  }
+
+  function syncActiveRows(filtered) {
+    activeRows = [...filtered];
     const plotted = plottableRows(filtered);
+    const headerFilterCount = tableReady
+      ? comparisonTable.getHeaderFilters().length
+      : 0;
     el.filteredVariantCount.textContent = filtered.length.toLocaleString("id-ID");
     el.plottedVariantCount.textContent = plotted.length.toLocaleString("id-ID");
     el.tableStatus.textContent =
-      `${filtered.length} of ${rows.length} variants · ${tableColumns.length} source fields · click headers to sort`;
+      `${filtered.length} of ${rows.length} variants · ${tableColumns.length} source fields · ${headerFilterCount} column filters active`;
     el.scatterStatus.textContent =
       `${plotted.length} of ${filtered.length} filtered variants have both axis values`;
-    renderCompareShelf();
-    renderTable(filtered);
     renderScatter(filtered);
-  }
-
-  function sortedRows(filtered) {
-    const factor = state.sortDirection === "asc" ? 1 : -1;
-    return [...filtered].sort((a, b) => {
-      const av = a[state.sortField];
-      const bv = b[state.sortField];
-      if (av == null && bv == null) return 0;
-      if (av == null) return 1;
-      if (bv == null) return -1;
-      if (isNumeric(av) && isNumeric(bv)) return (av - bv) * factor;
-      return String(av).localeCompare(String(bv), undefined, {
-        numeric: true,
-        sensitivity: "base",
-      }) * factor;
-    });
-  }
-
-  function renderTable(filtered) {
-    document.querySelectorAll("th[data-sort]").forEach((header) => {
-      header.classList.remove("sort-asc", "sort-desc");
-      if (header.dataset.sort === state.sortField) {
-        header.classList.add(`sort-${state.sortDirection}`);
-      }
-    });
-
-    const sorted = sortedRows(filtered);
-    if (!sorted.length) {
-      el.tableBody.innerHTML =
-        `<tr><td colspan="${tableColumns.length + 1}" style="padding:50px;text-align:center">No variants match these filters.</td></tr>`;
-      return;
-    }
-
-    el.tableBody.innerHTML = sorted
-      .map((row) => {
-        const selected = state.selected.has(row.id);
-        return `
-          <tr class="${selected ? "selected" : ""}" data-row-id="${row.id}">
-            <td class="check-cell">
-              <button
-                class="row-check ${selected ? "selected" : ""}"
-                type="button"
-                data-select-id="${row.id}"
-                aria-label="${selected ? "Remove" : "Add"} ${escapeAttr(row.model)} ${escapeAttr(row.variant || "")}"
-                aria-pressed="${selected}"
-              >✓</button>
-            </td>
-            ${tableColumns.map((column) => renderTableCell(row, column)).join("")}
-          </tr>
-        `;
-      })
-      .join("");
-
-    el.tableBody.querySelectorAll("[data-select-id]").forEach((button) => {
-      button.addEventListener("click", () => toggleSelection(button.dataset.selectId));
-    });
-  }
-
-  function renderTableCell(row, column) {
-    const classes = [
-      column.numeric ? "num" : "",
-      column.field === "price_idr" ? "price" : "",
-      `field-${column.field.replaceAll("_", "-")}`,
-    ]
-      .filter(Boolean)
-      .join(" ");
-
-    if (column.field === "model") {
-      const image = row.image
-        ? `<img class="model-thumb" src="${escapeAttr(row.image)}" alt="${escapeAttr(row.image_alt || `${row.model} vehicle`)}" />`
-        : `<span class="model-monogram">${escapeHtml(monogram(row.brand))}</span>`;
-      const visual = row.image_source_url
-        ? `<a class="model-visual" href="${escapeAttr(row.image_source_url)}" target="_blank" rel="noreferrer" title="Open image source">${image}</a>`
-        : `<span class="model-visual">${image}</span>`;
-      return `
-        <td class="${classes}">
-          <div class="model-cell">
-            ${visual}
-            <div class="model-info">
-              <strong>${escapeHtml(row.model || "—")}</strong>
-            </div>
-          </div>
-        </td>
-      `;
-    }
-
-    return `<td class="${classes}">${formatSheetField(row[column.field], column.field)}</td>`;
   }
 
   function formatSheetField(value, field) {
@@ -544,6 +615,19 @@
     return `<div><strong>${value}</strong><span>${label}</span></div>`;
   }
 
+  function renderSelection() {
+    renderCompareShelf();
+    if (tableReady) {
+      comparisonTable.getRows().forEach((row) => {
+        row
+          .getElement()
+          .classList.toggle("selected", state.selected.has(row.getData().id));
+        row.reformat();
+      });
+    }
+    renderScatter(activeRows);
+  }
+
   function toggleSelection(id) {
     if (state.selected.has(id)) {
       state.selected.delete(id);
@@ -553,7 +637,7 @@
     } else {
       state.selected.add(id);
     }
-    render();
+    renderSelection();
   }
 
   function plottableRows(filtered) {
@@ -565,11 +649,17 @@
   function renderScatter(filtered) {
     const data = plottableRows(filtered);
     const svg = el.scatterPlot;
+    hideTooltip();
     svg.replaceChildren();
 
-    const width = 1000;
-    const height = 600;
-    const margin = { top: 32, right: 32, bottom: 82, left: 92 };
+    const compact = window.matchMedia("(max-width: 700px)").matches;
+    const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const width = compact ? 720 : 1000;
+    const height = compact ? 480 : 600;
+    const margin = compact
+      ? { top: 24, right: 24, bottom: 74, left: 88 }
+      : { top: 32, right: 32, bottom: 82, left: 92 };
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
     const xMetric = metrics[state.xField];
@@ -607,8 +697,8 @@
     const yScale = (value) =>
       margin.top + innerHeight - ((value - yMin) / (yMax - yMin)) * innerHeight;
 
-    const xTicks = tickValues(xMin, xMax, 6);
-    const yTicks = tickValues(yMin, yMax, 6);
+    const xTicks = tickValues(xMin, xMax, compact ? 4 : 6);
+    const yTicks = tickValues(yMin, yMax, compact ? 4 : 6);
     const plotGroup = svgNode("g");
     svg.append(plotGroup);
 
@@ -698,19 +788,35 @@
       const circle = svgNode("circle", {
         cx: xScale(row[state.xField]),
         cy: yScale(row[state.yField]),
-        r: selected ? 10 : 6,
+        r: selected ? (compact ? 13 : 10) : compact ? 9 : 6,
         fill: colourMap.get(row[state.colourBy] || "Unknown"),
         class: `plot-point${selected ? " selected" : ""}`,
         tabindex: "0",
         role: "button",
         "aria-label": `${row.model}, ${row.variant || "variant"}, ${xMetric.label} ${formatMetric(row[state.xField], state.xField)}, ${yMetric.label} ${formatMetric(row[state.yField], state.yField)}`,
       });
-      circle.addEventListener("pointerenter", (event) => showTooltip(event, row));
-      circle.addEventListener("pointermove", moveTooltip);
-      circle.addEventListener("pointerleave", hideTooltip);
-      circle.addEventListener("focus", (event) => showTooltip(event, row));
-      circle.addEventListener("blur", hideTooltip);
-      circle.addEventListener("click", () => toggleSelection(row.id));
+      circle.addEventListener("pointerenter", (event) => {
+        if (canHover) showTooltip(event, row);
+      });
+      circle.addEventListener("pointermove", (event) => {
+        if (canHover) moveTooltip(event);
+      });
+      circle.addEventListener("pointerleave", () => {
+        if (canHover) hideTooltip();
+      });
+      circle.addEventListener("focus", (event) => {
+        if (canHover) showTooltip(event, row);
+      });
+      circle.addEventListener("blur", () => {
+        if (canHover) hideTooltip();
+      });
+      circle.addEventListener("click", (event) => {
+        event.stopPropagation();
+        toggleSelection(row.id);
+        if (!canHover) {
+          window.requestAnimationFrame(() => showTooltip(event, row));
+        }
+      });
       circle.addEventListener("keydown", (event) => {
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
@@ -760,20 +866,31 @@
   }
 
   function showTooltip(event, row) {
-    const xMetric = metrics[state.xField];
-    const yMetric = metrics[state.yField];
+    const detailFields = [
+      ...new Set([state.xField, state.yField, "price_idr"]),
+    ];
+    const details = detailFields
+      .map(
+        (field) => `
+          <dt>${escapeHtml(metrics[field].label)}</dt>
+          <dd>${escapeHtml(formatMetric(row[field], field))}</dd>
+        `,
+      )
+      .join("");
     el.plotTooltip.innerHTML = `
+      <button class="tooltip-close" type="button" aria-label="Close vehicle details">×</button>
       <strong>${escapeHtml(row.model)}</strong>
       <span>${escapeHtml(row.variant || "—")}</span>
       <dl>
-        <dt>${escapeHtml(xMetric.label)}</dt>
-        <dd>${escapeHtml(formatMetric(row[state.xField], state.xField))}</dd>
-        <dt>${escapeHtml(yMetric.label)}</dt>
-        <dd>${escapeHtml(formatMetric(row[state.yField], state.yField))}</dd>
-        <dt>Price</dt>
-        <dd>${escapeHtml(formatMaybe(row.price_idr, formatPrice))}</dd>
+        ${details}
       </dl>
     `;
+    el.plotTooltip
+      .querySelector(".tooltip-close")
+      .addEventListener("click", (closeEvent) => {
+        closeEvent.stopPropagation();
+        hideTooltip();
+      });
     el.plotTooltip.hidden = false;
     moveTooltip(event);
   }
@@ -788,6 +905,8 @@
 
   function hideTooltip() {
     el.plotTooltip.hidden = true;
+    el.plotTooltip.style.removeProperty("left");
+    el.plotTooltip.style.removeProperty("top");
   }
 
   function paddedExtent(values) {

@@ -19,6 +19,10 @@
       href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="vendor/tabulator-6.5.2/tabulator.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -174,18 +178,15 @@
           </div>
 
           <p class="filter-bridge">
-            All 29 source-sheet fields are shown. Scroll sideways to inspect
-            every column; these filters also control the scatter plot below.
+            All 29 source-sheet fields are shown. Use the filter box under any
+            column heading; quick filters and column filters both update the
+            scatter plot below. Numeric filters accept operators such as
+            <strong>&gt;=300</strong> or <strong>&lt;500000000</strong>.
             <a href="#scatterView">Jump to filtered scatter ↓</a>
           </p>
 
           <div class="table-shell">
-            <table id="comparisonTable">
-              <thead>
-                <tr id="tableHeadRow"></tr>
-              </thead>
-              <tbody id="tableBody"></tbody>
-            </table>
+            <div id="comparisonTable" aria-label="EV variant comparison table"></div>
           </div>
         </section>
 
@@ -270,6 +271,7 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
+    <script src="vendor/tabulator-6.5.2/tabulator.min.js"></script>
     <script src="cars.js"></script>
     <script src="app.js"></script>
   </body>

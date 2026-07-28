@@ -882,6 +882,146 @@ tbody tr.selected {
   color: #aaa89f;
 }
 
+/* Tabulator keeps every source field sortable and gives each one its own filter. */
+.table-shell {
+  overflow: hidden;
+  max-height: none;
+}
+
+#comparisonTable.tabulator {
+  width: 100%;
+  border: 0;
+  background: var(--surface);
+  font-family: "Familjen Grotesk", sans-serif;
+}
+
+#comparisonTable .tabulator-header {
+  color: var(--surface);
+  background: var(--ink);
+  border: 0;
+  border-bottom: 1px solid var(--ink);
+}
+
+#comparisonTable .tabulator-header .tabulator-col {
+  color: var(--surface);
+  background: var(--ink);
+  border-right: 1px solid #3b3d36;
+}
+
+#comparisonTable
+  .tabulator-header
+  .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+  color: var(--signal);
+  background: #20211d;
+}
+
+#comparisonTable .tabulator-col-content {
+  padding: 10px 9px 9px;
+}
+
+#comparisonTable .tabulator-col-title {
+  min-height: 25px;
+  font: 600 10px/1.2 "IBM Plex Mono", monospace;
+  letter-spacing: 0.035em;
+  white-space: normal;
+}
+
+#comparisonTable .tabulator-col-sorter {
+  color: var(--signal);
+}
+
+#comparisonTable .tabulator-header-filter {
+  margin-top: 7px;
+}
+
+#comparisonTable .tabulator-header-filter input {
+  width: 100%;
+  min-height: 34px;
+  height: 34px;
+  padding: 0 9px;
+  color: var(--ink);
+  background: #f8f6ef;
+  border: 1px solid #71736b;
+  font: 500 10px/1 "IBM Plex Mono", monospace;
+}
+
+#comparisonTable .tabulator-header-filter input::placeholder {
+  color: #8f918a;
+  opacity: 1;
+}
+
+#comparisonTable
+  .tabulator-header-filter
+  input:not(:placeholder-shown) {
+  background: var(--signal);
+  border-color: var(--signal);
+  box-shadow: inset 0 -3px 0 var(--orange);
+}
+
+#comparisonTable .tabulator-tableholder {
+  background: var(--surface);
+  overscroll-behavior: contain;
+  scrollbar-color: var(--orange) #d8d5ca;
+}
+
+#comparisonTable .tabulator-row {
+  min-height: 79px;
+  color: var(--ink);
+  background: var(--surface);
+  border-bottom: 1px solid #dedbd2;
+  transition: background 120ms ease;
+}
+
+#comparisonTable .tabulator-row.tabulator-row-even {
+  background: #fbfaf6;
+}
+
+#comparisonTable .tabulator-row:hover {
+  background: #eefbd7;
+}
+
+#comparisonTable .tabulator-row.selected,
+#comparisonTable .tabulator-row.selected.tabulator-row-even {
+  background: #e7f3f1;
+  box-shadow: inset 4px 0 0 var(--aqua);
+}
+
+#comparisonTable .tabulator-row .tabulator-cell {
+  min-height: 78px;
+  padding: 11px 12px;
+  border-right: 1px solid #ece8df;
+  border-bottom: 0;
+  font-size: 13px;
+  line-height: 1.25;
+  white-space: normal;
+}
+
+#comparisonTable .tabulator-row .tabulator-cell:not(.field-model) {
+  padding-top: 30px;
+  white-space: nowrap;
+}
+
+#comparisonTable .tabulator-row .tabulator-cell.num {
+  text-align: right;
+}
+
+#comparisonTable .tabulator-frozen {
+  background: inherit;
+  border-right: 2px solid var(--ink) !important;
+}
+
+#comparisonTable .tabulator-placeholder {
+  color: var(--muted);
+  background: var(--surface);
+  font: 600 12px/1.4 "IBM Plex Mono", monospace;
+}
+
+.table-error {
+  margin: 0;
+  padding: 40px 22px;
+  font: 600 12px/1.5 "IBM Plex Mono", monospace;
+}
+
 .plot-controls {
   display: grid;
   grid-template-columns: minmax(190px, 1fr) 44px minmax(190px, 1fr) minmax(180px, 0.75fr);
@@ -927,6 +1067,7 @@ tbody tr.selected {
   width: 100%;
   height: auto;
   min-height: 430px;
+  touch-action: pan-y;
 }
 
 .axis-line {
@@ -998,6 +1139,10 @@ tbody tr.selected {
   border-left: 4px solid var(--signal);
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
   pointer-events: none;
+}
+
+.tooltip-close {
+  display: none;
 }
 
 .plot-tooltip strong,
@@ -1247,8 +1392,27 @@ tbody tr.selected {
   }
 
   .filter-bridge {
-    display: grid;
+    display: block;
     padding: 10px 15px;
+  }
+
+  .filter-bridge a {
+    display: block;
+    margin-top: 10px;
+  }
+
+  #comparisonTable .tabulator-col-content {
+    padding: 9px 7px 8px;
+  }
+
+  #comparisonTable .tabulator-header-filter input {
+    min-height: 38px;
+    height: 38px;
+    font-size: 11px;
+  }
+
+  #comparisonTable .tabulator-row .tabulator-cell {
+    font-size: 12px;
   }
 
   .search-control {
@@ -1303,11 +1467,60 @@ tbody tr.selected {
 
   .plot-frame {
     margin: 12px 5px 0;
-    overflow-x: auto;
+    overflow: hidden;
   }
 
   #scatterPlot {
-    width: 820px;
+    width: 100%;
+    min-height: 0;
+  }
+
+  .tick-label {
+    font-size: 18px;
+  }
+
+  .axis-label {
+    font-size: 20px;
+  }
+
+  .point-label {
+    font-size: 16px;
+    stroke-width: 7px;
+  }
+
+  .plot-point:hover,
+  .plot-point:focus {
+    r: 12;
+  }
+
+  .plot-point.selected {
+    r: 13;
+  }
+
+  .plot-tooltip {
+    inset: auto 10px max(10px, env(safe-area-inset-bottom)) 10px !important;
+    width: auto;
+    padding: 16px 48px 16px 16px;
+    border-top: 4px solid var(--signal);
+    border-left: 0;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.28);
+    pointer-events: auto;
+  }
+
+  .tooltip-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    color: var(--surface);
+    background: transparent;
+    border: 1px solid #686a62;
+    font-size: 24px;
+    line-height: 1;
   }
 
   .source-note {
