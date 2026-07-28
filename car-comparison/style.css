@@ -1210,7 +1210,7 @@ tbody tr.selected {
 
 .source-note {
   display: grid;
-  grid-template-columns: 0.35fr 0.85fr 1.45fr auto;
+  grid-template-columns: 0.35fr 0.8fr 1.35fr minmax(230px, 0.8fr);
   gap: 32px;
   align-items: start;
   margin: 0 2vw 80px;
@@ -1235,9 +1235,36 @@ tbody tr.selected {
   line-height: 1.4;
 }
 
+.source-attribution {
+  display: grid;
+  gap: 7px;
+  padding-left: 16px;
+  border-left: 4px solid var(--signal);
+}
+
+.source-attribution > span {
+  color: var(--muted);
+  font: 600 9px/1.2 "IBM Plex Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .source-note a {
+  width: fit-content;
+  color: var(--ink);
   font-weight: 700;
-  white-space: nowrap;
+}
+
+.source-attribution .credit-name {
+  font-size: 20px;
+  line-height: 1;
+  text-decoration-thickness: 3px;
+  text-decoration-color: var(--orange);
+  text-underline-offset: 4px;
+}
+
+.source-attribution a:not(.credit-name) {
+  font: 600 10px/1.35 "IBM Plex Mono", monospace;
 }
 
 .toast {
