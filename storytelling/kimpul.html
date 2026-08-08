@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saya Ganti Kimpul · DataWizart</title>
+<meta name="description" content="Minat pencarian kimpul tiba-tiba mencapai puncak saat satu tren TikTok sedang ramai. Kalau nasi diganti kimpul, apa yang berubah? Yuk, lihat datanya.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#242424; --muted:#6b6b6b; --faint:#9a9a9a;
+  --kimpul:#7A4EA0; --kimpul-dk:#5E3A80; --kimpul-fill:#EADDF4;
+  --nasi:#C29A5B; --nasi-dk:#9C7838; --nasi-fill:#F0E6D2;
+  --good:#5BA672; --mid:#E0A24E; --high:#D9695B;
+  --grid:#ededed; --dot:#D6D6D6;
+  --g100:#F7F6F4; --g200:#EFEEEB; --g300:#DDDBD6; --g500:#8b8b8b; --g600:#585858; --g800:#2A2A2A;
+  --deep:#2E2E2E; --gold:#F2C438;
+  --white:#fff;
+  --display:'Oswald',sans-serif; --body:'DM Sans',sans-serif; --mono:'DM Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{background:var(--white);color:var(--g800);font-family:var(--body);-webkit-font-smoothing:antialiased}
+a{cursor:pointer}
+img{display:block;max-width:100%}
+
+/* ── MASTHEAD / NAV ───────────────────────────────── */
+.mast{border-top:8px solid var(--deep);border-bottom:1px solid var(--deep);
+  padding:16px 56px;display:flex;justify-content:space-between;align-items:center;gap:24px}
+.mast-title{font-family:var(--display);font-weight:700;font-size:28px;letter-spacing:.02em;color:var(--deep)}
+.mast-title a{color:var(--deep);text-decoration:none}
+.mast-meta{font-family:var(--mono);font-size:11px;color:var(--g600);letter-spacing:.04em}
+.nav{border-bottom:2px solid var(--deep);padding:10px 56px;display:flex;justify-content:space-between;
+  align-items:center;font-family:var(--body);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.nav-links{display:flex;gap:28px}
+.nav-links a{color:var(--deep);text-decoration:none}
+.nav-links a.active{color:var(--kimpul)}
+.nav-accent{color:var(--kimpul);font-family:var(--mono);letter-spacing:.02em;text-transform:none;font-weight:400;font-size:11px}
+
+/* ── COVER ────────────────────────────────────────── */
+.cover{position:relative;overflow:hidden;padding:88px 56px 84px;border-bottom:1px solid var(--g300);background:var(--g100)}
+.cover-jp{position:absolute;right:-2%;bottom:-14%;font-family:var(--display);font-weight:700;
+  font-size:22vw;line-height:.8;color:#EFEAF3;letter-spacing:.01em;z-index:0;user-select:none;pointer-events:none}
+.cover-inner{position:relative;z-index:1;max-width:1080px;margin:0 auto;
+  display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;align-items:center}
+.cover-text{min-width:0}
+.cover-art{position:relative;align-self:center;min-height:360px;display:flex;align-items:center;justify-content:center;
+  min-width:0;z-index:1;isolation:isolate}
+.cover-art::after{content:"";position:absolute;width:72%;height:22%;left:13%;bottom:17%;z-index:-1;
+  background:radial-gradient(ellipse,rgba(94,58,128,.16) 0%,rgba(94,58,128,.05) 44%,transparent 72%);
+  filter:blur(10px);transform:rotate(-4deg)}
+.cover-photo{width:520px;max-width:none;height:auto;transform:translate(-16px,8px) rotate(-2deg);
+  filter:drop-shadow(0 20px 18px rgba(49,35,58,.14))}
+.kicker{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--kimpul);margin-bottom:22px;display:flex;align-items:center;gap:12px}
+.kicker-line{width:36px;height:1px;background:var(--kimpul);display:inline-block}
+.cover h1{font-family:var(--display);font-weight:700;font-size:74px;line-height:.98;color:var(--deep);
+  letter-spacing:-.01em;margin-bottom:24px;text-wrap:balance;max-width:12ch}
+.cover h1 .accent{color:var(--kimpul)}
+.cover .lede{font-size:19px;line-height:1.65;color:var(--g800);max-width:56ch;margin-bottom:28px;font-weight:400}
+.cover .byline{font-family:var(--mono);font-size:12px;color:var(--g600);border-top:1px solid var(--g300);
+  border-bottom:1px solid var(--g300);padding:10px 0;letter-spacing:.03em;max-width:56ch;margin-bottom:38px}
+.scrollcue{display:inline-flex;align-items:center;gap:12px;font-family:var(--body);font-size:12px;
+  font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--deep);text-decoration:none}
+.scrollcue .arrow{display:inline-block;width:34px;height:34px;border:1.5px solid var(--deep);border-radius:50%;
+  position:relative;animation:bob 1.8s ease-in-out infinite}
+.scrollcue .arrow::after{content:"";position:absolute;left:50%;top:44%;width:8px;height:8px;
+  border-right:1.5px solid var(--deep);border-bottom:1.5px solid var(--deep);transform:translate(-50%,-50%) rotate(45deg)}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+/* ── SECTION LEAD ─────────────────────────────────── */
+.lead{max-width:680px;margin:0 auto;padding:96px 24px 8px;text-align:center}
+.lead .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase;margin-bottom:16px}
+.lead h2{font-family:var(--display);font-weight:600;font-size:36px;color:var(--deep);line-height:1.08;text-wrap:balance}
+.lead p{font-size:18px;line-height:1.65;color:var(--muted);margin-top:18px;font-weight:400}
+
+/* ── SCROLLY (sticky graphic + floating cards) ────── */
+.scrolly{position:relative}
+.graphic{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;pointer-events:none;background:var(--white)}
+.chart-wrap{width:100%;max-width:860px;padding:0 40px;pointer-events:auto}
+.chart-head{font-family:var(--body);font-weight:700;font-size:15px;color:var(--ink);
+  letter-spacing:.01em;margin:0 0 2px 2px}
+.chart-sub{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.04em;margin:0 0 6px 2px}
+svg.chart{width:100%;height:auto;display:block;overflow:visible}
+
+.steps{position:relative;z-index:2}
+.step{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.step-card{background:rgba(255,255,255,.92);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  border:1px solid var(--g200);border-radius:16px;box-shadow:0 14px 46px -22px rgba(0,0,0,.4);
+  max-width:460px;padding:26px 34px;text-align:center}
+.step-card .sn{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--kimpul);
+  text-transform:uppercase;margin-bottom:12px}
+.step-card p{font-size:19px;line-height:1.6;color:var(--ink);font-weight:400}
+.step-card p b{color:var(--kimpul-dk);font-weight:600}
+.step-card p.small{font-size:15px;color:var(--muted);margin-top:10px}
+.step-card .big{font-family:var(--display);font-weight:600;font-size:44px;color:var(--kimpul);line-height:1;margin:6px 0 2px}
+
+/* Act 2: chart + cards side-by-side so the bars stay readable */
+.scrolly.split{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 380px;
+  gap:48px;padding:0 40px;align-items:start}
+.scrolly.split .graphic{background:transparent;align-items:center}
+.scrolly.split .chart-wrap{padding:0;max-width:none}
+.scrolly.split .steps{position:static}
+.scrolly.split .step{min-height:92vh;padding:24px 0}
+.scrolly.split .step-card{max-width:none;text-align:left;margin:0}
+@media(max-width:900px){
+  .scrolly.split{grid-template-columns:1fr;gap:0;padding:0}
+  .scrolly.split .graphic{position:sticky;top:0;height:60vh;background:var(--white);
+    border-bottom:1px solid var(--g200);justify-content:center}
+  .scrolly.split .chart-wrap{padding:0 16px}
+  .scrolly.split .step{min-height:80vh;padding:24px}
+  .scrolly.split .step-card{max-width:88vw;text-align:center}
+}
+
+/* ── INTERLUDE: TREND CAUSE / TIKTOK ──────────────── */
+.cause{background:var(--g100);border-top:1px solid var(--g300);border-bottom:1px solid var(--g300);
+  padding:92px 24px}
+.cause-inner{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 300px;gap:56px;align-items:center}
+.cause-text .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--kimpul);text-transform:uppercase;margin-bottom:14px}
+.cause-text h2{font-family:var(--display);font-weight:600;font-size:34px;color:var(--deep);line-height:1.1;margin-bottom:18px}
+.cause-text p{font-size:17px;line-height:1.7;color:var(--g800);margin-bottom:14px}
+.cause-text p b{color:var(--kimpul-dk);font-weight:600}
+.cause-text .src{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:6px}
+.cause-text .src a{color:var(--kimpul)}
+
+/* fake tiktok phone (illustration, not a real screenshot) */
+.phone{width:280px;margin:0 auto;border-radius:30px;background:#111;padding:10px;
+  box-shadow:0 24px 60px -24px rgba(0,0,0,.55);position:relative}
+.phone-screen{border-radius:22px;overflow:hidden;background:#000;line-height:0}
+.phone-screen img{width:100%;height:auto;display:block}
+.phone-notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:96px;height:16px;background:#111;border-radius:10px;z-index:3}
+.phone-emoji{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;
+  font-size:66px;gap:6px;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35))}
+.phone-ui{position:relative;z-index:2;padding:16px 14px 18px;background:linear-gradient(transparent,rgba(0,0,0,.55))}
+.phone-user{font-family:var(--body);font-weight:700;font-size:14px;margin-bottom:5px}
+.phone-cap{font-family:var(--body);font-size:12.5px;line-height:1.45;font-weight:400;opacity:.96}
+.phone-tag{font-weight:600}
+.phone-side{position:absolute;right:10px;bottom:70px;z-index:2;display:flex;flex-direction:column;gap:16px;align-items:center;font-size:11px}
+.phone-side .ic{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:17px}
+.phone-label{text-align:center;font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.06em;margin-top:14px;text-transform:uppercase}
+
+/* ── GI MYTH / DATA-LITERACY BLOCK ────────────────── */
+.myth{max-width:760px;margin:0 auto;padding:92px 24px 8px}
+.myth .tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--high);border:1px solid var(--high);border-radius:20px;padding:4px 12px;margin-bottom:20px}
+.myth h2{font-family:var(--display);font-weight:600;font-size:32px;color:var(--deep);line-height:1.12;margin-bottom:18px}
+.myth p{font-size:17px;line-height:1.7;color:var(--g800);margin-bottom:16px}
+.myth p b{color:var(--kimpul-dk);font-weight:600}
+.myth-tbl{width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0 20px;background:var(--white)}
+.myth-tbl caption{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:left;padding:0 0 8px;letter-spacing:.03em}
+.myth-tbl th,.myth-tbl td{padding:9px 12px;border-bottom:1px solid var(--g200);text-align:left}
+.myth-tbl th{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--g500);text-transform:uppercase;font-weight:400}
+.myth-tbl td.n{font-family:var(--mono);text-align:right}
+.myth-tbl tr.hi td{background:#FBEFED;font-weight:600;color:var(--high)}
+.callout{border-left:3px solid var(--kimpul);background:var(--g100);border-radius:0 10px 10px 0;
+  padding:18px 22px;font-size:16px;line-height:1.6;color:var(--g800);margin-top:8px}
+.callout b{color:var(--kimpul-dk)}
+
+/* ── ALTERNATIF GRID ──────────────────────────────── */
+.alts{max-width:1040px;margin:0 auto;padding:88px 24px}
+.alts-head{text-align:center;max-width:640px;margin:0 auto 42px}
+.alts-head .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--kimpul);text-transform:uppercase;margin-bottom:14px}
+.alts-head h2{font-family:var(--display);font-weight:600;font-size:34px;color:var(--deep);line-height:1.1;margin-bottom:14px}
+.alts-head p{font-size:17px;line-height:1.65;color:var(--muted)}
+.alt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.alt{border:1px solid var(--g200);border-radius:14px;padding:22px 20px;background:var(--white);
+  transition:transform .15s ease,box-shadow .15s ease}
+.alt:hover{transform:translateY(-3px);box-shadow:0 16px 36px -22px rgba(0,0,0,.35)}
+.alt .em{font-size:34px;line-height:1;margin-bottom:12px}
+.alt-img{width:100%;height:130px;object-fit:cover;border-radius:10px;margin-bottom:14px;display:block;background:#f0efec}
+.alt h3{font-family:var(--display);font-weight:600;font-size:20px;color:var(--deep);margin-bottom:6px}
+.alt p{font-size:13.5px;line-height:1.55;color:var(--muted)}
+.alt .pill{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--kimpul);background:var(--kimpul-fill);border-radius:12px;padding:3px 9px;margin-top:12px}
+
+/* ── CONCLUSION ───────────────────────────────────── */
+.conclusion{background:var(--deep);color:#EDEBE8;padding:104px 24px}
+.conclusion-inner{max-width:720px;margin:0 auto}
+.conclusion h2{font-family:var(--display);font-weight:700;font-size:44px;color:var(--white);margin-bottom:26px}
+.conclusion p{font-size:19px;line-height:1.7;margin-bottom:20px;font-weight:300;color:#DAD7D2}
+.conclusion p b{font-weight:600;color:var(--gold)}
+.conclusion .rc{border-top:1px solid #4a4a4a;margin-top:30px;padding-top:22px;font-size:15px;color:#B9B6B1;line-height:1.7}
+.conclusion .sign{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.04em;margin-top:30px}
+
+/* ── METHOD ───────────────────────────────────────── */
+.method{max-width:760px;margin:0 auto;padding:64px 24px}
+.method h3{font-family:var(--display);font-weight:600;font-size:22px;color:var(--deep);margin-bottom:14px}
+.method p{font-size:14.5px;line-height:1.7;color:var(--g600);margin-bottom:12px}
+.method a{color:var(--kimpul)}
+.method ul{list-style:none;font-size:14px;line-height:1.7;color:var(--g600)}
+.method li{padding-left:16px;position:relative;margin-bottom:6px}
+.method li::before{content:"·";position:absolute;left:2px;color:var(--kimpul);font-weight:700}
+
+/* ── FOOTER ───────────────────────────────────────── */
+.foot{padding:36px 56px;background:var(--deep);color:var(--g300);border-top:1px solid #4a4a4a}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.foot-word{font-family:var(--body);font-weight:300;font-size:18px;letter-spacing:.22em;color:var(--white)}
+.foot-links{display:flex;gap:22px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;flex-wrap:wrap}
+.foot-links a{color:var(--gold);text-decoration:none}
+
+/* ── RESPONSIVE ───────────────────────────────────── */
+@media (max-width:960px){
+  .cover-inner{grid-template-columns:1fr;gap:20px}
+  .cover-art{width:100%;min-height:250px;margin:0 auto -26px;order:2}
+  .cover-photo{position:absolute;width:min(430px,110vw);transform:translateY(-8px) rotate(-2deg)}
+  .cover h1{font-size:52px}
+  .cause-inner{grid-template-columns:1fr;gap:36px}
+  .cause-text{order:2}
+  .alt-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:900px){
+  .mast,.nav,.cover,.foot{padding-left:20px;padding-right:20px}
+  .nav{overflow-x:auto;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}
+  .nav-links{gap:16px;min-width:max-content}.nav-accent{display:none}
+  .cover{padding-top:60px;padding-bottom:64px}
+  .cover h1{font-size:42px}.cover .lede{font-size:17px}
+  .lead h2,.cause-text h2,.myth h2,.alts-head h2{font-size:27px}
+  .graphic{height:100vh}.chart-wrap{padding:0 16px}
+  .step-card{max-width:88vw;padding:22px 22px}.step-card p{font-size:17px}
+  .conclusion h2{font-size:32px}.conclusion p{font-size:17px}
+}
+@media (prefers-reduced-motion:reduce){.scrollcue .arrow{animation:none}}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="mast-title"><a href="../index.html">DATAWIZART</a></div>
+  <div class="mast-meta">DATA STORYTELLING STUDIO · JAKARTA</div>
+</header>
+
+<nav class="nav">
+  <div class="nav-links">
+    <a href="../index.html">Home</a>
+    <a href="../index.html#stories" class="active">Storytelling</a>
+    <a href="../index.html#dataviz">Data Visualization</a>
+    <a href="../index.html#tutorials">Tutorials</a>
+  </div>
+  <div class="nav-accent">@datawizart · datawizart.co</div>
+</nav>
+
+<!-- ── COVER ────────────────────────────────────────── -->
+<section class="cover">
+  <div class="cover-jp">KIMPUL</div>
+  <div class="cover-inner">
+    <div class="cover-text">
+      <div class="kicker"><span class="kicker-line"></span>STORYTELLING · PANGAN LOKAL</div>
+      <h1>Saya Ganti <span class="accent">Kimpul</span></h1>
+      <p class="lede">Selama tujuh bulan, pencarian kimpul nyaris diam. Lalu akhir Juli 2026, kimpul tiba-tiba sampai di <b>puncak pencarian</b>, tepat saat satu tren TikTok sedang ramai. Kalau nasi benar-benar diganti kimpul, apa yang berubah di piring kita? Yuk, lihat datanya.</p>
+      <div class="byline">BY DIO ARIADI · DATAWIZART.CO · GOOGLE TRENDS · SUMBER GIZI &amp; JURNAL ILMIAH</div>
+      <a class="scrollcue" href="#mulai"><span class="arrow"></span>Scroll untuk mulai</a>
+    </div>
+    <div class="cover-art">
+      <img class="cover-photo" src="../assets/kimpul/kimpul-cutout.png"
+           alt="Umbi kimpul segar; salah satu dibelah memperlihatkan daging berwarna pucat di dalamnya"
+           width="1254" height="1254" fetchpriority="high" decoding="async">
+    </div>
+  </div>
+</section>
+
+<!-- ── ACT 1 LEAD ───────────────────────────────────── -->
+<div class="lead" id="mulai">
+  <div class="lbl">Google Trends · minat pencarian mingguan · Indonesia</div>
+  <h2>Selama tujuh bulan, minat pencarian "kimpul" nyaris diam.</h2>
+  <p>Lalu akhir Juli, garisnya mendadak menanjak.</p>
+</div>
+
+<!-- ── ACT 1 SCROLLY: TREND ─────────────────────────── -->
+<section class="scrolly" id="scrolly-trend">
+  <div class="graphic">
+    <div class="chart-wrap">
+      <div class="chart-head">Minat pencarian "kimpul" di Google Trends</div>
+      <div class="chart-sub" id="trend-sub">28 Des 2025 – 26 Jul 2026 · skala 0–100 (puncak = 100)</div>
+      <svg class="chart" id="trendChart" viewBox="0 0 720 500" role="img" aria-label="Grafik tren pencarian kimpul"></svg>
+    </div>
+  </div>
+  <div class="steps">
+    <div class="step" data-step="0"><div class="step-card">
+      <div class="sn">01 · Garis dasar</div>
+      <p>Dari akhir Desember sampai akhir Juni, minatnya <b>nyaris datar</b>. Angkanya cuma naik-turun tipis di sekitar <b>9</b>. Saat itu, kimpul nyaris tidak masuk radar.</p>
+    </div></div>
+    <div class="step" data-step="1"><div class="step-card">
+      <div class="sn">02 · Juli mulai bergerak</div>
+      <p>Awal Juli, garisnya mulai merangkak: <b>13 → 19 → 21</b>. Kenaikannya masih kecil, tapi terjadi tiga minggu berturut-turut. Ini bukan cuma satu lonjakan sesaat.</p>
+    </div></div>
+    <div class="step" data-step="2"><div class="step-card">
+      <div class="sn">03 · Puncaknya</div>
+      <div class="big">26 Juli</div>
+      <p>Di minggu ini, minat pencarian kimpul mencapai titik <b>tertinggi</b> sepanjang Januari–Juli 2026. Tapi ingat, angka 100 cuma berarti "minggu paling ramai" di rentang ini. Angka itu <b>bukan volume pencarian mutlak</b>.</p>
+    </div></div>
+    <div class="step" data-step="3"><div class="step-card">
+      <div class="sn">04 · Kenapa minggu itu?</div>
+      <p>Di minggu yang sama, <b>@black.sheep8208</b> viral dengan tren "Saya ganti kimpul".</p>
+      <p class="small">Lanjut scroll. Kita cek dulu asal trennya.</p>
+    </div></div>
+  </div>
+</section>
+
+<!-- ── INTERLUDE: CAUSE / TIKTOK MOCKUP ─────────────── -->
+<section class="cause">
+  <div class="cause-inner">
+    <div class="cause-text">
+      <div class="lbl">Dari mana tren ini?</div>
+      <h2>Semua berawal dari "tidak punya kentang"</h2>
+      <p>Tren <b>"Saya ganti kimpul"</b> berawal dari eksperimen kreator asal Bantul, <b>@black.sheep8208</b>. Ia mengganti bahan utama masakan, terutama kentang, dengan kimpul. Hasilnya macam-macam: mashed potato, lasagna, seblak, arancini, sampai pancake ala Korea.</p>
+      <p>Formatnya lucu dan gampang ditiru. Tidak lama kemudian, umbi yang biasanya cuma terlihat di pasar tradisional ikut ramai dibicarakan di TikTok.</p>
+      <p class="src">Sumber tren: Detik, Viva, IDN Times, Kumparan, RRI. Profil kreator: <a href="https://www.tiktok.com/@black.sheep8208" target="_blank" rel="noopener nofollow">tiktok.com/@black.sheep8208 ↗</a></p>
+    </div>
+    <div>
+      <div class="phone">
+        <div class="phone-screen">
+          <img src="../assets/kimpul/sheep.webp" alt="Tangkapan konten @black.sheep8208 di TikTok, menampilkan semangkuk masakan berkuah dengan kimpul sebagai sumber karbohidrat dan tulisan “Saya ganti kimpul sebagai sumber karbohidrat”">
+        </div>
+      </div>
+      <div class="phone-label">Tangkapan konten @black.sheep8208 · tren “Saya ganti kimpul” di TikTok</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ACT 2 LEAD ───────────────────────────────────── -->
+<div class="lead">
+  <div class="lbl">Per 100 gram · umbi kimpul segar vs nasi putih matang</div>
+  <h2>Trennya lucu. Tapi apakah kimpul benar-benar lebih sehat dari nasi?</h2>
+  <p>Kita bandingkan lima hal yang paling sering dibahas. Angkanya diambil dari beberapa sumber supaya perbandingannya lebih jujur.</p>
+</div>
+
+<!-- ── ACT 2 SCROLLY: NUTRITION ─────────────────────── -->
+<section class="scrolly split" id="scrolly-gizi">
+  <div class="graphic">
+    <div class="chart-wrap">
+      <div class="chart-head">Kimpul vs Nasi · per 100 gram</div>
+      <svg class="chart" id="giziChart" viewBox="0 0 720 470" role="img" aria-label="Perbandingan gizi kimpul dan nasi"></svg>
+    </div>
+  </div>
+  <div class="steps">
+    <div class="step" data-step="0"><div class="step-card">
+      <div class="sn">01 · Indeks glikemik</div>
+      <p>Indeks glikemik kimpul ada di kisaran <b>~55–63 (sedang)</b>, sedangkan nasi putih sekitar <b>~70–89 (tinggi)</b>. Artinya, kenaikan gula darah setelah makan kimpul cenderung lebih landai. <b>Makin rendah, makin ramah gula darah.</b></p>
+    </div></div>
+    <div class="step" data-step="1"><div class="step-card">
+      <div class="sn">02 · Serat</div>
+      <p>Dalam porsi yang sama, serat kimpul <b>beberapa kali lebih banyak</b> daripada nasi (~1–3 g vs ~0,2–0,4 g). Itu bisa membantu kita merasa <b>kenyang lebih lama</b>.</p>
+    </div></div>
+    <div class="step" data-step="2"><div class="step-card">
+      <div class="sn">Yang ternyata mirip</div>
+      <p>Karbohidrat, protein, dan kalori kimpul <b>tidak terlalu berbeda</b> dari nasi.</p>
+      <p class="small">Yang beda: indeks glikemiknya lebih rendah dan seratnya lebih tinggi.</p>
+    </div></div>
+  </div>
+</section>
+
+<!-- ── GI MYTH / DATA LITERACY ──────────────────────── -->
+<section class="myth">
+  <div class="tag">⚠ Cek angka</div>
+  <h2>"Indeks glikemik kimpul cuma 0,29." Dari mana angka ini?</h2>
+  <p>Klaim ini muncul di banyak artikel. Kimpul disebut punya IG <b>super rendah, 0,29</b>. Saat dilacak, sumbernya ternyata satu studi di <i>Media Farmasi Indonesia</i> (STIFAR Semarang) yang menguji <b>tepung kimpul pada tikus</b>. Ini tabel hasilnya:</p>
+  <table class="myth-tbl">
+    <caption>Tabel asli: penentuan IG tepung umbi kimpul (Puspitaningrum dkk.)</caption>
+    <thead><tr><th>Kelompok</th><th class="n">Glukosa jam 0→1→2 (mg/dl)</th><th class="n">AUC</th><th class="n">IG</th></tr></thead>
+    <tbody>
+      <tr><td>Glukosa (pembanding)</td><td class="n">86 → 456,8 → 276,2</td><td class="n">637,9</td><td class="n">100</td></tr>
+      <tr class="hi"><td>Tepung kimpul</td><td class="n">105,6 → 105,8 → 103,2</td><td class="n">1,9</td><td class="n">0,29</td></tr>
+    </tbody>
+  </table>
+  <p>Nah, masalahnya ada di metode. Dosis karbohidrat pembanding dan kimpul <b>tidak setara</b> (glukosa 6,75 g/kg vs kimpul 2 g/kg). Pengujiannya juga memakai <b>tikus</b> dan kimpul dalam bentuk suspensi tepung. Padahal, pengujian indeks glikemik seharusnya membandingkan jumlah karbohidrat tersedia yang <b>sama</b> (biasanya 50 g). Dengan metode seperti ini, angka 0,29 tidak bisa dipakai untuk menggambarkan kimpul yang biasa kita makan.</p>
+  <div class="callout">Kesimpulan yang lebih aman: <b>IG kimpul memang lebih rendah daripada nasi, tapi masih masuk kategori sedang (~55–63), bukan "hampir nol".</b> Angka yang terdengar bagus tetap perlu dicek sebelum dibagikan.</div>
+</section>
+
+<!-- ── ALTERNATIF NASI ──────────────────────────────── -->
+<section class="alts" style="background:var(--g100);border-top:1px solid var(--g300);border-bottom:1px solid var(--g300)">
+  <div class="alts-head">
+    <div class="lbl">Bukan cuma kimpul</div>
+    <h2>Indonesia punya banyak pilihan karbo lokal</h2>
+    <p>Kimpul cuma pintu masuk. Badan Pangan Nasional menetapkan enam komoditas prioritas diversifikasi, belum termasuk banyak pangan lokal lainnya.</p>
+  </div>
+  <div class="alt-grid">
+    <div class="alt"><img class="alt-img" src="../assets/kimpul/singkong.webp" alt="Umbi singkong (ubi kayu) dipotong" loading="lazy"><h3>Singkong</h3><p>Pangan pokok ketiga setelah padi dan jagung. Karbohidratnya kompleks dan seratnya lebih tinggi daripada nasi.</p><span class="pill">Prioritas NFA</span></div>
+    <div class="alt"><img class="alt-img" src="../assets/kimpul/jagung.jpg" alt="Tongkol jagung" loading="lazy"><h3>Jagung</h3><p>Sudah lama jadi makanan pokok di Madura dan NTT lewat nasi jagung. Jagung juga kaya serat dan antioksidan.</p><span class="pill">Prioritas NFA</span></div>
+    <div class="alt"><img class="alt-img" src="../assets/kimpul/ubi-jalar.jpg" alt="Umbi ubi jalar" loading="lazy"><h3>Ubi Jalar</h3><p>Kaya serat & beta-karoten. Beberapa varietas punya indeks glikemik rendah.</p><span class="pill">Prioritas NFA</span></div>
+    <div class="alt"><img class="alt-img" src="../assets/kimpul/sagu.avif" alt="Sagu" loading="lazy"><h3>Sagu</h3><p>Sudah lama jadi makanan pokok di Papua dan Maluku. Sagu tumbuh di lahan rawa tanpa menyaingi lahan padi.</p><span class="pill">Prioritas NFA</span></div>
+    <div class="alt"><img class="alt-img" src="../assets/kimpul/sorgum.jpg" alt="Biji sorgum" loading="lazy"><h3>Sorgum</h3><p>Masih sekeluarga dengan padi, tapi bebas gluten serta lebih tinggi protein dan serat.</p><span class="pill">Pangan lokal</span></div>
+    <div class="alt"><img class="alt-img" src="../assets/kimpul/talas.avif" alt="Umbi talas" loading="lazy"><h3>Talas</h3><p>Sepupu dekat kimpul dengan profil gizi yang mirip. Talas juga sudah lama jadi pangan pokok lokal.</p><span class="pill">Prioritas NFA</span></div>
+    <div class="alt"><img class="alt-img" src="../assets/kimpul/sukun.jpg" alt="Buah sukun" loading="lazy"><h3>Sukun</h3><p>Buah bertepung yang mengenyangkan. Bisa direbus, digoreng, atau dijadikan tepung.</p><span class="pill">Pangan lokal</span></div>
+    <div class="alt"><img class="alt-img" src="../assets/kimpul/garut.webp" alt="Umbi garut" loading="lazy"><h3>Garut & Gembili</h3><p>Umbi lokal kaya pati yang sering diolah jadi tepung. Potensinya besar, tapi belum banyak dilirik.</p><span class="pill">Pangan lokal</span></div>
+  </div>
+</section>
+
+<!-- ── CONCLUSION ───────────────────────────────────── -->
+<section class="conclusion">
+  <div class="conclusion-inner">
+    <h2>Jadi, layak ganti kimpul?</h2>
+    <p>Kalau melihat datanya, kimpul unggul di dua hal: <b>indeks glikemiknya lebih rendah</b> dan <b>seratnya lebih tinggi</b> daripada nasi. Kalori, karbohidrat, dan proteinnya <b>tidak jauh berbeda</b>. Jadi kimpul bukan makanan ajaib untuk memangkas kalori, tapi bisa jadi pilihan karbohidrat yang lebih berserat.</p>
+    <p>Justru itu yang bikin kimpul menarik. Ia bukan makanan ajaib, tapi layak mendapat tempat di piring kita. Tren <b>@black.sheep8208</b> membuat lebih banyak orang ikut meliriknya.</p>
+    <div class="rc">Sebelum ikut mengganti semuanya dengan kimpul, ada beberapa hal yang perlu diingat. Getah kimpul (kalsium oksalat) bisa bikin gatal, jadi harus dibersihkan dan dimasak dulu. Angka gizi umbi segar juga berbeda jauh dari tepung kimpul. Kita pun belum tahu apakah minat pencariannya akan bertahan setelah puncak Juli atau ikut surut.</div>
+    <div class="sign">@DATAWIZART · DIO ARIADI · DATAWIZART.CO</div>
+  </div>
+</section>
+
+<!-- ── METHOD / SOURCES ─────────────────────────────── -->
+<div class="method">
+  <h3>Dari mana datanya?</h3>
+  <p><b>Tren:</b> Grafik memakai minat pencarian relatif untuk "kimpul" di Indonesia, per minggu, dari 28 Des 2025 sampai 26 Jul 2026. Di Google Trends, nilai 100 berarti minggu tertinggi <b>di rentang tanggal yang dipilih</b>. Kalau rentangnya berubah, skalanya ikut berubah. Jadi grafik ini membantu melihat <b>kapan</b> puncaknya terjadi, bukan berapa kali orang mencari secara absolut.</p>
+  <p><b>Gizi:</b> Perbandingan memakai porsi 100 g yang siap dimakan: umbi kimpul segar vs nasi putih matang. Angka diambil dari beberapa sumber, lalu nilai tengah rentangnya dipakai untuk panjang batang.</p>
+  <ul>
+    <li>Kimpul: infografis ANTARA/Kementan; tabel klasik Lingga/Direktorat Gizi Depkes; Nutritional Assessment of Philippine <i>Xanthosoma sagittifolium</i> corms (Philippine J. Crop Science).</li>
+    <li>Indeks glikemik: talas <i>Colocasia esculenta</i> corm eGI ~63 (Simsek &amp; Nehir El, Food Chemistry, 2015); IG nasi putih ~70–89 (Jurnal AMNT, Univ. Airlangga).</li>
+    <li>Mitos "IG 0,29": Puspitaningrum, Kusmita &amp; Mutmainah, <i>Media Farmasi Indonesia</i> 9(1), STIFAR Semarang. Studi memakai tikus dengan dosis karbohidrat yang tidak setara.</li>
+    <li>Nasi putih: USDA (130 kkal; karbo 28 g; serat 0,4 g) &amp; TKPI/nilaigizi.com (180 kkal; karbo 39,8 g).</li>
+    <li>Alternatif nasi: Badan Pangan Nasional (6 komoditas prioritas), IPB Digitani, Greeners, Dietela.</li>
+  </ul>
+  <p>Nilai gizi umbi bisa berubah tergantung varietas, umur panen, dan kondisi tanah. Karena itu, angka di sini sebaiknya dibaca sebagai rentang umum, bukan satu nilai yang selalu pasti.</p>
+  <p><b>Kredit gambar:</b> Tangkapan layar tren dari konten <a href="https://www.tiktok.com/@black.sheep8208" target="_blank" rel="noopener nofollow">@black.sheep8208</a> di TikTok (digunakan dengan izin). Untuk foto sampul juga tersedia alternatif berlisensi bebas: Wibowo Djatmiko (Wie146), <a href="https://commons.wikimedia.org/wiki/File:Xanthos_sagitt_140518-0426_tdp.JPG" target="_blank" rel="noopener">CC BY-SA 3.0 via Wikimedia Commons</a>.</p>
+</div>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-word">DATAWIZART</div>
+    <div class="foot-links">
+      <a href="../index.html">HOME</a>
+      <a href="https://instagram.com/datawizart" target="_blank" rel="noopener">INSTAGRAM ↗</a>
+      <a href="https://github.com/dioariadi" target="_blank" rel="noopener">GITHUB ↗</a>
+      <a href="mailto:dioariadi2025@gmail.com">EMAIL ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script>
+(function(){
+  "use strict";
+  const KIMPUL="#7A4EA0", KIMPUL_DK="#5E3A80", NASI="#C29A5B", NASI_DK="#9C7838",
+        INK="#242424", MUTED="#8b8b8b", GRID="#ededed", DOT="#D2D2D2", DEEP="#2E2E2E";
+  const FS="font-family:'DM Sans',sans-serif", FM="font-family:'DM Mono',monospace";
+  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const T = ()=> d3.transition().duration(reduce?0:760).ease(d3.easeCubicInOut);
+
+  /* generic scroll driver: fires cb(stepIndex) when a step reaches viewport center */
+  function driveScrolly(sectionSel, cb){
+    const steps = document.querySelectorAll(sectionSel+" .step");
+    const io = new IntersectionObserver(es=>{
+      es.forEach(e=>{ if(e.isIntersecting) cb(+e.target.dataset.step); });
+    }, {root:null, rootMargin:"-45% 0px -45% 0px", threshold:0});
+    steps.forEach(s=>io.observe(s));
+  }
+
+  /* ─────────────────────────────────────────────────
+     CHART 1: TREND LINE
+  ───────────────────────────────────────────────── */
+  (function(){
+    const DATA=[9,10,8,7,9,10,8,8,9,7,5,7,6,12,9,8,12,11,10,12,10,8,9,13,8,9,12,13,19,21,100]
+      .map((v,i)=>({i,v}));
+    const W=720,H=500, m={l:46,r:26,t:34,b:52};
+    const x=d3.scaleLinear().domain([0,30]).range([m.l,W-m.r]);
+    const y=d3.scaleLinear().domain([0,100]).range([H-m.b,m.t]);
+    const svg=d3.select("#trendChart");
+    const defs=svg.append("defs");
+    // reveal clip
+    const clip=defs.append("clipPath").attr("id","revealTrend");
+    const clipRect=clip.append("rect").attr("x",0).attr("y",0).attr("width",x(0)).attr("height",H);
+
+    // gridlines + y ticks
+    const gGrid=svg.append("g");
+    [0,25,50,75,100].forEach(t=>{
+      gGrid.append("line").attr("x1",m.l).attr("x2",W-m.r).attr("y1",y(t)).attr("y2",y(t))
+        .attr("stroke",GRID).attr("stroke-width",1);
+      gGrid.append("text").attr("x",m.l-10).attr("y",y(t)+4).attr("text-anchor","end")
+        .attr("style",FM).attr("font-size",10).attr("fill",MUTED).text(t);
+    });
+    // month ticks
+    [[1,"Jan"],[9,"Mar"],[18,"Mei"],[27,"Jul"]].forEach(([idx,lb])=>{
+      svg.append("text").attr("x",x(idx)).attr("y",H-m.b+22).attr("text-anchor","middle")
+        .attr("style",FS).attr("font-size",11).attr("fill",MUTED).text(lb);
+    });
+    svg.append("text").attr("x",W-m.r).attr("y",H-m.b+22).attr("text-anchor","end")
+      .attr("style",FS).attr("font-size",11).attr("font-weight",600).attr("fill",INK).text("26 Jul");
+
+    // baseline median guide
+    const gBase=svg.append("g");
+    gBase.append("line").attr("x1",m.l).attr("x2",W-m.r).attr("y1",y(9)).attr("y2",y(9))
+      .attr("stroke",MUTED).attr("stroke-width",1).attr("stroke-dasharray","3 4").attr("opacity",.6);
+    gBase.append("text").attr("x",m.l+4).attr("y",y(9)-7).attr("style",FM).attr("font-size",10)
+      .attr("fill",MUTED).text("median ~9");
+
+    // line + area, clipped for reveal
+    const gReveal=svg.append("g").attr("clip-path","url(#revealTrend)");
+    const line=d3.line().x(d=>x(d.i)).y(d=>y(d.v)).curve(d3.curveMonotoneX);
+    const area=d3.area().x(d=>x(d.i)).y0(y(0)).y1(d=>y(d.v)).curve(d3.curveMonotoneX);
+    gReveal.append("path").datum(DATA).attr("d",area).attr("fill",KIMPUL).attr("opacity",.08);
+    gReveal.append("path").datum(DATA).attr("d",line).attr("fill","none")
+      .attr("stroke",KIMPUL).attr("stroke-width",2.4).attr("stroke-linejoin","round").attr("stroke-linecap","round");
+    gReveal.selectAll("circle.d").data(DATA.filter(d=>d.i<30)).join("circle").attr("class","d")
+      .attr("cx",d=>x(d.i)).attr("cy",d=>y(d.v)).attr("r",2.6).attr("fill",KIMPUL).attr("opacity",.55);
+
+    // spike dot (separate, emphasized)
+    const spike=svg.append("circle").attr("cx",x(30)).attr("cy",y(100)).attr("r",0)
+      .attr("fill",KIMPUL).attr("stroke","#fff").attr("stroke-width",2.5);
+
+    // annotations
+    const gA=svg.append("g");
+    function ann(id,x1,y1,anchor,lines,color){
+      const g=gA.append("g").attr("id",id).attr("opacity",0);
+      lines.forEach((ln,k)=>g.append("text").attr("x",x1).attr("y",y1+k*15).attr("text-anchor",anchor)
+        .attr("style",FS).attr("font-size",k===0?12.5:11).attr("font-weight",k===0?600:400)
+        .attr("fill",color||INK).text(ln));
+      return g;
+    }
+    const a0=ann("a0",x(13),y(9)+34,"middle",["7 bulan nyaris datar"],MUTED);
+    const a1=ann("a1",x(28),y(21)-16,"middle",["Juli: 13 → 19 → 21"],NASI_DK);
+    const a2=ann("a2",x(30)-12,y(100)+16,"end",["Puncak periode ini","26 Juli 2026"],KIMPUL_DK);
+    const a3=ann("a3",x(30)-12,y(100)+50,"end",["Pemicu: tren TikTok","“Saya ganti kimpul”"],KIMPUL);
+
+    const CUT=[26,29,30,30];
+    let cur=-1;
+    function set(s){
+      if(s===cur) return; cur=s;
+      clipRect.transition(T()).attr("width", x(CUT[s])+7 );
+      spike.transition(T()).attr("r", s>=2?7:0);
+      a0.transition(T()).attr("opacity", s===0?1:0);
+      a1.transition(T()).attr("opacity", s===1?1:.0);
+      a2.transition(T()).attr("opacity", s>=2?1:0);
+      a3.transition(T()).attr("opacity", s>=3?1:0);
+    }
+    set(0);
+    driveScrolly("#scrolly-trend", set);
+  })();
+
+  /* ─────────────────────────────────────────────────
+     CHART 2: NUTRITION PAIRED BARS
+  ───────────────────────────────────────────────── */
+  (function(){
+    const ROWS=[
+      {key:"gi",   label:"Indeks glikemik", note:"makin rendah makin baik", k:59,  n:80,  kf:"~59", nf:"~80",  max:100},
+      {key:"serat",label:"Serat pangan",    note:"gram",                    k:2,   n:0.3, kf:"~2 g", nf:"~0,3 g", max:3},
+      {key:"karbo",label:"Karbohidrat",     note:"gram",                    k:31,  n:34,  kf:"~31 g",nf:"~34 g", max:42},
+      {key:"protein",label:"Protein",       note:"gram",                    k:2.5, n:2.8, kf:"~2,5 g",nf:"~2,8 g",max:3.2},
+      {key:"energi",label:"Energi",         note:"kkal",                    k:120, n:155, kf:"~120", nf:"~155", max:190}
+    ];
+    const HL=[["gi"],["serat"],["karbo","protein","energi"]];
+    const W=720,H=470, m={l:150,r:70,t:44,b:30};
+    const rowH=(H-m.t-m.b)/ROWS.length;
+    const barMax=W-m.l-m.r;
+    const svg=d3.select("#giziChart");
+
+    // legend
+    const lg=svg.append("g").attr("transform",`translate(${m.l},18)`);
+    lg.append("rect").attr("width",12).attr("height",12).attr("rx",2).attr("y",-10).attr("fill",KIMPUL);
+    lg.append("text").attr("x",18).attr("y",0).attr("style",FS).attr("font-size",12).attr("font-weight",600).attr("fill",INK).text("Kimpul");
+    lg.append("rect").attr("width",12).attr("height",12).attr("rx",2).attr("x",90).attr("y",-10).attr("fill",NASI);
+    lg.append("text").attr("x",108).attr("y",0).attr("style",FS).attr("font-size",12).attr("font-weight",600).attr("fill",INK).text("Nasi putih");
+
+    const rowsG=[];
+    ROWS.forEach((r,ri)=>{
+      const cy=m.t+ri*rowH;
+      const g=svg.append("g").attr("data-key",r.key);
+      // label
+      g.append("text").attr("x",m.l-14).attr("y",cy+rowH/2-2).attr("text-anchor","end")
+        .attr("style",FS).attr("font-size",13.5).attr("font-weight",600).attr("fill",INK).text(r.label);
+      g.append("text").attr("x",m.l-14).attr("y",cy+rowH/2+14).attr("text-anchor","end")
+        .attr("style",FM).attr("font-size",9.5).attr("fill",MUTED).text(r.note);
+      const bh=13, gap=6, y0=cy+rowH/2-bh-gap/2;
+      const wk=barMax*(r.k/r.max), wn=barMax*(r.n/r.max);
+      // kimpul bar
+      g.append("rect").attr("x",m.l).attr("y",y0).attr("height",bh).attr("rx",3).attr("fill",KIMPUL).attr("width",0)
+        .transition().delay(reduce?0:200+ri*60).duration(reduce?0:700).attr("width",wk);
+      g.append("text").attr("x",m.l+wk+8).attr("y",y0+bh-2).attr("style",FM).attr("font-size",11)
+        .attr("font-weight",600).attr("fill",KIMPUL_DK).text(r.kf).attr("opacity",0)
+        .transition().delay(reduce?0:400+ri*60).duration(400).attr("opacity",1);
+      // nasi bar
+      g.append("rect").attr("x",m.l).attr("y",y0+bh+gap).attr("height",bh).attr("rx",3).attr("fill",NASI).attr("width",0)
+        .transition().delay(reduce?0:200+ri*60).duration(reduce?0:700).attr("width",wn);
+      g.append("text").attr("x",m.l+wn+8).attr("y",y0+bh+gap+bh-2).attr("style",FM).attr("font-size",11)
+        .attr("font-weight",600).attr("fill",NASI_DK).text(r.nf).attr("opacity",0)
+        .transition().delay(reduce?0:400+ri*60).duration(400).attr("opacity",1);
+      rowsG.push({key:r.key,g});
+    });
+
+    let cur=-1;
+    function set(s){
+      if(s===cur) return; cur=s;
+      const active=new Set(HL[s]);
+      rowsG.forEach(o=> o.g.transition(T()).attr("opacity", active.has(o.key)?1:.22));
+    }
+    set(0);
+    driveScrolly("#scrolly-gizi", set);
+  })();
+})();
+</script>
+</body>
+</html>

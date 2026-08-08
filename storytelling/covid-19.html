@@ -86,13 +86,13 @@ details.code code{font-family:var(--mono);font-size:12.5px;line-height:1.6;color
     <a href="../index.html#dataviz">Data Visualization</a>
     <a href="../index.html#tutorials">Tutorials</a>
   </div>
-  <div class="nav-accent">@data_wizart · datawizart.com</div>
+  <div class="nav-accent">@datawizart · datawizart.co</div>
 </nav>
 
 <article class="article">
   <div class="kicker"><span class="kicker-line"></span>STORYTELLING · № 03 · PUBLIC HEALTH</div>
   <h1>COVID-19 Tracker Indonesia</h1>
-  <div class="byline">DIO ARIADI · WWW.DATAWIZART.COM · BERDASARKAN DATA 5/12/2020</div>
+  <div class="byline">DIO ARIADI · WWW.DATAWIZART.CO · BERDASARKAN DATA 5/12/2020</div>
 
   <h3>Bagaimana kondisi wilayah provinsi kalian? Apakah telah melewati puncak dari penambahan kasus?</h3>
 
@@ -117,7 +117,7 @@ details.code code{font-family:var(--mono);font-size:12.5px;line-height:1.6;color
   labs(subtitle = "7 hari rolling average kasus positif, dari hari terjadinya kasus positif diatas 4",
        y = "Log Rolling Avg Kasus Positif",
        x = "Jumlah hari dari terjadinya kasus positif diatas 4",
-       caption = "Kode oleh Dio Ariadi | www.datawizart.com\nInspirasi grafik twitter @jburnmurdoch")+
+       caption = "Kode oleh Dio Ariadi | www.datawizart.co\nInspirasi grafik twitter @jburnmurdoch")+
   theme(panel.background = element_rect(fill = "#f5f5f5"),
         text = element_text(family = "Proxima Nova"),
         panel.grid.major = element_line(colour = "#f0f0f0"),
@@ -130,7 +130,7 @@ details.code code{font-family:var(--mono);font-size:12.5px;line-height:1.6;color
     <div class="fig-title">Rolling Average 7 Hari per Provinsi</div>
     <div class="fig-sub">7 hari rolling average kasus positif, dari hari terjadinya kasus positif diatas 4</div>
     <img src="../assets/covid/c01.png" alt="Rolling Average 7 Hari per Provinsi">
-    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.COM</span></div>
+    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.CO</span></div>
   </div>
 
   <h4>Time-series Kasus Positif Harian dan Rolling Average 7 Hari</h4>
@@ -149,7 +149,7 @@ details.code code{font-family:var(--mono);font-size:12.5px;line-height:1.6;color
        subtile = "Bar adalah penambahan harian, line adalah rolling avg",
        x = "Hari dari sejak terjadinya kasus positif",
        y = "Penambahan kasus positif",
-       caption = "Kode oleh Dio Ariadi | www.datawizart.com")+
+       caption = "Kode oleh Dio Ariadi | www.datawizart.co")+
   facet_wrap(~province,scales = "free")+
   theme(panel.background = element_rect(fill = "#f5f5f5"),
         text = element_text(family = "Proxima Nova"),
@@ -163,7 +163,7 @@ details.code code{font-family:var(--mono);font-size:12.5px;line-height:1.6;color
     <div class="fig-title">Kasus Harian dan Rolling Average per Provinsi</div>
     <div class="fig-sub">Bar chart kasus harian dengan garis rolling average 7 hari</div>
     <img src="../assets/covid/c02.png" alt="Kasus Harian dan Rolling Average per Provinsi">
-    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.COM</span></div>
+    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.CO</span></div>
   </div>
 
   <h4>Heatmap per Provinsi</h4>
@@ -183,7 +183,7 @@ casetiles &lt;- ggplot(heatmap_indo_2, aes(x=data_date, y=(province), fill=maxca
   
   labs(title = "Heatmap penambahan kasus positif harian",
        subtitle = "Warna tiap hari dibandingkan dengan hari penambahan kasus tertinggi",
-       caption="Kode oleh @VictimOfMaths | Replikasi &amp; modifkasi oleh @dioariadi | www.datawizart.com")+
+       caption="Kode oleh @VictimOfMaths | Replikasi &amp; modifkasi oleh @dioariadi | www.datawizart.co")+
   theme(
     axis.line.y=element_blank(), 
     plot.subtitle=element_text(size=rel(0.78)), 
@@ -213,7 +213,7 @@ plot_grid(casetiles, casebar, align="h", rel_widths=c(1,0.2))</code></pre></deta
     <div class="fig-title">Heatmap Rolling Average per Provinsi</div>
     <div class="fig-sub">Rolling average dinormalisasi terhadap nilai tertinggi tiap provinsi</div>
     <img src="../assets/covid/c03.png" alt="Heatmap Rolling Average per Provinsi">
-    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.COM</span></div>
+    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.CO</span></div>
   </div>
 
   <h3>Perkembangan Kasus Positif</h3>
@@ -255,7 +255,7 @@ case_cumulative %&gt;%
                      breaks=c(10,100,500,1000,2000,5000,10000,25000,80000,120000))+
   facet_wrap(~province,scales = "free")+
   labs(y = "Log Total Kasus Posititf", x = "Hari dari kasus positif berjumlah 5",
-       caption = "Kode oleh Dio Ariadi &amp; Nur Izzahudin | www.datawizart.com",
+       caption = "Kode oleh Dio Ariadi &amp; Nur Izzahudin | www.datawizart.co",
        title = "Kumulatif kasus positif, dari hari kasus ke 5",
        subtitle = "&lt;span style='color:grey'&gt;Dashed Line (Kasus Double, setiap 3 hari)&lt;/span&gt; &lt;span style='color:red'&gt;Dashed Line (. . .4 hari)&lt;/span&gt; &lt;span style='color:darkred'&gt;Dashed Line (. . . 7 hari)&lt;/span&gt; &lt;span style='color:blue'&gt;Dashed Line (. . .14 hari)&lt;/span&gt;")+
   theme(panel.background = element_rect(fill = "#f5f5f5"),
@@ -271,7 +271,7 @@ case_cumulative %&gt;%
     <div class="fig-title">Log Kumulatif Kasus Positif</div>
     <div class="fig-sub">Kumulatif kasus (log) dengan garis bantu laju penggandaan</div>
     <img src="../assets/covid/c04.png" alt="Log Kumulatif Kasus Positif">
-    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.COM</span></div>
+    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.CO</span></div>
   </div>
 
   <h3>Tingkat Kematian Per Provinsi</h3>
@@ -295,7 +295,7 @@ death_ratio_df %&gt;%
   geom_tile(color = "#f5f5f5",size=1)+
   geom_text(aes(label=round(death_ratio,3)*100),vjust=1.2,family = "Proxima Nova")+
   geom_text(aes(label=name_short),vjust =-1,family = "Proxima Nova",size = 3)+
-  labs(x = "",y= "", caption = "Dibuat oleh @dioariadi\nwww.datawizart.com")+
+  labs(x = "",y= "", caption = "Dibuat oleh @dioariadi\nwww.datawizart.co")+
   coord_equal()+
   scale_fill_distiller(palette="Spectral")+
    theme(panel.grid = element_blank(),
@@ -313,7 +313,7 @@ death_ratio_df %&gt;%
     <div class="fig-title">Peta Tingkat Kematian per Provinsi</div>
     <div class="fig-sub">Geofacet — rasio kematian (%) tiap provinsi Indonesia</div>
     <img src="../assets/covid/c05.png" alt="Tingkat Kematian per Provinsi">
-    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.COM</span></div>
+    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.CO</span></div>
   </div>
   <details class="code"><summary>Code</summary><pre><code>overall_indo &lt;- sum(death_ratio_df$total_death)/sum(death_ratio_df$total_case)
 overall_world &lt;- read_rds("df_worldmeter_analysis.rds") %&gt;% group_by(country) %&gt;% slice(which.max(data_date)) %&gt;% ungroup() %&gt;% summarise(sum(deaths,na.rm = TRUE)/sum(cases,na.rm = TRUE)) %&gt;% pull()
@@ -336,7 +336,7 @@ death_ratio_df %&gt;% filter(province!="no_define") %&gt;%
            hjust = 1)+
   labs(x = "",
        y = "Rasio Kematian",
-       caption = "Dibuat oleh Dio Ariadi | www.datawizart.com")+
+       caption = "Dibuat oleh Dio Ariadi | www.datawizart.co")+
   coord_flip()+
   scale_fill_distiller(palette="Spectral")+
   scale_y_continuous(labels = scales::percent)+
@@ -353,7 +353,7 @@ death_ratio_df %&gt;% filter(province!="no_define") %&gt;%
     <div class="fig-title">Rasio Kematian per Provinsi</div>
     <div class="fig-sub">Diurutkan dari tertinggi — dengan garis rasio kematian dunia (6,7%) dan Indonesia (6,8%)</div>
     <img src="../assets/covid/c06.png" alt="Tingkat Kematian per Provinsi (Lanjutan)">
-    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.COM</span></div>
+    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.CO</span></div>
   </div>
   <details class="code"><summary>Code</summary><pre><code>  #geom_text(aes(label=round(death_ratio,3)*100),vjust=1.2,family = "Proxima Nova")+
   #geom_text(aes(label=name_short),vjust =-1,family = "Proxima Nova",size = 3)</code></pre></details>
@@ -403,7 +403,7 @@ death_ratio_df %&gt;% filter(province!="no_define") %&gt;%
     <div class="foot-word">DATAWIZART</div>
     <div class="foot-links">
       <a href="../index.html">HOME</a>
-      <a href="https://instagram.com/data_wizart" target="_blank" rel="noopener">INSTAGRAM ↗</a>
+      <a href="https://instagram.com/datawizart" target="_blank" rel="noopener">INSTAGRAM ↗</a>
       <a href="https://github.com/dioariadi" target="_blank" rel="noopener">GITHUB ↗</a>
       <a href="mailto:dioariadi2025@gmail.com">EMAIL ↗</a>
     </div>
