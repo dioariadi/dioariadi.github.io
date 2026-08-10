@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Saya Ganti Kimpul · DataWizart</title>
 <meta name="description" content="Minat pencarian kimpul tiba-tiba mencapai puncak saat satu tren TikTok sedang ramai. Kalau nasi diganti kimpul, apa yang berubah? Yuk, lihat datanya.">
+<link rel="icon" type="image/png" href="../assets/logo-mark.png">
+<link rel="apple-touch-icon" href="../assets/logo-mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -51,7 +53,7 @@ img{display:block;max-width:100%}
 .cover-art::after{content:"";position:absolute;width:72%;height:22%;left:13%;bottom:17%;z-index:-1;
   background:radial-gradient(ellipse,rgba(94,58,128,.16) 0%,rgba(94,58,128,.05) 44%,transparent 72%);
   filter:blur(10px);transform:rotate(-4deg)}
-.cover-photo{width:520px;max-width:none;height:auto;transform:translate(-16px,8px) rotate(-2deg);
+.cover-photo{width:min(360px,100%);max-width:none;height:auto;transform:translate(-8px,6px) rotate(-2deg);
   filter:drop-shadow(0 20px 18px rgba(49,35,58,.14))}
 .kicker{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
   color:var(--kimpul);margin-bottom:22px;display:flex;align-items:center;gap:12px}
@@ -84,6 +86,7 @@ img{display:block;max-width:100%}
 .chart-head{font-family:var(--body);font-weight:700;font-size:15px;color:var(--ink);
   letter-spacing:.01em;margin:0 0 2px 2px}
 .chart-sub{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.04em;margin:0 0 6px 2px}
+.chart-foot{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.02em;margin:10px 2px 0;line-height:1.5;max-width:660px}
 svg.chart{width:100%;height:auto;display:block;overflow:visible}
 
 .steps{position:relative;z-index:2}
@@ -97,6 +100,10 @@ svg.chart{width:100%;height:auto;display:block;overflow:visible}
 .step-card p b{color:var(--kimpul-dk);font-weight:600}
 .step-card p.small{font-size:15px;color:var(--muted);margin-top:10px}
 .step-card .big{font-family:var(--display);font-weight:600;font-size:44px;color:var(--kimpul);line-height:1;margin:6px 0 2px}
+.card-src{font-family:var(--mono);font-size:10px;color:var(--faint);margin-top:14px;letter-spacing:.02em}
+.card-src a{color:var(--kimpul);text-decoration:none}
+.card-src a:hover{text-decoration:underline}
+.alts-head p a{color:var(--kimpul);font-weight:600;text-decoration:none}
 
 /* Act 2: chart + cards side-by-side so the bars stay readable */
 .scrolly.split{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 380px;
@@ -249,7 +256,7 @@ svg.chart{width:100%;height:auto;display:block;overflow:visible}
     <div class="cover-text">
       <div class="kicker"><span class="kicker-line"></span>STORYTELLING · PANGAN LOKAL</div>
       <h1>Saya Ganti <span class="accent">Kimpul</span></h1>
-      <p class="lede">Selama tujuh bulan, pencarian kimpul nyaris diam. Lalu akhir Juli 2026, kimpul tiba-tiba sampai di <b>puncak pencarian</b>, tepat saat satu tren TikTok sedang ramai. Kalau nasi benar-benar diganti kimpul, apa yang berubah di piring kita? Yuk, lihat datanya.</p>
+      <p class="lede"><b>"Saya ganti kimpul"</b> — sebuah frasa unik yang minat pencariannya naik tajam di akhir Juli 2026 dibanding awal tahun. Pemicunya satu akun TikTok yang mengganti bahan masakan yang tak ia punya dengan kimpul. Kalau nasi benar-benar diganti kimpul, apa yang berubah di piring kita? Yuk, lihat datanya.</p>
       <div class="byline">BY DIO ARIADI · DATAWIZART.CO · GOOGLE TRENDS · SUMBER GIZI &amp; JURNAL ILMIAH</div>
       <a class="scrollcue" href="#mulai"><span class="arrow"></span>Scroll untuk mulai</a>
     </div>
@@ -264,7 +271,7 @@ svg.chart{width:100%;height:auto;display:block;overflow:visible}
 <!-- ── ACT 1 LEAD ───────────────────────────────────── -->
 <div class="lead" id="mulai">
   <div class="lbl">Google Trends · minat pencarian mingguan · Indonesia</div>
-  <h2>Selama tujuh bulan, minat pencarian "kimpul" nyaris diam.</h2>
+  <h2>Selama tujuh bulan, minat pencarian "kimpul" relatif rendah.</h2>
   <p>Lalu akhir Juli, garisnya mendadak menanjak.</p>
 </div>
 
@@ -280,7 +287,7 @@ svg.chart{width:100%;height:auto;display:block;overflow:visible}
   <div class="steps">
     <div class="step" data-step="0"><div class="step-card">
       <div class="sn">01 · Garis dasar</div>
-      <p>Dari akhir Desember sampai akhir Juni, minatnya <b>nyaris datar</b>. Angkanya cuma naik-turun tipis di sekitar <b>9</b>. Saat itu, kimpul nyaris tidak masuk radar.</p>
+      <p>Dari akhir Desember sampai akhir Juni, pencarian kimpul memang ada — tapi <b>tidak setinggi</b> puncaknya di 26 Juli. Angkanya cuma naik-turun tipis di sekitar <b>9</b>.</p>
     </div></div>
     <div class="step" data-step="1"><div class="step-card">
       <div class="sn">02 · Juli mulai bergerak</div>
@@ -289,7 +296,7 @@ svg.chart{width:100%;height:auto;display:block;overflow:visible}
     <div class="step" data-step="2"><div class="step-card">
       <div class="sn">03 · Puncaknya</div>
       <div class="big">26 Juli</div>
-      <p>Di minggu ini, minat pencarian kimpul mencapai titik <b>tertinggi</b> sepanjang Januari–Juli 2026. Tapi ingat, angka 100 cuma berarti "minggu paling ramai" di rentang ini. Angka itu <b>bukan volume pencarian mutlak</b>.</p>
+      <p>Di minggu ini, minat pencarian kimpul mencapai titik <b>tertinggi</b> sepanjang Januari–Juli 2026. Ingat, angka Google Trends hanya <b>relatif terhadap periode yang dipilih</b> — bukan volume pencarian mutlak.</p>
     </div></div>
     <div class="step" data-step="3"><div class="step-card">
       <div class="sn">04 · Kenapa minggu itu?</div>
@@ -315,7 +322,7 @@ svg.chart{width:100%;height:auto;display:block;overflow:visible}
           <img src="../assets/kimpul/sheep.webp" alt="Tangkapan konten @black.sheep8208 di TikTok, menampilkan semangkuk masakan berkuah dengan kimpul sebagai sumber karbohidrat dan tulisan “Saya ganti kimpul sebagai sumber karbohidrat”">
         </div>
       </div>
-      <div class="phone-label">Tangkapan konten @black.sheep8208 · tren “Saya ganti kimpul” di TikTok</div>
+      <div class="phone-label">Akun @black.sheep8208 · tren “Saya ganti kimpul” di TikTok</div>
     </div>
   </div>
 </section>
@@ -323,7 +330,7 @@ svg.chart{width:100%;height:auto;display:block;overflow:visible}
 <!-- ── ACT 2 LEAD ───────────────────────────────────── -->
 <div class="lead">
   <div class="lbl">Per 100 gram · umbi kimpul segar vs nasi putih matang</div>
-  <h2>Trennya lucu. Tapi apakah kimpul benar-benar lebih sehat dari nasi?</h2>
+  <h2>Trennya lucu. Tapi bagaimana komposisi gizi kimpul dibandingkan dengan nasi?</h2>
   <p>Kita bandingkan lima hal yang paling sering dibahas. Angkanya diambil dari beberapa sumber supaya perbandingannya lebih jujur.</p>
 </div>
 
@@ -333,58 +340,47 @@ svg.chart{width:100%;height:auto;display:block;overflow:visible}
     <div class="chart-wrap">
       <div class="chart-head">Kimpul vs Nasi · per 100 gram</div>
       <svg class="chart" id="giziChart" viewBox="0 0 720 470" role="img" aria-label="Perbandingan gizi kimpul dan nasi"></svg>
+      <div class="chart-foot">*IG kimpul kukus ~54 (rendah) — studi <i>Xanthosoma sagittifolium</i>, model hewan. Kimpul = infografis ANTARA/Kementan · nasi = USDA/TKPI.</div>
     </div>
   </div>
   <div class="steps">
     <div class="step" data-step="0"><div class="step-card">
       <div class="sn">01 · Indeks glikemik</div>
-      <p>Indeks glikemik kimpul ada di kisaran <b>~55–63 (sedang)</b>, sedangkan nasi putih sekitar <b>~70–89 (tinggi)</b>. Artinya, kenaikan gula darah setelah makan kimpul cenderung lebih landai. <b>Makin rendah, makin ramah gula darah.</b></p>
+      <p>Kimpul kukus punya indeks glikemik <b>~54 (rendah)</b>, sedangkan nasi putih <b>~70–89 (tinggi)</b>. Artinya, kenaikan gula darah setelah makan kimpul cenderung lebih landai. <b>Makin rendah, makin ramah gula darah.</b></p>
+      <p class="card-src">Sumber: IG kimpul kukus ~54 (IOP, 2018 · model hewan) · IG nasi ~70–89 (Amerta Nutrition Unair) — <a href="#sumber">rujukan ↓</a></p>
     </div></div>
     <div class="step" data-step="1"><div class="step-card">
       <div class="sn">02 · Serat</div>
-      <p>Dalam porsi yang sama, serat kimpul <b>beberapa kali lebih banyak</b> daripada nasi (~1–3 g vs ~0,2–0,4 g). Itu bisa membantu kita merasa <b>kenyang lebih lama</b>.</p>
+      <p>Serat pangan kimpul <b>~8,2 g</b> per 100 g — jauh di atas nasi putih (<b>~0,4 g</b>). Serat inilah yang bisa bikin <b>kenyang lebih lama</b>.</p>
+      <p class="card-src">Sumber: infografis ANTARA/Kementan · USDA — <a href="#sumber">rujukan ↓</a></p>
     </div></div>
     <div class="step" data-step="2"><div class="step-card">
       <div class="sn">Yang ternyata mirip</div>
-      <p>Karbohidrat, protein, dan kalori kimpul <b>tidak terlalu berbeda</b> dari nasi.</p>
-      <p class="small">Yang beda: indeks glikemiknya lebih rendah dan seratnya lebih tinggi.</p>
+      <p>Karbohidrat (<b>28,7 g</b>) dan protein (<b>2,8 g</b>) kimpul mirip nasi. Lemaknya sama-sama sangat rendah — kimpul malah cuma <b>0,08 g</b>.</p>
+      <p class="small">Jadi ini bukan soal potong kalori, tapi kualitas karbo: IG lebih rendah + serat lebih tinggi.</p>
+      <p class="card-src">Sumber: infografis ANTARA/Kementan · USDA/TKPI — <a href="#sumber">rujukan ↓</a></p>
     </div></div>
   </div>
 </section>
 
-<!-- ── GI MYTH / DATA LITERACY ──────────────────────── -->
-<section class="myth">
-  <div class="tag">⚠ Cek angka</div>
-  <h2>"Indeks glikemik kimpul cuma 0,29." Dari mana angka ini?</h2>
-  <p>Klaim ini muncul di banyak artikel. Kimpul disebut punya IG <b>super rendah, 0,29</b>. Saat dilacak, sumbernya ternyata satu studi di <i>Media Farmasi Indonesia</i> (STIFAR Semarang) yang menguji <b>tepung kimpul pada tikus</b>. Ini tabel hasilnya:</p>
-  <table class="myth-tbl">
-    <caption>Tabel asli: penentuan IG tepung umbi kimpul (Puspitaningrum dkk.)</caption>
-    <thead><tr><th>Kelompok</th><th class="n">Glukosa jam 0→1→2 (mg/dl)</th><th class="n">AUC</th><th class="n">IG</th></tr></thead>
-    <tbody>
-      <tr><td>Glukosa (pembanding)</td><td class="n">86 → 456,8 → 276,2</td><td class="n">637,9</td><td class="n">100</td></tr>
-      <tr class="hi"><td>Tepung kimpul</td><td class="n">105,6 → 105,8 → 103,2</td><td class="n">1,9</td><td class="n">0,29</td></tr>
-    </tbody>
-  </table>
-  <p>Nah, masalahnya ada di metode. Dosis karbohidrat pembanding dan kimpul <b>tidak setara</b> (glukosa 6,75 g/kg vs kimpul 2 g/kg). Pengujiannya juga memakai <b>tikus</b> dan kimpul dalam bentuk suspensi tepung. Padahal, pengujian indeks glikemik seharusnya membandingkan jumlah karbohidrat tersedia yang <b>sama</b> (biasanya 50 g). Dengan metode seperti ini, angka 0,29 tidak bisa dipakai untuk menggambarkan kimpul yang biasa kita makan.</p>
-  <div class="callout">Kesimpulan yang lebih aman: <b>IG kimpul memang lebih rendah daripada nasi, tapi masih masuk kategori sedang (~55–63), bukan "hampir nol".</b> Angka yang terdengar bagus tetap perlu dicek sebelum dibagikan.</div>
-</section>
+<!-- (bagian debunk "IG 0,29" di-discard atas permintaan Dio — kontradiktif utk format carousel; mudah dikembalikan bila perlu) -->
 
 <!-- ── ALTERNATIF NASI ──────────────────────────────── -->
 <section class="alts" style="background:var(--g100);border-top:1px solid var(--g300);border-bottom:1px solid var(--g300)">
   <div class="alts-head">
     <div class="lbl">Bukan cuma kimpul</div>
     <h2>Indonesia punya banyak pilihan karbo lokal</h2>
-    <p>Kimpul cuma pintu masuk. Badan Pangan Nasional menetapkan enam komoditas prioritas diversifikasi, belum termasuk banyak pangan lokal lainnya.</p>
+    <p>Kimpul cuma satu dari banyak. Indonesia punya beragam pangan lokal sumber karbohidrat selain nasi — dan <a href="https://badanpangan.go.id/blog/post/kenyang-tidak-harus-nasi-ini-enam-komoditas-pangan-sumber-karbohidrat-selain-beras" target="_blank" rel="noopener">Badan Pangan Nasional</a> pun mendorong diversifikasi ke arah sana.</p>
   </div>
   <div class="alt-grid">
-    <div class="alt"><img class="alt-img" src="../assets/kimpul/singkong.webp" alt="Umbi singkong (ubi kayu) dipotong" loading="lazy"><h3>Singkong</h3><p>Pangan pokok ketiga setelah padi dan jagung. Karbohidratnya kompleks dan seratnya lebih tinggi daripada nasi.</p><span class="pill">Prioritas NFA</span></div>
-    <div class="alt"><img class="alt-img" src="../assets/kimpul/jagung.jpg" alt="Tongkol jagung" loading="lazy"><h3>Jagung</h3><p>Sudah lama jadi makanan pokok di Madura dan NTT lewat nasi jagung. Jagung juga kaya serat dan antioksidan.</p><span class="pill">Prioritas NFA</span></div>
-    <div class="alt"><img class="alt-img" src="../assets/kimpul/ubi-jalar.jpg" alt="Umbi ubi jalar" loading="lazy"><h3>Ubi Jalar</h3><p>Kaya serat & beta-karoten. Beberapa varietas punya indeks glikemik rendah.</p><span class="pill">Prioritas NFA</span></div>
-    <div class="alt"><img class="alt-img" src="../assets/kimpul/sagu.avif" alt="Sagu" loading="lazy"><h3>Sagu</h3><p>Sudah lama jadi makanan pokok di Papua dan Maluku. Sagu tumbuh di lahan rawa tanpa menyaingi lahan padi.</p><span class="pill">Prioritas NFA</span></div>
-    <div class="alt"><img class="alt-img" src="../assets/kimpul/sorgum.jpg" alt="Biji sorgum" loading="lazy"><h3>Sorgum</h3><p>Masih sekeluarga dengan padi, tapi bebas gluten serta lebih tinggi protein dan serat.</p><span class="pill">Pangan lokal</span></div>
-    <div class="alt"><img class="alt-img" src="../assets/kimpul/talas.avif" alt="Umbi talas" loading="lazy"><h3>Talas</h3><p>Sepupu dekat kimpul dengan profil gizi yang mirip. Talas juga sudah lama jadi pangan pokok lokal.</p><span class="pill">Prioritas NFA</span></div>
-    <div class="alt"><img class="alt-img" src="../assets/kimpul/sukun.jpg" alt="Buah sukun" loading="lazy"><h3>Sukun</h3><p>Buah bertepung yang mengenyangkan. Bisa direbus, digoreng, atau dijadikan tepung.</p><span class="pill">Pangan lokal</span></div>
-    <div class="alt"><img class="alt-img" src="../assets/kimpul/garut.webp" alt="Umbi garut" loading="lazy"><h3>Garut & Gembili</h3><p>Umbi lokal kaya pati yang sering diolah jadi tepung. Potensinya besar, tapi belum banyak dilirik.</p><span class="pill">Pangan lokal</span></div>
+    <div class="alt"><img class="alt-img" src="../assets/kimpul/singkong.webp" alt="Umbi singkong (ubi kayu) dipotong" loading="lazy"><h3>Singkong</h3><p>Pangan pokok ketiga setelah padi dan jagung. Karbohidratnya kompleks dan seratnya lebih tinggi daripada nasi.</p></div>
+    <div class="alt"><img class="alt-img" src="../assets/kimpul/jagung.jpg" alt="Tongkol jagung" loading="lazy"><h3>Jagung</h3><p>Sudah lama jadi makanan pokok di Madura dan NTT lewat nasi jagung. Jagung juga kaya serat dan antioksidan.</p></div>
+    <div class="alt"><img class="alt-img" src="../assets/kimpul/ubi-jalar.jpg" alt="Umbi ubi jalar" loading="lazy"><h3>Ubi Jalar</h3><p>Kaya serat &amp; beta-karoten. Beberapa varietas punya indeks glikemik rendah.</p></div>
+    <div class="alt"><img class="alt-img" src="../assets/kimpul/sagu.avif" alt="Sagu" loading="lazy"><h3>Sagu</h3><p>Sudah lama jadi makanan pokok di Papua dan Maluku. Sagu tumbuh di lahan rawa tanpa menyaingi lahan padi.</p></div>
+    <div class="alt"><img class="alt-img" src="../assets/kimpul/sorgum.jpg" alt="Biji sorgum" loading="lazy"><h3>Sorgum</h3><p>Masih sekeluarga dengan padi, tapi bebas gluten serta lebih tinggi protein dan serat.</p></div>
+    <div class="alt"><img class="alt-img" src="../assets/kimpul/talas.avif" alt="Umbi talas" loading="lazy"><h3>Talas</h3><p>Sepupu dekat kimpul dengan profil gizi yang mirip. Talas juga sudah lama jadi pangan pokok lokal.</p></div>
+    <div class="alt"><img class="alt-img" src="../assets/kimpul/sukun.jpg" alt="Buah sukun" loading="lazy"><h3>Sukun</h3><p>Buah bertepung yang mengenyangkan. Bisa direbus, digoreng, atau dijadikan tepung.</p></div>
+    <div class="alt"><img class="alt-img" src="../assets/kimpul/garut.webp" alt="Umbi garut" loading="lazy"><h3>Garut & Gembili</h3><p>Umbi lokal kaya pati yang sering diolah jadi tepung. Potensinya besar, tapi belum banyak dilirik.</p></div>
   </div>
 </section>
 
@@ -400,16 +396,15 @@ svg.chart{width:100%;height:auto;display:block;overflow:visible}
 </section>
 
 <!-- ── METHOD / SOURCES ─────────────────────────────── -->
-<div class="method">
+<div class="method" id="sumber">
   <h3>Dari mana datanya?</h3>
   <p><b>Tren:</b> Grafik memakai minat pencarian relatif untuk "kimpul" di Indonesia, per minggu, dari 28 Des 2025 sampai 26 Jul 2026. Di Google Trends, nilai 100 berarti minggu tertinggi <b>di rentang tanggal yang dipilih</b>. Kalau rentangnya berubah, skalanya ikut berubah. Jadi grafik ini membantu melihat <b>kapan</b> puncaknya terjadi, bukan berapa kali orang mencari secara absolut.</p>
   <p><b>Gizi:</b> Perbandingan memakai porsi 100 g yang siap dimakan: umbi kimpul segar vs nasi putih matang. Angka diambil dari beberapa sumber, lalu nilai tengah rentangnya dipakai untuk panjang batang.</p>
   <ul>
-    <li>Kimpul: infografis ANTARA/Kementan; tabel klasik Lingga/Direktorat Gizi Depkes; Nutritional Assessment of Philippine <i>Xanthosoma sagittifolium</i> corms (Philippine J. Crop Science).</li>
-    <li>Indeks glikemik: talas <i>Colocasia esculenta</i> corm eGI ~63 (Simsek &amp; Nehir El, Food Chemistry, 2015); IG nasi putih ~70–89 (Jurnal AMNT, Univ. Airlangga).</li>
-    <li>Mitos "IG 0,29": Puspitaningrum, Kusmita &amp; Mutmainah, <i>Media Farmasi Indonesia</i> 9(1), STIFAR Semarang. Studi memakai tikus dengan dosis karbohidrat yang tidak setara.</li>
-    <li>Nasi putih: USDA (130 kkal; karbo 28 g; serat 0,4 g) &amp; TKPI/nilaigizi.com (180 kkal; karbo 39,8 g).</li>
-    <li>Alternatif nasi: Badan Pangan Nasional (6 komoditas prioritas), IPB Digitani, Greeners, Dietela.</li>
+    <li>Kimpul: <a href="https://www.antaranews.com/infografik/3076433/kimpul-umbi-alternatif-pengganti-nasi" target="_blank" rel="noopener">infografis ANTARA/Kementan</a>; tabel klasik Lingga/Direktorat Gizi Depkes; <a href="https://www.cabidigitallibrary.org/doi/full/10.5555/20193213032" target="_blank" rel="noopener">Nutritional Assessment of Philippine <i>Xanthosoma sagittifolium</i> corms</a> (Philippine J. Crop Science, 2019).</li>
+    <li>Indeks glikemik: kimpul kukus (<i>Xanthosoma sagittifolium</i>) IG ~54 — rendah (<a href="https://doi.org/10.1088/1757-899X/333/1/012074" target="_blank" rel="noopener">IOP Conf. Ser. MSE 333, 2018</a>, model hewan/tikus); diperkuat <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7381813/" target="_blank" rel="noopener">Surono dkk., Food &amp; Nutrition Research, 2020</a> (glycemic load rendah, in vitro). IG nasi putih ~70–89 (<a href="https://doi.org/10.20473/amnt.v7i2.2023.223-229" target="_blank" rel="noopener">Amerta Nutrition, Univ. Airlangga, 2023</a>).</li>
+    <li>Nasi putih: <a href="https://fdc.nal.usda.gov/" target="_blank" rel="noopener">USDA FoodData Central</a> (130 kkal; karbo 28 g; serat 0,4 g) &amp; <a href="https://nilaigizi.com/" target="_blank" rel="noopener">TKPI/nilaigizi.com</a> (180 kkal; karbo 39,8 g).</li>
+    <li>Alternatif nasi: <a href="https://badanpangan.go.id/blog/post/kenyang-tidak-harus-nasi-ini-enam-komoditas-pangan-sumber-karbohidrat-selain-beras" target="_blank" rel="noopener">Badan Pangan Nasional</a> (6 komoditas prioritas), <a href="https://digitani.ipb.ac.id/pengganti-nasi-yang-sehat-makanan-pokok-yang-mudah-ditemukan-di-indonesia/" target="_blank" rel="noopener">IPB Digitani</a>, <a href="https://www.greeners.co/gaya-hidup/lebih-sehat-6-makanan-alternatif-pengganti-nasi/" target="_blank" rel="noopener">Greeners</a>, <a href="https://blog.dietela.id/bosan-makan-nasi-terus-ini-alternatif-makanan-pokok-lokal-kita/" target="_blank" rel="noopener">Dietela</a>.</li>
   </ul>
   <p>Nilai gizi umbi bisa berubah tergantung varietas, umur panen, dan kondisi tanah. Karena itu, angka di sini sebaiknya dibaca sebagai rentang umum, bukan satu nilai yang selalu pasti.</p>
   <p><b>Kredit gambar:</b> Tangkapan layar tren dari konten <a href="https://www.tiktok.com/@black.sheep8208" target="_blank" rel="noopener nofollow">@black.sheep8208</a> di TikTok (digunakan dengan izin). Untuk foto sampul juga tersedia alternatif berlisensi bebas: Wibowo Djatmiko (Wie146), <a href="https://commons.wikimedia.org/wiki/File:Xanthos_sagitt_140518-0426_tdp.JPG" target="_blank" rel="noopener">CC BY-SA 3.0 via Wikimedia Commons</a>.</p>
@@ -532,13 +527,13 @@ svg.chart{width:100%;height:auto;display:block;overflow:visible}
   ───────────────────────────────────────────────── */
   (function(){
     const ROWS=[
-      {key:"gi",   label:"Indeks glikemik", note:"makin rendah makin baik", k:59,  n:80,  kf:"~59", nf:"~80",  max:100},
-      {key:"serat",label:"Serat pangan",    note:"gram",                    k:2,   n:0.3, kf:"~2 g", nf:"~0,3 g", max:3},
-      {key:"karbo",label:"Karbohidrat",     note:"gram",                    k:31,  n:34,  kf:"~31 g",nf:"~34 g", max:42},
-      {key:"protein",label:"Protein",       note:"gram",                    k:2.5, n:2.8, kf:"~2,5 g",nf:"~2,8 g",max:3.2},
-      {key:"energi",label:"Energi",         note:"kkal",                    k:120, n:155, kf:"~120", nf:"~155", max:190}
+      {key:"gi",   label:"Indeks glikemik", note:"makin rendah makin baik", k:54,   n:80,  kf:"~54*",  nf:"~70–89",    max:100},
+      {key:"serat",label:"Serat pangan",    note:"gram",                    k:8.24, n:0.4, kf:"~8,2 g", nf:"~0,4 g",    max:9},
+      {key:"karbo",label:"Karbohidrat",     note:"gram",                    k:28.66,n:34,  kf:"28,7 g", nf:"~28–40 g",  max:42},
+      {key:"protein",label:"Protein",       note:"gram",                    k:2.81, n:2.9, kf:"2,8 g",  nf:"~2,7–3,0 g",max:3.5},
+      {key:"lemak",label:"Lemak",           note:"gram",                    k:0.08, n:0.3, kf:"0,08 g", nf:"~0,3 g",    max:0.4}
     ];
-    const HL=[["gi"],["serat"],["karbo","protein","energi"]];
+    const HL=[["gi"],["serat"],["karbo","protein","lemak"]];
     const W=720,H=470, m={l:150,r:70,t:44,b:30};
     const rowH=(H-m.t-m.b)/ROWS.length;
     const barMax=W-m.l-m.r;
