@@ -5,108 +5,102 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Who Win South Korean Music Show and How Long It Takes? · DataWizart</title>
 <meta name="description" content="Which K-pop groups win Korean music shows, what separates the winners, and how long they wait for a first win. A DataWizart story.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400;1,9..40,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="../assets/logo/dw-mark-gold.png">
+<link rel="stylesheet" href="../assets/dw-system.css">
 <style>
-:root{
-  --gold:#F2C438; --gold-dk:#C99E18; --charcoal:#474747; --deep:#2E2E2E; --black:#111111;
-  --teal:#3DC9C0; --teal-dk:#27A39B; --green:#5DB96B; --sand:#C4A882; --red:#E05A5A;
-  --g100:#F7F7F7; --g200:#EFEFEF; --g300:#DCDCDC; --g400:#B0B0B0; --g500:#808080;
-  --g600:#555555; --g800:#2A2A2A; --white:#FFFFFF;
-  --display:'Oswald',sans-serif; --body:'DM Sans',sans-serif; --mono:'DM Mono',monospace;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--white);color:var(--g800);font-family:var(--body)}
-a{cursor:pointer}
+/* Page layout only. Every value below resolves to a design-system token —
+   no colour, font, space or radius is declared here. */
 img{display:block;max-width:100%}
 
 /* ── MASTHEAD (compact) ───────────────────────────── */
-.mast{border-top:8px solid var(--deep);border-bottom:1px solid var(--deep);
-  padding:16px 56px;display:flex;justify-content:space-between;align-items:center;gap:24px}
-.mast-title{font-family:var(--display);font-weight:700;font-size:28px;letter-spacing:.02em;color:var(--deep)}
-.mast-title a{color:var(--deep);text-decoration:none}
-.mast-meta{font-family:var(--mono);font-size:11px;color:var(--g600);letter-spacing:.04em}
-.nav{border-bottom:2px solid var(--deep);padding:10px 56px;display:flex;justify-content:space-between;
-  align-items:center;font-family:var(--body);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
-.nav-links{display:flex;gap:28px}
-.nav-links a{color:var(--deep);text-decoration:none}
-.nav-links a.active{color:var(--gold-dk)}
-.nav-accent{color:var(--gold);font-family:var(--mono);letter-spacing:.02em;text-transform:none;font-weight:400;font-size:11px}
+.mast{border-top:8px solid var(--dw-charcoal-deep);border-bottom:1px solid var(--dw-charcoal-deep);
+  padding:var(--space-4) var(--space-16);display:flex;justify-content:space-between;align-items:center;gap:var(--space-6)}
+.mast .dw-mark{--mark-h:34px}
+.mast-meta{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-secondary);letter-spacing:.04em}
+.nav{border-bottom:2px solid var(--dw-charcoal-deep);padding:var(--space-3) var(--space-16);display:flex;
+  justify-content:space-between;align-items:center;gap:var(--space-6);flex-wrap:wrap}
+.nav-links{display:flex;gap:var(--space-8)}
+.nav-links a,.nav-accent{font-family:var(--font-body);font-size:var(--text-xs);font-weight:600;
+  letter-spacing:var(--tracking-widest);text-transform:uppercase}
+.nav-links a{color:var(--dw-charcoal-deep);border-bottom:0}
+.nav-links a.active{color:var(--dw-gold-dark)}
+.nav-accent{color:var(--fg-muted);font-family:var(--font-mono);letter-spacing:.02em;text-transform:none;font-weight:400}
 
 /* ── ARTICLE ──────────────────────────────────────── */
-.article{max-width:880px;margin:0 auto;padding:56px 24px 0}
-.kicker{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--teal-dk);margin-bottom:16px;display:flex;align-items:center;gap:12px}
-.kicker-line{width:36px;height:1px;background:var(--teal-dk);display:inline-block}
-h1{font-family:var(--display);font-weight:700;font-size:46px;line-height:1.02;color:var(--deep);
-  letter-spacing:-.01em;margin-bottom:16px;text-wrap:balance}
-.byline{font-family:var(--mono);font-size:12px;color:var(--g600);border-top:1px solid var(--g300);border-bottom:1px solid var(--g300);
-  padding:10px 0;letter-spacing:.03em;margin:22px 0 34px}
-.article p{font-size:16.5px;line-height:1.7;margin-bottom:20px;color:var(--g800)}
-.article p a{color:var(--teal-dk)}
-h2{font-family:var(--display);font-weight:600;font-size:32px;color:var(--deep);margin:44px 0 16px;line-height:1.05}
-h3{font-family:var(--display);font-weight:600;font-size:25px;color:var(--deep);margin:40px 0 14px;line-height:1.1}
-h4{font-family:var(--display);font-weight:500;font-size:20px;color:var(--deep);margin:30px 0 12px}
-.note{font-size:13.5px;color:var(--g600);font-style:italic;line-height:1.6;margin-bottom:16px}
-.figure{border:1px solid var(--g300);padding:22px 22px 16px;margin:26px 0 34px;background:var(--white)}
-.fig-title{font-family:var(--display);font-weight:600;font-size:20px;color:var(--deep);margin-bottom:2px}
-.fig-sub{font-size:13px;color:var(--g600);font-style:italic;margin-bottom:14px}
-.fig-src{font-family:var(--mono);font-size:10.5px;color:var(--g500);letter-spacing:.04em;border-top:1px solid var(--g200);
-  padding-top:10px;margin-top:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
-.legend{display:flex;gap:18px;font-size:12.5px;color:var(--g600);margin-bottom:8px}
-.legend .swatch{width:11px;height:11px;display:inline-block;margin-right:6px;vertical-align:-1px}
-.story-img{margin:26px 0 34px}
-.story-img img{width:100%;border:1px solid var(--g300)}
-.story-img .credit{font-family:var(--mono);font-size:10.5px;color:var(--g500);margin-top:8px}
-.story-img .credit a{color:var(--g500)}
+.article{max-width:880px;margin:0 auto;padding:var(--space-16) var(--space-6) 0}
+.article h1{margin-bottom:var(--space-4)}
+.byline{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-secondary);
+  border-top:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle);
+  padding:var(--space-3) 0;letter-spacing:.03em;margin:var(--space-5) 0 var(--space-8)}
+.article p{margin-bottom:var(--space-5)}
+.article h2{margin:var(--space-12) 0 var(--space-4)}
+.article h3{margin:var(--space-10) 0 var(--space-3)}
+.article h4{font-family:var(--font-display);font-weight:500;font-size:var(--text-lg);
+  color:var(--dw-charcoal-deep);margin:var(--space-8) 0 var(--space-3)}
+.note{font-family:var(--font-body);font-size:var(--text-sm);color:var(--fg-secondary);
+  font-style:italic;line-height:1.6;margin-bottom:var(--space-4);max-width:var(--measure)}
+.dw-chart{margin:var(--space-6) 0 var(--space-8)}
+.story-img{margin:var(--space-6) 0 var(--space-8)}
+.story-img img{width:100%;border:1px solid var(--border-subtle)}
+.story-img .credit{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-muted);margin-top:var(--space-2)}
 
-/* tabs */
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.tab-btn{font-family:var(--body);font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  padding:8px 14px;border:1.5px solid var(--deep);background:transparent;color:var(--deep);cursor:pointer}
-.tab-btn.active{background:var(--deep);color:var(--white)}
+/* tabs — class name kept because the D3 code binds to .tab-btn/.active */
+.tabs{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-3)}
+.tab-btn{display:inline-flex;align-items:center;min-height:44px;padding:12px 18px;font-family:var(--font-body);
+  font-size:var(--text-xs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  border:1.5px solid var(--dw-charcoal-deep);background:transparent;color:var(--dw-charcoal-deep);cursor:pointer}
+.tab-btn:hover{background:var(--dw-gray-200)}
+.tab-btn.active{background:var(--dw-charcoal-deep);color:var(--dw-white)}
 
 /* chart svg */
 .chart svg{width:100%;height:auto;display:block}
-.tooltip{position:absolute;pointer-events:none;background:var(--deep);color:var(--white);font-family:var(--body);
-  font-size:12px;line-height:1.5;padding:9px 12px;max-width:260px;opacity:0;transition:opacity .12s;z-index:10}
-.tooltip b{color:var(--gold)}
+.tooltip{position:absolute;pointer-events:none;background:var(--bg-deep);color:var(--dw-white);
+  font-family:var(--font-body);font-size:var(--text-xs);line-height:1.5;padding:var(--space-2) var(--space-3);
+  max-width:260px;opacity:0;transition:opacity var(--duration-fast);z-index:10}
+.tooltip b{color:var(--dw-gold)}
 
 /* table */
-.tbl-wrap{overflow-x:auto;border:1px solid var(--g300)}
-table{border-collapse:collapse;font-size:12.5px;min-width:1400px;width:100%}
-thead th{font-family:var(--body);font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--deep);text-align:left;padding:10px 10px;border-bottom:2px solid var(--deep);cursor:pointer;white-space:nowrap;background:var(--white)}
-thead th .arrow{color:var(--gold-dk);font-size:10px}
-.filter-row td{padding:4px 6px;border-bottom:1px solid var(--g300);background:var(--g100)}
-.filter-row input{width:100%;min-width:70px;font-family:var(--mono);font-size:11px;padding:5px 6px;border:1px solid var(--g300);background:var(--white)}
-tbody td{padding:9px 10px;border-bottom:1px solid var(--g200);color:var(--g800);white-space:nowrap}
-tbody tr:hover{background:var(--g100)}
-.pager{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--g600)}
-.pager button{font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  padding:6px 12px;border:1.5px solid var(--deep);background:transparent;color:var(--deep);cursor:pointer;margin-left:8px}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border-subtle)}
+table{border-collapse:collapse;font-family:var(--font-body);font-size:var(--text-sm);min-width:1400px;width:100%}
+thead th{font-family:var(--font-body);font-weight:700;font-size:var(--text-xs);letter-spacing:.06em;
+  text-transform:uppercase;color:var(--dw-charcoal-deep);text-align:left;padding:var(--space-3);
+  border-bottom:2px solid var(--dw-charcoal-deep);cursor:pointer;white-space:nowrap;background:var(--dw-white)}
+thead th .arrow{color:var(--dw-gold-dark);font-size:var(--text-xs)}
+.filter-row td{padding:var(--space-1) var(--space-2);border-bottom:1px solid var(--border-subtle);background:var(--bg-subtle)}
+.filter-row input{width:100%;min-width:70px;font-family:var(--font-mono);font-size:var(--text-xs);
+  padding:5px 6px;border:1px solid var(--border-subtle);background:var(--dw-white)}
+tbody td{padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--dw-gray-200);
+  color:var(--fg-primary);white-space:nowrap}
+tbody tr:hover{background:var(--bg-subtle)}
+.pager{display:flex;justify-content:space-between;align-items:center;margin-top:var(--space-3);
+  font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-secondary)}
+.pager button{font-family:var(--font-body);font-size:var(--text-xs);font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;min-height:44px;padding:12px 18px;border:1.5px solid var(--dw-charcoal-deep);
+  background:transparent;color:var(--dw-charcoal-deep);cursor:pointer;margin-left:var(--space-2)}
 .pager button:disabled{opacity:.35;cursor:default}
 
 /* footer */
-.foot{margin-top:72px;padding:36px 56px;background:var(--deep);color:var(--g300)}
-.foot-inner{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
-.foot-word{font-family:var(--body);font-weight:300;font-size:18px;letter-spacing:.22em;color:var(--white)}
-.foot-links{display:flex;gap:22px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;flex-wrap:wrap}
-.foot-links a{color:var(--gold);text-decoration:none}
+.foot{margin-top:var(--space-20);padding:var(--space-10) var(--space-16);background:var(--bg-deep);color:var(--dw-gray-300)}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;gap:var(--space-6);flex-wrap:wrap}
+.foot .dw-mark{--mark-h:44px}
+.foot-links{display:flex;gap:var(--space-5);font-family:var(--font-mono);font-size:var(--text-xs);
+  letter-spacing:.04em;flex-wrap:wrap}
 
 @media (max-width:900px){
-  .mast,.nav,.foot{padding-left:20px;padding-right:20px}
-  .nav-links{gap:16px}
+  .mast,.nav,.foot{padding-left:var(--space-5);padding-right:var(--space-5)}
+  .nav-links{gap:var(--space-4)}
   .nav-accent{display:none}
-  h1{font-size:34px}
+  .article h1{font-size:var(--text-3xl)}
 }
 </style>
 </head>
 <body>
 
 <header class="mast">
-  <div class="mast-title"><a href="../index.html">DATAWIZART</a></div>
+  <a class="dw-row dw-gap-3" href="../index.html" style="border-bottom:0">
+    <img class="dw-mark" src="../assets/logo/dw-mark-charcoal.png" alt="DataWizart">
+    <span class="dw-wordmark" style="--wordmark-size:var(--text-md);color:var(--dw-charcoal-deep)">Datawizart</span>
+  </a>
   <div class="mast-meta">DATA STORYTELLING STUDIO · JAKARTA</div>
 </header>
 
@@ -121,101 +115,116 @@ tbody tr:hover{background:var(--g100)}
 </nav>
 
 <article class="article">
-  <div class="kicker"><span class="kicker-line"></span>STORYTELLING · № 01 · MUSIC</div>
-  <h1>Who Win South Korean Music Show and How Long It Takes?</h1>
+  <div class="dw-kicker">Storytelling · № 01 · Music</div>
+  <h1 class="dw-h1">Who Win South Korean Music Show and How Long It Takes?</h1>
   <div class="byline">BY DIO ARIADI · DATAWIZART.CO · AUGUST 2021</div>
 
-  <p>For whose doesn't know about South Korean music show this is the place where Kpop artist will perform their song and compete each other in the broadcasting place such as SBS, MBC, and other. In the end of the show they will announce who win the show based on some <a href="https://aminoagpps.com/c/k-pop/page/blog/the-significance-of-music-shows/ZkIB_u0g4zZ3lzQYLG7epkGkb7g" target="_blank" rel="noopener">criteria</a>. Winning the music show for the first time can be leading indicator a greater chance for the artist and agency that public notice the artist and the song they produced. The positive side effect can be be generated more fans and translated into increasing sales album or merchandise.</p>
+  <p class="dw-body">For whose doesn't know about South Korean music show this is the place where Kpop artist will perform their song and compete each other in the broadcasting place such as SBS, MBC, and other. In the end of the show they will announce who win the show based on some <a href="https://aminoagpps.com/c/k-pop/page/blog/the-significance-of-music-shows/ZkIB_u0g4zZ3lzQYLG7epkGkb7g" target="_blank" rel="noopener">criteria</a>. Winning the music show for the first time can be leading indicator a greater chance for the artist and agency that public notice the artist and the song they produced. The positive side effect can be be generated more fans and translated into increasing sales album or merchandise.</p>
 
-  <p>There are multiple group debut every year and unfortunately not every group will win the show eventually. We take a look on some variable that available that might effect the chance the group to win the show, some of the variable provided by pudding.cool on this article <a href="https://pudding.cool/2020/10/kpop/" target="_blank" rel="noopener">Why are K-pop groups so big?</a>, such as international casting, from survival show or not, size of group, and gender. During the research we noticed that every article mentioned about big 3 SM, JYP, and YG. These 3 along with BigHit (BTS's agency) will become the variable for this analysis.</p>
+  <p class="dw-body">There are multiple group debut every year and unfortunately not every group will win the show eventually. We take a look on some variable that available that might effect the chance the group to win the show, some of the variable provided by pudding.cool on this article <a href="https://pudding.cool/2020/10/kpop/" target="_blank" rel="noopener">Why are K-pop groups so big?</a>, such as international casting, from survival show or not, size of group, and gender. During the research we noticed that every article mentioned about big 3 SM, JYP, and YG. These 3 along with BigHit (BTS's agency) will become the variable for this analysis.</p>
 
-  <h2 id="whoWinMusic">Who win the music show?</h2>
+  <h2 class="dw-h2" id="whoWinMusic">Who win the music show?</h2>
 
-  <p>From what we gathered there are 251 band where 71 of them have win some of music show. Some of the agency can have more than one group that win, the way they created the group itself can be different. Agency can create group using survival shows and also international casting.</p>
+  <p class="dw-body">From what we gathered there are 251 band where 71 of them have win some of music show. Some of the agency can have more than one group that win, the way they created the group itself can be different. Agency can create group using survival shows and also international casting.</p>
 
-  <p>If we split the proportion win and never/still try to win using other dimension such as type of agency and the other, then we can see clearly which variable that might be a good indicator who will win the music show. Here is how it's look like the proportion where the bigger the green color means more group winning in the music show for that respective dimension or grid. For example grid Type of Group, the group that came from Top 4 Agency, 95% of them was win at least one music show, while the other (non Top 4 Agency) only has 22.5% that win music show (this analysis done on 18 August 2021).</p>
+  <p class="dw-body">If we split the proportion win and never/still try to win using other dimension such as type of agency and the other, then we can see clearly which variable that might be a good indicator who will win the music show. Here is how it's look like the proportion where the bigger the green color means more group winning in the music show for that respective dimension or grid. For example grid Type of Group, the group that came from Top 4 Agency, 95% of them was win at least one music show, while the other (non Top 4 Agency) only has 22.5% that win music show (this analysis done on 18 August 2021).</p>
 
-  <p>The sequence of the order is based on importance variable, means Type of Group is variable that can differentiate really well which group will win and not compared to the other. See <a href="#methodology">Methodology</a> for more detail.</p>
+  <p class="dw-body">The sequence of the order is based on importance variable, means Type of Group is variable that can differentiate really well which group will win and not compared to the other. See <a href="#methodology">Methodology</a> for more detail.</p>
 
-  <div class="figure">
-    <div class="fig-title">Share of Groups That Win, by Dimension</div>
-    <div class="fig-sub">Each bar splits the groups in that category — green is the share that has won a music show</div>
-    <div class="legend">
-      <span><span class="swatch" style="background:var(--green)"></span>Win</span>
-      <span><span class="swatch" style="background:var(--g300)"></span>Trying/Disband</span>
+  <div class="dw-chart">
+    <div class="dw-chart__head">
+    <span class="dw-label">Chart</span>
+      <h3 class="dw-chart__title">Share of Groups That Win, by Dimension</h3>
+    <p class="dw-chart__subtitle">Each bar splits the groups in that category — green is the share that has won a music show</p>
     </div>
-    <div class="chart" id="chart-proportion"></div>
-    <div class="fig-src"><span>SOURCE: PUDDING.COOL + DATAWIZART RESEARCH · 18 AUG 2021</span><span>DATAWIZART.CO</span></div>
+    <div class="dw-legend">
+      <span class="dw-legend__item"><span class="dw-legend__swatch" style="--sw:var(--dw-green)"></span>Win</span>
+      <span class="dw-legend__item"><span class="dw-legend__swatch" style="--sw:var(--dw-gray-300)"></span>Trying/Disband</span>
+    </div>
+    <div class="dw-chart__plot chart" id="chart-proportion"></div>
+    <div class="dw-chart__foot"><span class="dw-source">SOURCE: PUDDING.COOL + DATAWIZART RESEARCH · 18 AUG 2021</span><span class="dw-source">DATAWIZART.CO</span></div>
   </div>
 
-  <p>From previous analysis we see that when it comes who will win, type of agency will have the greatest impact. Big agencies will have more capital to spend on marketing and music producer. The second substantial impact is that if there is an international casting at least one even though music shows we count is music shows in South Korea, one of financial reason is that International casting (member outside South Korea) can also help the group expand their reach into a larger market. The latest significance is whether the group came from survival or not. Some of advantages for agencies using survival show are early exposure to the public, where the public can participate in choosing the idol they want. Meanwhile group size and gender does not give significant effect compare to others three.</p>
+  <p class="dw-body">From previous analysis we see that when it comes who will win, type of agency will have the greatest impact. Big agencies will have more capital to spend on marketing and music producer. The second substantial impact is that if there is an international casting at least one even though music shows we count is music shows in South Korea, one of financial reason is that International casting (member outside South Korea) can also help the group expand their reach into a larger market. The latest significance is whether the group came from survival or not. Some of advantages for agencies using survival show are early exposure to the public, where the public can participate in choosing the idol they want. Meanwhile group size and gender does not give significant effect compare to others three.</p>
 
-  <p>Is there any group have combination of these three? Big agency, survival show and international casting? Yes, one of them is Twice. Twice is some of the example combination of survival shows and international casting.</p>
+  <p class="dw-body">Is there any group have combination of these three? Big agency, survival show and international casting? Yes, one of them is Twice. Twice is some of the example combination of survival shows and international casting.</p>
 
   <div class="story-img">
     <img src="../assets/twice-win.jpeg" alt="Twice winning on a music show">
     <div class="credit">SOURCE IMAGE: <a href="http://0423chaeyoung.tistory.com/178" target="_blank" rel="noopener">0423CHAEYOUNG.TISTORY.COM</a></div>
   </div>
 
-  <h3 id="howLongTheyWait">For those who win how long they need to wait?</h3>
+  <h3 class="dw-h3" id="howLongTheyWait">For those who win how long they need to wait?</h3>
 
-  <p>If we count all the winner show the <a href="https://en.wikipedia.org/wiki/Median" target="_blank" rel="noopener">median</a> days for them to wait until the first win was 384 days or 1 year from their debut. Interestingly if we split based on type of agency the difference is staggering Big Company need to wait less than one year or 238 days while the median other company is 483 days.</p>
+  <p class="dw-body">If we count all the winner show the <a href="https://en.wikipedia.org/wiki/Median" target="_blank" rel="noopener">median</a> days for them to wait until the first win was 384 days or 1 year from their debut. Interestingly if we split based on type of agency the difference is staggering Big Company need to wait less than one year or 238 days while the median other company is 483 days.</p>
 
   <p class="note">Note: Each dots represents each group, hover the dot to know the detail for each observation. Y-axis is days they had to wait to get the first win, the higher the dot means more time they need to wait.</p>
 
-  <div class="figure">
-    <div class="fig-title">Days From Debut to First Music-Show Win</div>
-    <div class="fig-sub">71 winning groups · log scale · box shows the middle half, line is the median</div>
+  <div class="dw-chart">
+    <div class="dw-chart__head">
+    <span class="dw-label">Chart</span>
+      <h3 class="dw-chart__title">Days From Debut to First Music-Show Win</h3>
+    <p class="dw-chart__subtitle">71 winning groups · log scale · box shows the middle half, line is the median</p>
+    </div>
     <div class="tabs" id="tabs-main"></div>
-    <div class="legend">
-      <span><span class="swatch" style="background:var(--teal-dk)"></span>Win</span>
-      <span><span class="swatch" style="background:var(--red)"></span>Win &amp; Disband</span>
+    <div class="dw-legend">
+      <span class="dw-legend__item"><span class="dw-legend__swatch" style="--sw:var(--dw-teal-dark)"></span>Win</span>
+      <span class="dw-legend__item"><span class="dw-legend__swatch" style="--sw:var(--dw-red)"></span>Win &amp; Disband</span>
     </div>
-    <div class="chart" id="chart-main"></div>
-    <div class="fig-src"><span>SOURCE: PUDDING.COOL + DATAWIZART RESEARCH · 18 AUG 2021</span><span>DATAWIZART.CO</span></div>
+    <div class="dw-chart__plot chart" id="chart-main"></div>
+    <div class="dw-chart__foot"><span class="dw-source">SOURCE: PUDDING.COOL + DATAWIZART RESEARCH · 18 AUG 2021</span><span class="dw-source">DATAWIZART.CO</span></div>
   </div>
 
-  <p>From five variable that we gathered, it cannot describe really well variance why certain groups are faster than the other. The most significant difference is whether group comes out from survival show or not. A group band came from survival have median 168 days while the other is 565 days. Additional variable or information might needed to explain the variance between the group, it can be budget during promotion or the competition while they promoted the song.</p>
+  <p class="dw-body">From five variable that we gathered, it cannot describe really well variance why certain groups are faster than the other. The most significant difference is whether group comes out from survival show or not. A group band came from survival have median 168 days while the other is 565 days. Additional variable or information might needed to explain the variance between the group, it can be budget during promotion or the competition while they promoted the song.</p>
 
-  <h4>How long the group need to wait based on other dimension</h4>
+  <h4 class="dw-h3">How long the group need to wait based on other dimension</h4>
 
-  <p>Three other variable have the least influence on how fast the group will win. For Gender we remove mix due to small number of observation.</p>
+  <p class="dw-body">Three other variable have the least influence on how fast the group will win. For Gender we remove mix due to small number of observation.</p>
 
-  <div class="figure">
-    <div class="fig-title">Days From Debut to First Win — Other Dimensions</div>
-    <div class="fig-sub">Same chart, split by the three weaker variables</div>
+  <div class="dw-chart">
+    <div class="dw-chart__head">
+    <span class="dw-label">Chart</span>
+      <h3 class="dw-chart__title">Days From Debut to First Win — Other Dimensions</h3>
+    <p class="dw-chart__subtitle">Same chart, split by the three weaker variables</p>
+    </div>
     <div class="tabs" id="tabs-other"></div>
-    <div class="legend">
-      <span><span class="swatch" style="background:var(--teal-dk)"></span>Win</span>
-      <span><span class="swatch" style="background:var(--red)"></span>Win &amp; Disband</span>
+    <div class="dw-legend">
+      <span class="dw-legend__item"><span class="dw-legend__swatch" style="--sw:var(--dw-teal-dark)"></span>Win</span>
+      <span class="dw-legend__item"><span class="dw-legend__swatch" style="--sw:var(--dw-red)"></span>Win &amp; Disband</span>
     </div>
-    <div class="chart" id="chart-other"></div>
-    <div class="fig-src"><span>SOURCE: PUDDING.COOL + DATAWIZART RESEARCH · 18 AUG 2021</span><span>DATAWIZART.CO</span></div>
+    <div class="dw-chart__plot chart" id="chart-other"></div>
+    <div class="dw-chart__foot"><span class="dw-source">SOURCE: PUDDING.COOL + DATAWIZART RESEARCH · 18 AUG 2021</span><span class="dw-source">DATAWIZART.CO</span></div>
   </div>
 
-  <div class="figure" id="alldata">
-    <div class="fig-title">All Data</div>
-    <div class="fig-sub">All 251 groups — type in any box to filter, click a header to sort</div>
-    <div class="tbl-wrap"><table id="data-table"></table></div>
+  <div class="dw-chart" id="alldata">
+    <div class="dw-chart__head">
+    <span class="dw-label">Chart</span>
+      <h3 class="dw-chart__title">All Data</h3>
+    <p class="dw-chart__subtitle">All 251 groups — type in any box to filter, click a header to sort</p>
+    </div>
+    <div class="dw-chart__plot"><div class="tbl-wrap"><table id="data-table"></table></div></div>
     <div class="pager">
       <span id="pager-info"></span>
       <span><button id="pg-prev">← Prev</button><button id="pg-next">Next →</button></span>
     </div>
   </div>
 
-  <h3 id="methodology">Methodology</h3>
+  <h3 class="dw-h3" id="methodology">Methodology</h3>
 
-  <p>The data set is combination between group that mentioned on this article <a href="https://pudding.cool/2020/10/kpop/" target="_blank" rel="noopener">https://pudding.cool/2020/10/kpop/</a>, with additional new groups that debut in 2020 and at least have more than two members. We also exclude Trouble Maker, GD X Taeyang, ToHeart, WJMK, Super M as this group created from existed group or combination from different group.</p>
+  <p class="dw-body">The data set is combination between group that mentioned on this article <a href="https://pudding.cool/2020/10/kpop/" target="_blank" rel="noopener">https://pudding.cool/2020/10/kpop/</a>, with additional new groups that debut in 2020 and at least have more than two members. We also exclude Trouble Maker, GD X Taeyang, ToHeart, WJMK, Super M as this group created from existed group or combination from different group.</p>
 
-  <p>The sequence of order in <a href="#whoWinMusic">Who win the music show</a> variable based on random forest output. The first sequence means the most importance variable that able to differentiate between group who will win or not.</p>
+  <p class="dw-body">The sequence of order in <a href="#whoWinMusic">Who win the music show</a> variable based on random forest output. The first sequence means the most importance variable that able to differentiate between group who will win or not.</p>
 
-  <p>The sequence of the tab order in <a href="#howLongTheyWait">For those who win how long they need to wait?</a> is based on linear regression where we pick based on the highest R-squared. The first tab means the most gain in term of R-Squared.</p>
+  <p class="dw-body">The sequence of the tab order in <a href="#howLongTheyWait">For those who win how long they need to wait?</a> is based on linear regression where we pick based on the highest R-squared. The first tab means the most gain in term of R-Squared.</p>
 
 </article>
 
-<footer class="foot">
+<footer class="foot dw-on-dark">
   <div class="foot-inner">
-    <div class="foot-word">DATAWIZART</div>
+    <div class="dw-lockup" style="padding:0">
+      <img class="dw-mark" src="../assets/logo/dw-mark-gold.png" alt="DataWizart">
+      <span class="dw-wordmark" style="--wordmark-size:var(--text-lg);color:var(--dw-white)">Datawizart</span>
+    </div>
     <div class="foot-links">
       <a href="../index.html">HOME</a>
       <a href="https://instagram.com/datawizart" target="_blank" rel="noopener">INSTAGRAM ↗</a>
@@ -223,6 +232,7 @@ tbody tr:hover{background:var(--g100)}
       <a href="mailto:dioariadi2025@gmail.com">EMAIL ↗</a>
     </div>
   </div>
+  <div class="dw-credit" style="margin-top:var(--space-6)">DATAWIZART · DIO ARIADI · PUDDING.COOL + DATAWIZART RESEARCH, 18 AUG 2021</div>
 </footer>
 
 <div class="tooltip" id="tooltip"></div>
@@ -232,8 +242,12 @@ tbody tr:hover{background:var(--g100)}
 <script>
 const DATA = JSON.parse(document.getElementById('dw-data').textContent);
 const WINNERS = DATA.filter(d => d.first_win_show_date && typeof d.days_until_win === 'number');
-const DW = { green:'#5DB96B', teal:'#27A39B', red:'#E05A5A', deep:'#2E2E2E',
-             g200:'#EFEFEF', g300:'#DCDCDC', g400:'#B0B0B0', g500:'#808080', g600:'#555555' };
+/* Colours resolved from assets/dw-system.css — never hard-coded here. */
+const TOK = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const DW = { green:TOK('--dw-green'), teal:TOK('--dw-teal-dark'), red:TOK('--dw-red'),
+             deep:TOK('--dw-charcoal-deep'), white:TOK('--dw-white'),
+             g200:TOK('--dw-gray-200'), g300:TOK('--dw-gray-300'), g400:TOK('--dw-gray-400'),
+             g500:TOK('--dw-gray-500'), g600:TOK('--dw-gray-600') };
 const tooltip = document.getElementById('tooltip');
 function showTip(html, ev){ tooltip.innerHTML = html; tooltip.style.opacity = 1;
   tooltip.style.left = (ev.pageX + 14) + 'px'; tooltip.style.top = (ev.pageY - 10) + 'px'; }
@@ -283,7 +297,7 @@ const DIMS = {
     const pctTxt = d3.format('.1~%')(r.pct);
     svg.append('text').attr('x', x(r.pct) + (r.pct > .5 ? -6 : 6)).attr('y', barY + barH/2 + 4)
       .attr('text-anchor', r.pct > .5 ? 'end' : 'start')
-      .attr('font-family','DM Mono').attr('font-size',11).attr('fill', r.pct > .5 ? '#fff' : DW.g600)
+      .attr('font-family','var(--font-mono)').attr('font-size',11).attr('fill', r.pct > .5 ? DW.white : DW.g600)
       .text(pctTxt + ' win');
     [gWin, gTry].forEach((g, i) => {
       const who = i === 0 ? 'Win' : 'Trying/Disband';
@@ -316,7 +330,7 @@ function stripChart(el, dimKey, dropCats) {
   ticks.forEach(t => {
     svg.append('line').attr('x1',padL).attr('x2',W-padR).attr('y1',y(t)).attr('y2',y(t)).attr('stroke',DW.g200);
     svg.append('text').attr('x',padL-8).attr('y',y(t)+4).attr('text-anchor','end')
-      .attr('font-family','DM Mono').attr('font-size',11).attr('fill',DW.g500).text(t);
+      .attr('font-family','var(--font-mono)').attr('font-size',11).attr('fill',DW.g500).text(t);
   });
   svg.append('text').attr('x',padL-44).attr('y',padT+4).attr('font-family','DM Sans').attr('font-size',11)
      .attr('fill',DW.g600).attr('transform',`rotate(-90 ${padL-44} ${(H)/2})`).attr('x',padL-44).attr('y',H/2)
@@ -331,13 +345,13 @@ function stripChart(el, dimKey, dropCats) {
     const cx = x(cat), bw = 110;
     svg.append('line').attr('x1',cx).attr('x2',cx).attr('y1',y(lo)).attr('y2',y(hi)).attr('stroke',DW.g400);
     svg.append('rect').attr('x',cx-bw/2).attr('y',y(q3)).attr('width',bw).attr('height',y(q1)-y(q3))
-      .attr('fill','#fff').attr('fill-opacity',.6).attr('stroke',DW.g400);
+      .attr('fill',DW.white).attr('fill-opacity',.6).attr('stroke',DW.g400);
     svg.append('line').attr('x1',cx-bw/2).attr('x2',cx+bw/2).attr('y1',y(med)).attr('y2',y(med))
       .attr('stroke',DW.deep).attr('stroke-width',2);
     const onRight = cx > W * 0.6;
     svg.append('text').attr('x', cx + (onRight ? -bw/2-8 : bw/2+8)).attr('y',y(med)+4)
       .attr('text-anchor', onRight ? 'end' : 'start')
-      .attr('font-family','DM Mono').attr('font-size',11.5).attr('fill',DW.deep).text('median ' + Math.round(med) + 'd');
+      .attr('font-family','var(--font-mono)').attr('font-size',11.5).attr('fill',DW.deep).text('median ' + Math.round(med) + 'd');
     svg.append('text').attr('x',cx).attr('y',H-padB+26).attr('text-anchor','middle')
       .attr('font-family','DM Sans').attr('font-size',13).attr('font-weight',600).attr('fill',DW.deep).text(cat);
   });
@@ -346,7 +360,7 @@ function stripChart(el, dimKey, dropCats) {
     const cx = x(dim.get(d)) + (rng() - .5) * 96;
     svg.append('circle').attr('cx',cx).attr('cy',y(d.days_until_win)).attr('r',4.5)
       .attr('fill', disband ? DW.red : DW.teal).attr('fill-opacity',.75)
-      .attr('stroke','#fff').attr('stroke-width',.8).style('cursor','pointer')
+      .attr('stroke',DW.white).attr('stroke-width',.8).style('cursor','pointer')
       .on('mousemove', ev => showTip(
         `<b>${d.name_group}</b><br>Music title when win: ${d.music_title_when_win||'—'}<br>` +
         `Days until win: ${d.days_until_win} day(s)<br>Agency: ${d.agency}<br>Debut: ${d.debut_date}` +

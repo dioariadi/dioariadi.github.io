@@ -1,81 +1,74 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>COVID-19 Tracker Indonesia · DataWizart</title>
-<meta name="description" content="Tiga grafik untuk menganalisis kasus Covid-19 di 34 provinsi Indonesia — replikasi dashboard Financial Times dalam R, lengkap dengan kodenya.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400;1,9..40,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<meta name="description" content="Three charts for reading Covid-19 case data across Indonesia's 34 provinces — the Financial Times dashboard rebuilt in R, with the code included.">
+<link rel="icon" type="image/png" href="../assets/logo/dw-mark-gold.png">
+<link rel="stylesheet" href="../assets/dw-system.css">
 <style>
-:root{
-  --gold:#F2C438; --gold-dk:#C99E18; --charcoal:#474747; --deep:#2E2E2E; --black:#111111;
-  --teal:#3DC9C0; --teal-dk:#27A39B; --green:#5DB96B; --sand:#C4A882; --red:#E05A5A;
-  --g100:#F7F7F7; --g200:#EFEFEF; --g300:#DCDCDC; --g400:#B0B0B0; --g500:#808080;
-  --g600:#555555; --g800:#2A2A2A; --white:#FFFFFF;
-  --display:'Oswald',sans-serif; --body:'DM Sans',sans-serif; --mono:'DM Mono',monospace;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--white);color:var(--g800);font-family:var(--body)}
-a{cursor:pointer}
+/* Page layout only. Every value below resolves to a design-system token —
+   no colour, font, space or radius is declared here. */
 img{display:block;max-width:100%}
-.mast{border-top:8px solid var(--deep);border-bottom:1px solid var(--deep);
-  padding:16px 56px;display:flex;justify-content:space-between;align-items:center;gap:24px}
-.mast-title{font-family:var(--display);font-weight:700;font-size:28px;letter-spacing:.02em;color:var(--deep)}
-.mast-title a{color:var(--deep);text-decoration:none}
-.mast-meta{font-family:var(--mono);font-size:11px;color:var(--g600);letter-spacing:.04em}
-.nav{border-bottom:2px solid var(--deep);padding:10px 56px;display:flex;justify-content:space-between;
-  align-items:center;font-family:var(--body);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
-.nav-links{display:flex;gap:28px}
-.nav-links a{color:var(--deep);text-decoration:none}
-.nav-links a.active{color:var(--gold-dk)}
-.nav-accent{color:var(--gold);font-family:var(--mono);letter-spacing:.02em;text-transform:none;font-weight:400;font-size:11px}
-.article{max-width:880px;margin:0 auto;padding:56px 24px 0}
-.kicker{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--teal-dk);margin-bottom:16px;display:flex;align-items:center;gap:12px}
-.kicker-line{width:36px;height:1px;background:var(--teal-dk);display:inline-block}
-h1{font-family:var(--display);font-weight:700;font-size:46px;line-height:1.02;color:var(--deep);
-  letter-spacing:-.01em;margin-bottom:16px;text-wrap:balance}
-.byline{font-family:var(--mono);font-size:12px;color:var(--g600);border-top:1px solid var(--g300);border-bottom:1px solid var(--g300);
-  padding:10px 0;letter-spacing:.03em;margin:22px 0 34px}
-.article p{font-size:16.5px;line-height:1.7;margin-bottom:20px;color:var(--g800)}
-.article p a{color:var(--teal-dk)}
-.article ul{font-size:16.5px;line-height:1.7;margin:0 0 20px 24px;color:var(--g800)}
-.article ul a{color:var(--teal-dk)}
-h2{font-family:var(--display);font-weight:600;font-size:30px;color:var(--deep);margin:44px 0 16px;line-height:1.1}
-h3{font-family:var(--display);font-weight:600;font-size:23px;color:var(--deep);margin:38px 0 14px;line-height:1.1}
-h4{font-family:var(--display);font-weight:500;font-size:19px;color:var(--deep);margin:28px 0 10px}
-.note{font-size:13.5px;color:var(--g600);font-style:italic;line-height:1.6;margin-bottom:16px}
-.figure{border:1px solid var(--g300);padding:22px 22px 16px;margin:22px 0 34px;background:var(--white)}
-.fig-title{font-family:var(--display);font-weight:600;font-size:20px;color:var(--deep);margin-bottom:2px}
-.fig-sub{font-size:13px;color:var(--g600);font-style:italic;margin-bottom:14px}
-.fig-src{font-family:var(--mono);font-size:10.5px;color:var(--g500);letter-spacing:.04em;border-top:1px solid var(--g200);
-  padding-top:10px;margin-top:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
-.figure img{width:100%;border:1px solid var(--g200)}
-details.code{border:1px solid var(--g300);border-left:3px solid var(--gold);margin:18px 0;background:var(--g100)}
-details.code summary{font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--deep);padding:10px 16px;cursor:pointer;user-select:none}
-details.code summary::marker{color:var(--gold-dk)}
-details.code pre{overflow-x:auto;padding:14px 18px;background:var(--white);border-top:1px solid var(--g300)}
-details.code code{font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--g800);white-space:pre}
-.foot{margin-top:72px;padding:36px 56px;background:var(--deep);color:var(--g300)}
-.foot-inner{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
-.foot-word{font-family:var(--body);font-weight:300;font-size:18px;letter-spacing:.22em;color:var(--white)}
-.foot-links{display:flex;gap:22px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;flex-wrap:wrap}
-.foot-links a{color:var(--gold);text-decoration:none}
+.mast{border-top:8px solid var(--dw-charcoal-deep);border-bottom:1px solid var(--dw-charcoal-deep);
+  padding:var(--space-4) var(--space-16);display:flex;justify-content:space-between;align-items:center;gap:var(--space-6)}
+.mast .dw-mark{--mark-h:34px}
+.mast-meta{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-secondary);letter-spacing:.04em}
+.nav{border-bottom:2px solid var(--dw-charcoal-deep);padding:var(--space-3) var(--space-16);display:flex;
+  justify-content:space-between;align-items:center;gap:var(--space-6);flex-wrap:wrap}
+.nav-links{display:flex;gap:var(--space-8)}
+.nav-links a,.nav-accent{font-family:var(--font-body);font-size:var(--text-xs);font-weight:600;
+  letter-spacing:var(--tracking-widest);text-transform:uppercase}
+.nav-links a{color:var(--dw-charcoal-deep);border-bottom:0}
+.nav-links a.active{color:var(--dw-gold-dark)}
+.nav-accent{color:var(--fg-muted);font-family:var(--font-mono);letter-spacing:.02em;text-transform:none;font-weight:400}
+.article{max-width:880px;margin:0 auto;padding:var(--space-16) var(--space-6) 0}
+.article h1{margin-bottom:var(--space-4)}
+.byline{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-secondary);
+  border-top:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle);
+  padding:var(--space-3) 0;letter-spacing:.03em;margin:var(--space-5) 0 var(--space-8)}
+.article p{margin-bottom:var(--space-5)}
+.article ul{font-family:var(--font-body);font-size:var(--text-base);line-height:1.7;
+  margin:0 0 var(--space-5) var(--space-6);color:var(--fg-primary)}
+.article h2{margin:var(--space-12) 0 var(--space-4)}
+.article h3{margin:var(--space-10) 0 var(--space-3)}
+.article h4{font-family:var(--font-display);font-weight:500;font-size:var(--text-lg);
+  color:var(--dw-charcoal-deep);margin:var(--space-8) 0 var(--space-3)}
+.note{font-family:var(--font-body);font-size:var(--text-sm);color:var(--fg-secondary);
+  font-style:italic;line-height:1.6;margin-bottom:var(--space-4);max-width:var(--measure)}
+.dw-chart{margin:var(--space-5) 0 var(--space-8)}
+.dw-chart__plot img{width:100%;border:1px solid var(--dw-gray-200)}
+details.code{border:1px solid var(--border-subtle);border-left:3px solid var(--dw-gold);
+  margin:var(--space-5) 0;background:var(--bg-subtle)}
+details.code summary{font-family:var(--font-body);font-size:var(--text-xs);font-weight:600;
+  letter-spacing:var(--tracking-widest);text-transform:uppercase;color:var(--dw-charcoal-deep);
+  padding:var(--space-3) var(--space-4);cursor:pointer;user-select:none;min-height:44px;display:flex;align-items:center}
+details.code summary::marker{color:var(--dw-gold-dark)}
+details.code pre{overflow-x:auto;padding:var(--space-4) var(--space-5);background:var(--dw-white);
+  border-top:1px solid var(--border-subtle)}
+details.code code{font-family:var(--font-mono);font-size:var(--text-sm);line-height:1.6;
+  color:var(--fg-primary);white-space:pre}
+.foot{margin-top:var(--space-20);padding:var(--space-10) var(--space-16);background:var(--bg-deep);color:var(--dw-gray-300)}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;gap:var(--space-6);flex-wrap:wrap}
+.foot .dw-mark{--mark-h:44px}
+.foot-links{display:flex;gap:var(--space-5);font-family:var(--font-mono);font-size:var(--text-xs);
+  letter-spacing:.04em;flex-wrap:wrap}
 @media (max-width:900px){
-  .mast,.nav,.foot{padding-left:20px;padding-right:20px}
-  .nav-links{gap:16px}
+  .mast,.nav,.foot{padding-left:var(--space-5);padding-right:var(--space-5)}
+  .nav-links{gap:var(--space-4)}
   .nav-accent{display:none}
-  h1{font-size:34px}
+  .article h1{font-size:var(--text-3xl)}
 }
 </style>
 </head>
 <body>
 
 <header class="mast">
-  <div class="mast-title"><a href="../index.html">DATAWIZART</a></div>
+  <a class="dw-row dw-gap-3" href="../index.html" style="border-bottom:0">
+    <img class="dw-mark" src="../assets/logo/dw-mark-charcoal.png" alt="DataWizart">
+    <span class="dw-wordmark" style="--wordmark-size:var(--text-md);color:var(--dw-charcoal-deep)">Datawizart</span>
+  </a>
   <div class="mast-meta">DATA STORYTELLING STUDIO · JAKARTA</div>
 </header>
 
@@ -90,19 +83,19 @@ details.code code{font-family:var(--mono);font-size:12.5px;line-height:1.6;color
 </nav>
 
 <article class="article">
-  <div class="kicker"><span class="kicker-line"></span>STORYTELLING · № 03 · PUBLIC HEALTH</div>
-  <h1>COVID-19 Tracker Indonesia</h1>
-  <div class="byline">DIO ARIADI · WWW.DATAWIZART.CO · BERDASARKAN DATA 5/12/2020</div>
+  <div class="dw-kicker">Storytelling · № 03 · Public Health</div>
+  <h1 class="dw-h1">COVID-19 Tracker Indonesia</h1>
+  <div class="byline">DIO ARIADI · WWW.DATAWIZART.CO · BASED ON DATA TO 5 DEC 2020</div>
 
-  <h3>Bagaimana kondisi wilayah provinsi kalian? Apakah telah melewati puncak dari penambahan kasus?</h3>
+  <h3 class="dw-h2">How is your province doing? Has it passed the peak of new cases?</h3>
 
-  <p>Untuk menjawab pertanyaan ini kami membuat tiga grafik yang masing-masing dapat digunakan untuk menganalisis kasus Covid-19 di 34 provinsi di Indonesia. Ketiga grafik ini menampilkan rolling average 7-hari dari jumlah kasus positif Covid-19 di setiap provinsi. Grafik pertama dan kedua merupakan replikasi dari dashboard yang dibuat oleh Financial Times <a href="https://ig.ft.com/coronavirus-chart/?areas=usa&amp;areas=idn&amp;cumulative=0&amp;logScale=1&amp;perMillion=0&amp;values=cases" target="_blank" rel="noopener">link</a>. Sedangkan grafik ketiga adalah replikasi heatmap dari akun twitter @VictimOfMaths <a href="https://github.com/VictimOfMaths/COVID-19" target="_blank" rel="noopener">source</a>. Ketiga grafik ini melengkapi satu sama lain, terdapat keunggulan dan kelemahan dalam tiap grafik. Dengan menampilkan ketiganya diharapkan dapat diambil analisa atau kesimpulan yang mencukupi.</p>
+  <p class="dw-body">To answer that, we built three charts, each of which can be used to read Covid-19 cases across Indonesia’s 34 provinces. All three show the 7-day rolling average of positive Covid-19 cases in each province. The first and second replicate the dashboard built by the Financial Times <a href="https://ig.ft.com/coronavirus-chart/?areas=usa&amp;areas=idn&amp;cumulative=0&amp;logScale=1&amp;perMillion=0&amp;values=cases" target="_blank" rel="noopener">link</a>. The third replicates the heatmap from the Twitter account @VictimOfMaths <a href="https://github.com/VictimOfMaths/COVID-19" target="_blank" rel="noopener">source</a>. The three complement each other; each has its own strengths and weaknesses. Showing all three should be enough to support a reasonable reading.</p>
 
-  <p><i>Disclaimer</i> bahwa penulis hanya membuat grafik dan tidak mengambil suatu kesimpulan.</p>
+  <p class="dw-body"><i>Disclaimer:</i> the author only builds the charts and draws no conclusions from them.</p>
 
-  <h4>Time-series Rolling Average Kasus Positif Baru</h4>
+  <h4>Time series: rolling average of new positive cases</h4>
 
-  <p class="note">NOTE: Pada grafik pertama ini, kami memetakan rolling-average dari satu provinsi dalam satu garis time-series sehingga lebih mudah melakukan perbandingan antar-provinsi. Dalam grafik ini, rolling average dimulai ketika jumlah kasus sudah mencapai 4 atau lebih kasus.</p>
+  <p class="note">NOTE: in this first chart, each province’s rolling average is drawn as a single time-series line, which makes province-to-province comparison easier. The rolling average starts once a province has reached 4 or more cases.</p>
 
   <details class="code"><summary>Code</summary><pre><code>heatmap_daily_indo %&gt;% group_by(province) %&gt;% 
   mutate(dott_y = if_else(seq_==max(seq_),casesroll_avg,NaN)) %&gt;% 
@@ -114,7 +107,7 @@ details.code code{font-family:var(--mono);font-size:12.5px;line-height:1.6;color
   scale_y_continuous(trans='log2',
                      breaks=c(1,10,100,500,1000,5000,10000,25000,80000,120000))+
   facet_wrap(~province)+
-  labs(subtitle = "7 hari rolling average kasus positif, dari hari terjadinya kasus positif diatas 4",
+  labs(subtitle = "7-day rolling average of positive cases, from the day a province passed 4 cases",
        y = "Log Rolling Avg Kasus Positif",
        x = "Jumlah hari dari terjadinya kasus positif diatas 4",
        caption = "Kode oleh Dio Ariadi | www.datawizart.co\nInspirasi grafik twitter @jburnmurdoch")+
@@ -126,16 +119,19 @@ details.code code{font-family:var(--mono);font-size:12.5px;line-height:1.6;color
         strip.background = element_rect(fill = "#f5f5f5"),
         plot.background = element_rect(fill = "#f5f5f5"),
         strip.text.x = element_text(hjust = 0))</code></pre></details>
-  <div class="figure">
-    <div class="fig-title">Rolling Average 7 Hari per Provinsi</div>
-    <div class="fig-sub">7 hari rolling average kasus positif, dari hari terjadinya kasus positif diatas 4</div>
-    <img src="../assets/covid/c01.png" alt="Rolling Average 7 Hari per Provinsi">
-    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.CO</span></div>
+  <div class="dw-chart">
+    <div class="dw-chart__head">
+    <span class="dw-label">Chart</span>
+      <h3 class="dw-chart__title">7-Day Rolling Average by Province</h3>
+    <p class="dw-chart__subtitle">7-day rolling average of positive cases, from the day a province passed 4 cases</p>
+    </div>
+    <div class="dw-chart__plot"><img loading="lazy" src="../assets/covid/c01.png" alt="7-Day Rolling Average by Province"></div>
+    <div class="dw-chart__foot"><span class="dw-source">SOURCE: KAWALCOVID19 · COVID19.GO.ID · DATA TO 5 DEC 2020</span><span class="dw-source">DATAWIZART.CO</span></div>
   </div>
 
-  <h4>Time-series Kasus Positif Harian dan Rolling Average 7 Hari</h4>
+  <h4>Time series: daily positive cases and the 7-day rolling average</h4>
 
-  <p>Pada grafik kedua, kita dapat melihat lebih detail pertambahan kasus di tiap provinsi. Selain menggunakan line chart yang menggambarkan rolling average, grafik ini menggunakan bar chart yang mengilustrasikan jumlah kasus positif per hari di provinsi tersebut. Kita dapat melihat dengan jelas pada hari keberapa peak terjadi di suatu provinsi.</p>
+  <p class="dw-body">The second chart shows each province’s case growth in more detail. Alongside the line for the rolling average, it uses bars for the number of positive cases per day in that province. That makes it easy to see exactly which day a province peaked.</p>
 
   <details class="code"><summary>Code</summary><pre><code>heatmap_indo %&gt;% filter(total_case&gt;0 &amp; province!="no_define") %&gt;% 
   arrange(data_date) %&gt;% 
@@ -159,16 +155,19 @@ details.code code{font-family:var(--mono);font-size:12.5px;line-height:1.6;color
         strip.background = element_rect(fill = "#f5f5f5"),
         plot.background = element_rect(fill = "#f5f5f5"),
         strip.text.x = element_text(hjust = 0))</code></pre></details>
-  <div class="figure">
-    <div class="fig-title">Kasus Harian dan Rolling Average per Provinsi</div>
-    <div class="fig-sub">Bar chart kasus harian dengan garis rolling average 7 hari</div>
-    <img src="../assets/covid/c02.png" alt="Kasus Harian dan Rolling Average per Provinsi">
-    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.CO</span></div>
+  <div class="dw-chart">
+    <div class="dw-chart__head">
+    <span class="dw-label">Chart</span>
+      <h3 class="dw-chart__title">Daily Cases and Rolling Average by Province</h3>
+    <p class="dw-chart__subtitle">Bars are daily cases; the line is the 7-day rolling average</p>
+    </div>
+    <div class="dw-chart__plot"><img loading="lazy" src="../assets/covid/c02.png" alt="Daily Cases and Rolling Average by Province"></div>
+    <div class="dw-chart__foot"><span class="dw-source">SOURCE: KAWALCOVID19 · COVID19.GO.ID · DATA TO 5 DEC 2020</span><span class="dw-source">DATAWIZART.CO</span></div>
   </div>
 
-  <h4>Heatmap per Provinsi</h4>
+  <h4>Heatmap by province</h4>
 
-  <p>Heatmap ini menggambarkan 7 hari rolling average dari kasus positif baru yang dinormalisasi berdasarkan nilai kasus positif terbesar di tiap provinsi. Semakin hijau map suatu provinsi berarti semakin jauh rolling average bergerak dari jumlah kasus positif tertinggi. Hal ini dapat diinterpretasikan bahwa provinsi tersebut telah melewati puncak pertambahan kasus baru.</p>
+  <p class="dw-body">This heatmap shows the 7-day rolling average of new positive cases, normalised against each province’s own highest case count. The greener a province’s row, the further its rolling average has moved from that peak — which can be read as the province having passed the peak of new cases.</p>
 
   <details class="code"><summary>Code</summary><pre><code>heatmap_indo_2 &lt;- heatmap_indo %&gt;% filter(province!="no_define")
 heatmap_indo_2$province &lt;- fct_reorder(heatmap_indo_2$province, heatmap_indo_2$total_case,max)
@@ -209,16 +208,19 @@ casebar &lt;- ggplot(subset(heatmap_indo_2, data_date==max(data_date)), aes(x=to
         panel.background = element_rect(fill = "#f5f5f5"))
 
 plot_grid(casetiles, casebar, align="h", rel_widths=c(1,0.2))</code></pre></details>
-  <div class="figure">
-    <div class="fig-title">Heatmap Rolling Average per Provinsi</div>
-    <div class="fig-sub">Rolling average dinormalisasi terhadap nilai tertinggi tiap provinsi</div>
-    <img src="../assets/covid/c03.png" alt="Heatmap Rolling Average per Provinsi">
-    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.CO</span></div>
+  <div class="dw-chart">
+    <div class="dw-chart__head">
+    <span class="dw-label">Chart</span>
+      <h3 class="dw-chart__title">Rolling-Average Heatmap by Province</h3>
+    <p class="dw-chart__subtitle">Rolling average normalised against each province’s own peak</p>
+    </div>
+    <div class="dw-chart__plot"><img loading="lazy" src="../assets/covid/c03.png" alt="Rolling-Average Heatmap by Province"></div>
+    <div class="dw-chart__foot"><span class="dw-source">SOURCE: KAWALCOVID19 · COVID19.GO.ID · DATA TO 5 DEC 2020</span><span class="dw-source">DATAWIZART.CO</span></div>
   </div>
 
-  <h3>Perkembangan Kasus Positif</h3>
+  <h3 class="dw-h2">How positive cases progressed</h3>
 
-  <p>Pada grafik keempat, kami menampilkan grafik log kumulatif jumlah kasus dari hari jumlah kasus lebih dari 4. Terdapat garis bantu untuk melihat bagaimana laju pertambahan kasus positif suatu kota. Bila garis hitam mengikuti arah dari salah satu garis bantu artinya kasus akan meningkat dua kali lipat dalam jangka waktu garis tersebut.</p>
+  <p class="dw-body">The fourth chart plots cumulative cases on a log scale, starting from the day a province passed 4 cases. Guide lines show the doubling rate: where the black line runs parallel to a guide, cases are doubling over that guide’s interval.</p>
 
   <details class="code"><summary>Code</summary><pre><code>label_case=
   bind_rows(data.frame(value = seq_fun(start_value = 5, end_value = max(df_indo$total_case), 3), double_each = 3) %&gt;% mutate(seq_ = row_number()-1),
@@ -267,16 +269,19 @@ case_cumulative %&gt;%
         plot.background = element_rect(fill = "#f5f5f5"),
         strip.text.x = element_text(hjust = 0),
         plot.subtitle = element_markdown(size = 8))</code></pre></details>
-  <div class="figure">
-    <div class="fig-title">Log Kumulatif Kasus Positif</div>
-    <div class="fig-sub">Kumulatif kasus (log) dengan garis bantu laju penggandaan</div>
-    <img src="../assets/covid/c04.png" alt="Log Kumulatif Kasus Positif">
-    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.CO</span></div>
+  <div class="dw-chart">
+    <div class="dw-chart__head">
+    <span class="dw-label">Chart</span>
+      <h3 class="dw-chart__title">Cumulative Positive Cases, Log Scale</h3>
+    <p class="dw-chart__subtitle">Cumulative cases on a log scale, with doubling-rate guide lines</p>
+    </div>
+    <div class="dw-chart__plot"><img loading="lazy" src="../assets/covid/c04.png" alt="Cumulative Positive Cases, Log Scale"></div>
+    <div class="dw-chart__foot"><span class="dw-source">SOURCE: KAWALCOVID19 · COVID19.GO.ID · DATA TO 5 DEC 2020</span><span class="dw-source">DATAWIZART.CO</span></div>
   </div>
 
-  <h3>Tingkat Kematian Per Provinsi</h3>
+  <h3 class="dw-h2">Death rate by province</h3>
 
-  <p>Tingkat kematian didefinisikan sebagai jumlah kasus meninggal dibagi jumlah kasus positif. Dapat kita lihat bahwa provinsi-provinsi dengan tingkat kematian tertinggi banyak terdapat di pulau Jawa dan Sumatera.</p>
+  <p class="dw-body">The death rate is defined as deaths divided by positive cases. The provinces with the highest death rates are concentrated on Java and Sumatra.</p>
 
   <details class="code"><summary>Code</summary><pre><code>death_ratio_df &lt;- df_indo %&gt;% 
   group_by(code,province) %&gt;% 
@@ -309,11 +314,14 @@ death_ratio_df %&gt;%
         plot.background=element_rect(fill = "#f5f5f5"),
         panel.background = element_rect(fill = "#f5f5f5"),
         legend.position = "none")</code></pre></details>
-  <div class="figure">
-    <div class="fig-title">Peta Tingkat Kematian per Provinsi</div>
-    <div class="fig-sub">Geofacet — rasio kematian (%) tiap provinsi Indonesia</div>
-    <img src="../assets/covid/c05.png" alt="Tingkat Kematian per Provinsi">
-    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.CO</span></div>
+  <div class="dw-chart">
+    <div class="dw-chart__head">
+    <span class="dw-label">Chart</span>
+      <h3 class="dw-chart__title">Death-Rate Map by Province</h3>
+    <p class="dw-chart__subtitle">Geofacet grid — death rate (%) for each Indonesian province</p>
+    </div>
+    <div class="dw-chart__plot"><img loading="lazy" src="../assets/covid/c05.png" alt="Death-rate map by province"></div>
+    <div class="dw-chart__foot"><span class="dw-source">SOURCE: KAWALCOVID19 · COVID19.GO.ID · DATA TO 5 DEC 2020</span><span class="dw-source">DATAWIZART.CO</span></div>
   </div>
   <details class="code"><summary>Code</summary><pre><code>overall_indo &lt;- sum(death_ratio_df$total_death)/sum(death_ratio_df$total_case)
 overall_world &lt;- read_rds("df_worldmeter_analysis.rds") %&gt;% group_by(country) %&gt;% slice(which.max(data_date)) %&gt;% ungroup() %&gt;% summarise(sum(deaths,na.rm = TRUE)/sum(cases,na.rm = TRUE)) %&gt;% pull()
@@ -349,44 +357,47 @@ death_ratio_df %&gt;% filter(province!="no_define") %&gt;%
         plot.background=element_rect(fill = "#f5f5f5"),
         panel.background = element_rect(fill = "#f5f5f5"),
         legend.position = "none")</code></pre></details>
-  <div class="figure">
-    <div class="fig-title">Rasio Kematian per Provinsi</div>
-    <div class="fig-sub">Diurutkan dari tertinggi — dengan garis rasio kematian dunia (6,7%) dan Indonesia (6,8%)</div>
-    <img src="../assets/covid/c06.png" alt="Tingkat Kematian per Provinsi (Lanjutan)">
-    <div class="fig-src"><span>SUMBER: KAWALCOVID19 · COVID19.GO.ID · DATA 5/12/2020</span><span>DATAWIZART.CO</span></div>
+  <div class="dw-chart">
+    <div class="dw-chart__head">
+    <span class="dw-label">Chart</span>
+      <h3 class="dw-chart__title">Death Rate by Province</h3>
+    <p class="dw-chart__subtitle">Ranked highest first, with reference lines for the world (6.7%) and Indonesia (6.8%) death rates</p>
+    </div>
+    <div class="dw-chart__plot"><img loading="lazy" src="../assets/covid/c06.png" alt="Death rate by province, ranked"></div>
+    <div class="dw-chart__foot"><span class="dw-source">SOURCE: KAWALCOVID19 · COVID19.GO.ID · DATA TO 5 DEC 2020</span><span class="dw-source">DATAWIZART.CO</span></div>
   </div>
   <details class="code"><summary>Code</summary><pre><code>  #geom_text(aes(label=round(death_ratio,3)*100),vjust=1.2,family = "Proxima Nova")+
   #geom_text(aes(label=name_short),vjust =-1,family = "Proxima Nova",size = 3)</code></pre></details>
 
-  <h3>Apakah dapat dibuat kesimpulan dari gambar di atas?</h3>
+  <h3 class="dw-h2">Can any conclusion be drawn from the charts above?</h3>
 
-  <p>Untuk pengambilan kesimpulan kembali ke pembaca masing-masing. Sebagai referensi Kematian Jakarta naik 52% dibandingkan rata-rata tahun sebelumnya.</p>
+  <p class="dw-body">Any conclusion is left to the reader. For reference, deaths in Jakarta rose 52% against the previous year’s average.</p>
 
-  <h3>Kritik dan Saran</h3>
+  <h3 class="dw-h2">Feedback</h3>
 
-  <p>email dioariadi11@gmail.com</p>
+  <p class="dw-body">Email dioariadi11@gmail.com</p>
 
-  <h3>Appendix</h3>
+  <h3 class="dw-h2">Appendix</h3>
 
-  <h4>Contributor</h4>
+  <h4>Contributors</h4>
   <ul>
     <li><a href="https://www.linkedin.com/in/dioariadi/" target="_blank" rel="noopener">Dio Ariadi</a></li>
     <li><a href="https://www.linkedin.com/in/nur-izzahudin/" target="_blank" rel="noopener">Nur Izzahudin</a></li>
     <li><a href="https://www.linkedin.com/in/hamidah-alatas-4a5675126/" target="_blank" rel="noopener">Hamidah Alatas</a></li>
   </ul>
 
-  <h4>Tanggal PSBB</h4>
+  <h4>PSBB dates (large-scale social restrictions)</h4>
   <ul>
-    <li><a href="https://megapolitan.kompas.com/read/2020/04/22/18150051/psbb-jakarta-resmi-diperpanjang-28-hari" target="_blank" rel="noopener">Jakarta PSBB 10 April</a></li>
-    <li><a href="https://www.cnnindonesia.com/nasional/20200422071248-20-495899/tangkal-corona-psbb-bandung-raya" target="_blank" rel="noopener">Bandung PSBB 22 April</a></li>
-    <li><a href="https://surabaya.liputan6.com/read/4236093/pelaksanaan-psbb-surabaya-raya-mulai-berlaku-28-april-2020" target="_blank" rel="noopener">Surabaya PSBB 28 April</a></li>
-    <li><a href="https://tirto.id/psbb-jawa-barat-mulai-6-mei-ratusan-titik-dijaga-buat-cegah-mudik-fk1M" target="_blank" rel="noopener">Jawa Barat PSBB 6 Mei</a></li>
+    <li><a href="https://megapolitan.kompas.com/read/2020/04/22/18150051/psbb-jakarta-resmi-diperpanjang-28-hari" target="_blank" rel="noopener">Jakarta PSBB, 10 April</a></li>
+    <li><a href="https://www.cnnindonesia.com/nasional/20200422071248-20-495899/tangkal-corona-psbb-bandung-raya" target="_blank" rel="noopener">Bandung PSBB, 22 April</a></li>
+    <li><a href="https://surabaya.liputan6.com/read/4236093/pelaksanaan-psbb-surabaya-raya-mulai-berlaku-28-april-2020" target="_blank" rel="noopener">Surabaya PSBB, 28 April</a></li>
+    <li><a href="https://tirto.id/psbb-jawa-barat-mulai-6-mei-ratusan-titik-dijaga-buat-cegah-mudik-fk1M" target="_blank" rel="noopener">West Java PSBB, 6 May</a></li>
   </ul>
 
-  <h4>Sumber Data</h4>
+  <h4>Data sources</h4>
   <ul>
     <li>Indonesia: @kawalCOVID19 · <a href="https://covid19.go.id/" target="_blank" rel="noopener">https://covid19.go.id/</a></li>
-    <li>Internasional: <a href="https://www.worldometers.info/coronavirus/#countries" target="_blank" rel="noopener">worldmeters</a></li>
+    <li>International: <a href="https://www.worldometers.info/coronavirus/#countries" target="_blank" rel="noopener">worldmeters</a></li>
   </ul>
 
   <h4>Chart Style/Type</h4>
@@ -398,9 +409,12 @@ death_ratio_df %&gt;% filter(province!="no_define") %&gt;%
 
 </article>
 
-<footer class="foot">
+<footer class="foot dw-on-dark">
   <div class="foot-inner">
-    <div class="foot-word">DATAWIZART</div>
+    <div class="dw-lockup" style="padding:0">
+      <img class="dw-mark" src="../assets/logo/dw-mark-gold.png" alt="DataWizart">
+      <span class="dw-wordmark" style="--wordmark-size:var(--text-lg);color:var(--dw-white)">Datawizart</span>
+    </div>
     <div class="foot-links">
       <a href="../index.html">HOME</a>
       <a href="https://instagram.com/datawizart" target="_blank" rel="noopener">INSTAGRAM ↗</a>
@@ -408,6 +422,7 @@ death_ratio_df %&gt;% filter(province!="no_define") %&gt;%
       <a href="mailto:dioariadi2025@gmail.com">EMAIL ↗</a>
     </div>
   </div>
+  <div class="dw-credit" style="margin-top:var(--space-6)">DATAWIZART · DIO ARIADI · KAWALCOVID19 / COVID19.GO.ID, DATA TO 5 DEC 2020</div>
 </footer>
 </body>
 </html>

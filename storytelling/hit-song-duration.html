@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Apakah lagu hit makin pendek? Analisis 1.153 lagu nomor satu Billboard Hot 100, 1960–2024.">
+  <title>Lagu hit makin pendek? · DataWizart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,300;400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="../assets/logo-mark.png">
+  <link rel="stylesheet" href="../assets/hit-song-duration/style.css">
+</head>
+<body>
+  <header class="mast">
+    <a class="brand" href="../index.html">DATAWIZART</a>
+    <div class="mast-meta">DATA STORYTELLING STUDIO · JAKARTA</div>
+    <button class="mode-button" id="mode-button" type="button" aria-pressed="false">▣ Carousel guide</button>
+  </header>
+
+  <aside class="progress" aria-label="Progress cerita">
+    <div class="progress-track"><span id="progress-fill"></span></div>
+    <div class="progress-count"><span id="progress-current">01</span> / 07</div>
+  </aside>
+
+  <main id="story">
+    <section class="panel hero-panel" id="slide-1" data-slide="1" aria-label="Sampul">
+      <article class="slide-frame hero-frame">
+        <div class="issue-line"><span>№ 05 · MUSIC</span><span>1960—2024</span></div>
+        <div class="hero-copy">
+          <p class="eyebrow">SATU PERTANYAAN · 1.153 LAGU #1</p>
+          <h1>Lagu hit makin <em>pendek</em>—atau kita makin tidak sabar?</h1>
+          <p class="deck">Enam dekade lagu nomor satu menunjukkan jawabannya lebih aneh daripada “TikTok membuat semuanya pendek.”</p>
+        </div>
+        <div class="record-stage" aria-hidden="true">
+          <div class="speed-lines"></div>
+          <div class="vinyl vinyl-hero">
+            <div class="vinyl-label"><b>?</b><span>PLAY</span></div>
+          </div>
+          <div class="tonearm"><i></i></div>
+        </div>
+        <div class="hero-footer">
+          <span>SCROLL UNTUK PUTAR CERITANYA ↓</span>
+          <span>@DATA_WIZART · DIO ARIADI</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel" id="slide-2" data-slide="2" aria-label="Populasi analisis">
+      <article class="slide-frame paper-frame">
+        <header class="slide-header">
+          <span class="slide-no">01 / POPULASI</span>
+          <span class="mini-brand">DATAWIZART</span>
+        </header>
+        <div class="narrow-copy">
+          <p class="eyebrow">SEBELUM MENDENGAR POLANYA</p>
+          <h2>“Hit” di sini berarti pernah <mark>#1 di Billboard Hot 100.</mark></h2>
+          <p class="body-copy">Setiap lagu dihitung satu kali, berdasarkan minggu pertama mencapai posisi nomor satu—bukan seluruh katalog Spotify.</p>
+        </div>
+        <div class="waterfall" role="img" aria-label="Waterfall populasi dari 1.177 menjadi 1.153 lagu">
+          <div class="waterfall-row start"><span>Semua lagu #1 di data</span><b>1.177</b></div>
+          <div class="waterfall-row minus"><span>− 2025 belum satu tahun penuh</span><b>−1</b></div>
+          <div class="waterfall-row minus"><span>− 1958–1959 bukan dekade penuh</span><b>−23</b></div>
+          <div class="waterfall-row final"><span>Populasi analisis 1960–2024</span><b>1.153</b></div>
+        </div>
+        <p class="source-line">SUMBER · BILLBOARD HOT 100 NUMBER ONES DATABASE / CHRIS DALLA RIVA · VIA TIDYTUESDAY</p>
+      </article>
+    </section>
+
+    <section class="panel" id="slide-3" data-slide="3" aria-label="Tren durasi">
+      <article class="slide-frame chart-frame">
+        <header class="slide-header inverse">
+          <span class="slide-no">02 / TRENNYA</span>
+          <span class="mini-brand">DATAWIZART</span>
+        </header>
+        <div class="chart-copy inverse-copy">
+          <p class="eyebrow">MEDIAN DURASI LAGU #1 PER TAHUN</p>
+          <h2>Bukan garis turun.<br><mark>Lagu hit sempat makin panjang.</mark></h2>
+        </div>
+        <div class="line-chart-wrap">
+          <svg id="annual-chart" viewBox="0 0 900 550" role="img" aria-label="Median durasi lagu nomor satu per tahun dari 1960 sampai 2024"></svg>
+        </div>
+        <div class="chart-takeaway">
+          <div><b>2:43</b><span>1960-an · n=203</span></div>
+          <div class="peak"><b>4:10</b><span>1990-an · n=140</span></div>
+          <div><b>3:20</b><span>2020–24 · n=81</span></div>
+        </div>
+        <p class="source-line on-dark">TITIK = MEDIAN TAHUNAN · GARIS = 5-YEAR MOVING AVERAGE</p>
+      </article>
+    </section>
+
+    <section class="panel" id="slide-4" data-slide="4" aria-label="Perbandingan dekade">
+      <article class="slide-frame paper-frame">
+        <header class="slide-header">
+          <span class="slide-no">03 / TWIST-NYA</span>
+          <span class="mini-brand">DATAWIZART</span>
+        </header>
+        <div class="narrow-copy">
+          <p class="eyebrow">SATU LINGKARAN = MEDIAN DURASI</p>
+          <h2>Yang baru bukan lagu pendek. <mark>Yang baru: lagu kembali pendek.</mark></h2>
+        </div>
+        <div class="record-comparison" aria-label="Perbandingan median durasi menurut dekade">
+          <div class="record-item sixties">
+            <div class="vinyl"><div class="vinyl-label">60s</div></div>
+            <b>2:43</b><span>1960-an · n=203</span>
+          </div>
+          <div class="record-item nineties">
+            <div class="vinyl"><div class="vinyl-label">90s</div></div>
+            <b>4:10</b><span>1990-an · n=140</span>
+          </div>
+          <div class="record-item twenties">
+            <div class="vinyl"><div class="vinyl-label">20s</div></div>
+            <b>3:20</b><span>2020–24 · n=81</span>
+          </div>
+        </div>
+        <p class="comparison-note"><b>−50 detik vs 1990-an</b>, tetapi masih <b>+37 detik vs 1960-an</b>—semuanya dihitung dari median mentah tiap populasi.</p>
+      </article>
+    </section>
+
+    <section class="panel" id="slide-5" data-slide="5" aria-label="Lagu di bawah tiga menit">
+      <article class="slide-frame gold-frame">
+        <header class="slide-header">
+          <span class="slide-no">04 / DI BAWAH 3 MENIT</span>
+          <span class="mini-brand">DATAWIZART</span>
+        </header>
+        <div class="narrow-copy compact-copy">
+          <p class="eyebrow">1.153 KOTAK = SELURUH POPULASI ANALISIS</p>
+          <h2>Lagu &lt;3 menit sempat hilang—<mark>lalu kembali.</mark></h2>
+        </div>
+        <div class="share-columns" aria-hidden="true"><span>DEKADE / n</span><span>■ &lt;3 MENIT · □ ≥3 MENIT</span><span>SHARE</span></div>
+        <div class="share-grid" aria-label="Seluruh 1.153 lagu nomor satu dalam tujuh periode dari 1960 sampai 2024">
+          <div class="share-row" data-era="1960">
+            <div class="share-title"><b>1960–69</b><span>146 / 203</span></div>
+            <div class="dot-strip" data-total="203" data-hit="146"></div>
+            <div class="share-rate">71,9%</div>
+          </div>
+          <div class="share-row" data-era="1970">
+            <div class="share-title"><b>1970–79</b><span>38 / 253</span></div>
+            <div class="dot-strip" data-total="253" data-hit="38"></div>
+            <div class="share-rate">15,0%</div>
+          </div>
+          <div class="share-row" data-era="1980">
+            <div class="share-title"><b>1980–89</b><span>5 / 231</span></div>
+            <div class="dot-strip" data-total="231" data-hit="5"></div>
+            <div class="share-rate">2,2%</div>
+          </div>
+          <div class="share-row" data-era="1990">
+            <div class="share-title"><b>1990–99</b><span>2 / 140</span></div>
+            <div class="dot-strip" data-total="140" data-hit="2"></div>
+            <div class="share-rate">1,4%</div>
+          </div>
+          <div class="share-row" data-era="2000">
+            <div class="share-title"><b>2000–09</b><span>1 / 129</span></div>
+            <div class="dot-strip" data-total="129" data-hit="1"></div>
+            <div class="share-rate">0,8%</div>
+          </div>
+          <div class="share-row" data-era="2010">
+            <div class="share-title"><b>2010–19</b><span>8 / 116</span></div>
+            <div class="dot-strip" data-total="116" data-hit="8"></div>
+            <div class="share-rate">6,9%</div>
+          </div>
+          <div class="share-row" data-era="2020">
+            <div class="share-title"><b>2020–24*</b><span>23 / 81</span></div>
+            <div class="dot-strip" data-total="81" data-hit="23"></div>
+            <div class="share-rate">28,4%</div>
+          </div>
+        </div>
+        <div class="cohort-recon">
+          <b>1.153 DITAMPILKAN</b>
+          <span>= semua lagu dalam window 1960–2024</span>
+          <small>1.177 raw = 1.153 di atas + 23 lagu 1958–59 + 1 lagu 2025 yang belum lengkap · *2020-an tersedia sampai 2024</small>
+        </div>
+        <p class="comparison-note dark-note"><b>71,9% vs 0,8% untuk 1960–69 vs 2000–09</b>: lagu pendek nyaris menghilang. Lalu naik lagi menjadi <b>28,4% vs 6,9% untuk 2020–24 vs 2010–19</b>.</p>
+      </article>
+    </section>
+
+    <section class="panel" id="slide-6" data-slide="6" aria-label="Durasi intro">
+      <article class="slide-frame waveform-frame">
+        <header class="slide-header inverse">
+          <span class="slide-no">05 / INTRO</span>
+          <span class="mini-brand">DATAWIZART</span>
+        </header>
+        <div class="chart-copy inverse-copy">
+          <p class="eyebrow">MEDIAN DETIK SEBELUM VOKAL MASUK</p>
+          <h2>Kita memang menunggu lebih singkat—<mark>dibanding 90-an.</mark></h2>
+        </div>
+        <div class="intro-comparison" role="img" aria-label="Median intro 8 detik pada 1960-an, 20 detik pada 1990-an, dan 11 detik pada 2020 sampai 2024">
+          <div class="intro-row"><b>1960-an</b><div class="wave-track"><span style="--w:40%"></span><i>8 detik</i></div></div>
+          <div class="intro-row peak"><b>1990-an</b><div class="wave-track"><span style="--w:100%"></span><i>20 detik</i></div></div>
+          <div class="intro-row"><b>2020–24</b><div class="wave-track"><span style="--w:55%"></span><i>11 detik</i></div></div>
+        </div>
+        <p class="comparison-note on-dark-note"><b>11 detik vs 20 detik untuk 2020–24 vs 1990-an</b>, keduanya diukur dari awal track sampai vokal pertama. Tetapi era 60-an bahkan lebih cepat: <b>8 detik vs 11 detik untuk 1960-an vs 2020–24.</b></p>
+      </article>
+    </section>
+
+    <section class="panel" id="slide-7" data-slide="7" aria-label="Kesimpulan">
+      <article class="slide-frame verdict-frame">
+        <header class="slide-header">
+          <span class="slide-no">06 / JAWABANNYA</span>
+          <span class="mini-brand">DATAWIZART</span>
+        </header>
+        <div class="verdict-copy">
+          <p class="eyebrow">PUTUSAN DATA</p>
+          <h2>Lagunya memang <em>memendek.</em><br>Ketidaksabaran kita? <mark>Belum terbukti.</mark></h2>
+          <p>Data hanya menunjukkan pola durasi lagu #1. Ia tidak mengukur attention span, keputusan label, ekonomi streaming, struktur genre, atau pengaruh TikTok.</p>
+        </div>
+        <div class="verdict-stamp">
+          <span>DESKRIPTIF</span>
+          <b>BUKAN<br>KAUSAL</b>
+        </div>
+        <blockquote>“Hit modern tidak menciptakan lagu pendek. Mereka mengembalikan lagu pendek setelah puncak panjang era 90-an.”</blockquote>
+        <footer class="credit-footer">
+          <span>@DATA_WIZART · DIO ARIADI · DATAWIZART.COM</span>
+          <span>DATA · CHRIS DALLA RIVA / TIDYTUESDAY</span>
+        </footer>
+      </article>
+    </section>
+  </main>
+
+  <section class="method" id="method">
+    <div>
+      <p class="eyebrow">CATATAN DATA</p>
+      <h2>Apa yang dihitung—dan apa yang tidak.</h2>
+    </div>
+    <div class="method-grid">
+      <div>
+        <h3>Populasi</h3>
+        <p>1.153 lagu berbeda yang pertama kali mencapai posisi #1 Billboard Hot 100 pada 1960–2024. Satu lagu = satu observasi, tanpa pembobotan berdasarkan berapa lama bertahan di posisi #1.</p>
+      </div>
+      <div>
+        <h3>Waktu</h3>
+        <p>Tahun mengikuti minggu pertama lagu mencapai #1, bukan tahun rilis. Data mentah berisi 1.177 lagu dari 4 Agustus 1958 sampai 11 Januari 2025; 23 lagu pada 1958–59 dan satu lagu pada 2025 dikeluarkan agar periode perbandingan lengkap.</p>
+      </div>
+      <div>
+        <h3>Guardrail</h3>
+        <p>Hot 100 berubah bersama cara orang mendengar musik; komponen streaming ditambahkan dan disempurnakan dari waktu ke waktu. Karena itu, garis vertikal “streaming era” tidak diperlakukan sebagai eksperimen kausal.</p>
+      </div>
+      <div>
+        <h3>Sumber & unduhan</h3>
+        <p><a href="https://github.com/rfordatascience/tidytuesday/tree/main/data/2025/2025-08-26">TidyTuesday 2025-08-26</a>, dari <a href="https://docs.google.com/spreadsheets/d/1j1AUgtMnjpFTz54UdXgCKZ1i4bNxFjf01ImJ-BqBEt0/edit?gid=1974823090#gid=1974823090">Billboard Hot 100 Number Ones Database</a> milik Chris Dalla Riva. <a href="../data/hit-song-duration/billboard_number_ones.csv" download>Unduh raw CSV</a> · <a href="../data/hit-song-duration/billboard_number_ones_duration.csv" download>Unduh clean CSV</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="capture-note" id="capture-note" aria-live="polite">Bingkai putus-putus = area carousel 4:5. Tambahkan <code>?slide=1</code> sampai <code>?slide=7</code> untuk membuka satu slide penuh.</div>
+
+  <script src="../assets/hit-song-duration/data.js"></script>
+  <script src="../assets/hit-song-duration/app.js"></script>
+</body>
+</html>

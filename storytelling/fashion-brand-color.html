@@ -5,79 +5,61 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fashion Color Brand · DataWizart</title>
 <meta name="description" content="Seven years of runway photos from Vogue, top colors extracted per brand — how Chanel, Gucci, Prada, and Louis Vuitton changed their color schemes. A DataWizart story.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400;1,9..40,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="../assets/logo/dw-mark-gold.png">
+<link rel="stylesheet" href="../assets/dw-system.css">
 <style>
-:root{
-  --gold:#F2C438; --gold-dk:#C99E18; --charcoal:#474747; --deep:#2E2E2E; --black:#111111;
-  --teal:#3DC9C0; --teal-dk:#27A39B; --green:#5DB96B; --sand:#C4A882; --red:#E05A5A;
-  --g100:#F7F7F7; --g200:#EFEFEF; --g300:#DCDCDC; --g400:#B0B0B0; --g500:#808080;
-  --g600:#555555; --g800:#2A2A2A; --white:#FFFFFF;
-  --display:'Oswald',sans-serif; --body:'DM Sans',sans-serif; --mono:'DM Mono',monospace;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--white);color:var(--g800);font-family:var(--body)}
-a{cursor:pointer}
-img{display:block;max-width:100%}
+/* Page layout only. Every value below is a design-system token —
+   no colour, font, space or radius is declared here. */
+.mast{border-top:8px solid var(--dw-charcoal-deep);border-bottom:1px solid var(--dw-charcoal-deep);
+  padding:var(--space-4) var(--space-16);display:flex;justify-content:space-between;align-items:center;gap:var(--space-6)}
+.mast .dw-mark{--mark-h:34px}
+.mast-meta{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-secondary);letter-spacing:.04em}
+.nav{border-bottom:2px solid var(--dw-charcoal-deep);padding:var(--space-3) var(--space-16);display:flex;
+  justify-content:space-between;align-items:center;gap:var(--space-6);flex-wrap:wrap}
+.nav-links{display:flex;gap:var(--space-8)}
+.nav-links a,.nav-accent{font-family:var(--font-body);font-size:var(--text-xs);font-weight:600;
+  letter-spacing:var(--tracking-widest);text-transform:uppercase}
+.nav-links a{color:var(--dw-charcoal-deep);border-bottom:0}
+.nav-links a.active{color:var(--dw-gold-dark)}
+.nav-accent{color:var(--fg-muted);font-family:var(--font-mono);letter-spacing:.02em;text-transform:none;font-weight:400}
 
-.mast{border-top:8px solid var(--deep);border-bottom:1px solid var(--deep);
-  padding:16px 56px;display:flex;justify-content:space-between;align-items:center;gap:24px}
-.mast-title{font-family:var(--display);font-weight:700;font-size:28px;letter-spacing:.02em;color:var(--deep)}
-.mast-title a{color:var(--deep);text-decoration:none}
-.mast-meta{font-family:var(--mono);font-size:11px;color:var(--g600);letter-spacing:.04em}
-.nav{border-bottom:2px solid var(--deep);padding:10px 56px;display:flex;justify-content:space-between;
-  align-items:center;font-family:var(--body);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
-.nav-links{display:flex;gap:28px}
-.nav-links a{color:var(--deep);text-decoration:none}
-.nav-links a.active{color:var(--gold-dk)}
-.nav-accent{color:var(--gold);font-family:var(--mono);letter-spacing:.02em;text-transform:none;font-weight:400;font-size:11px}
+.article{max-width:880px;margin:0 auto;padding:var(--space-16) var(--space-6) 0}
+.article h1{margin-bottom:var(--space-4)}
+.byline{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-secondary);
+  border-top:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle);
+  padding:var(--space-3) 0;letter-spacing:.03em;margin:var(--space-5) 0 var(--space-8)}
+.article p{margin-bottom:var(--space-5)}
+.article ul{font-family:var(--font-body);font-size:var(--text-base);line-height:1.7;
+  margin:0 0 var(--space-5) var(--space-6);color:var(--fg-primary)}
+.article h2{margin:var(--space-12) 0 var(--space-4)}
+.article h3{margin:var(--space-10) 0 var(--space-3)}
+.note{font-family:var(--font-body);font-size:var(--text-sm);color:var(--fg-secondary);
+  font-style:italic;line-height:1.6;margin-bottom:var(--space-4);max-width:var(--measure)}
+.dw-chart{margin:var(--space-6) 0 var(--space-8)}
+.dw-chart__plot img{width:100%;border:1px solid var(--border-subtle)}
+.dw-chart__plot img.narrow{max-width:520px;margin:0 auto}
+.tabs{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-3)}
 
-.article{max-width:880px;margin:0 auto;padding:56px 24px 0}
-.kicker{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--teal-dk);margin-bottom:16px;display:flex;align-items:center;gap:12px}
-.kicker-line{width:36px;height:1px;background:var(--teal-dk);display:inline-block}
-h1{font-family:var(--display);font-weight:700;font-size:46px;line-height:1.02;color:var(--deep);
-  letter-spacing:-.01em;margin-bottom:16px;text-wrap:balance}
-.byline{font-family:var(--mono);font-size:12px;color:var(--g600);border-top:1px solid var(--g300);border-bottom:1px solid var(--g300);
-  padding:10px 0;letter-spacing:.03em;margin:22px 0 34px}
-.article p{font-size:16.5px;line-height:1.7;margin-bottom:20px;color:var(--g800)}
-.article p a{color:var(--teal-dk)}
-.article ul{font-size:16.5px;line-height:1.7;margin:0 0 20px 24px;color:var(--g800)}
-h2{font-family:var(--display);font-weight:600;font-size:32px;color:var(--deep);margin:44px 0 16px;line-height:1.05}
-h3{font-family:var(--display);font-weight:600;font-size:25px;color:var(--deep);margin:40px 0 14px;line-height:1.1}
-.note{font-size:13.5px;color:var(--g600);font-style:italic;line-height:1.6;margin-bottom:16px}
-.figure{border:1px solid var(--g300);padding:22px 22px 16px;margin:26px 0 34px;background:var(--white)}
-.fig-title{font-family:var(--display);font-weight:600;font-size:20px;color:var(--deep);margin-bottom:2px}
-.fig-sub{font-size:13px;color:var(--g600);font-style:italic;margin-bottom:14px}
-.fig-src{font-family:var(--mono);font-size:10.5px;color:var(--g500);letter-spacing:.04em;border-top:1px solid var(--g200);
-  padding-top:10px;margin-top:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
-.figure img{width:100%;border:1px solid var(--g200)}
-.figure img.narrow{max-width:520px;margin:0 auto}
-
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.tab-btn{font-family:var(--body);font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  padding:8px 14px;border:1.5px solid var(--deep);background:transparent;color:var(--deep);cursor:pointer}
-.tab-btn.active{background:var(--deep);color:var(--white)}
-
-.foot{margin-top:72px;padding:36px 56px;background:var(--deep);color:var(--g300)}
-.foot-inner{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
-.foot-word{font-family:var(--body);font-weight:300;font-size:18px;letter-spacing:.22em;color:var(--white)}
-.foot-links{display:flex;gap:22px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;flex-wrap:wrap}
-.foot-links a{color:var(--gold);text-decoration:none}
+.foot{margin-top:var(--space-20);padding:var(--space-10) var(--space-16);background:var(--bg-deep);color:var(--dw-gray-300)}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;gap:var(--space-6);flex-wrap:wrap}
+.foot .dw-mark{--mark-h:44px}
+.foot-links{display:flex;gap:var(--space-5);font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.04em;flex-wrap:wrap}
 
 @media (max-width:900px){
-  .mast,.nav,.foot{padding-left:20px;padding-right:20px}
-  .nav-links{gap:16px}
+  .mast,.nav,.foot{padding-left:var(--space-5);padding-right:var(--space-5)}
+  .nav-links{gap:var(--space-4)}
   .nav-accent{display:none}
-  h1{font-size:34px}
+  .article h1{font-size:var(--text-3xl)}
 }
 </style>
 </head>
 <body>
 
 <header class="mast">
-  <div class="mast-title"><a href="../index.html">DATAWIZART</a></div>
+  <a class="dw-row dw-gap-3" href="../index.html" style="border-bottom:0">
+    <img class="dw-mark" src="../assets/logo/dw-mark-charcoal.png" alt="DataWizart">
+    <span class="dw-wordmark" style="--wordmark-size:var(--text-md);color:var(--dw-charcoal-deep)">Datawizart</span>
+  </a>
   <div class="mast-meta">DATA STORYTELLING STUDIO · JAKARTA</div>
 </header>
 
@@ -92,114 +74,138 @@ h3{font-family:var(--display);font-weight:600;font-size:25px;color:var(--deep);m
 </nav>
 
 <article class="article">
-  <div class="kicker"><span class="kicker-line"></span>STORYTELLING · № 02 · VOGUE RUNWAY</div>
-  <h1>Fashion Color Brand</h1>
+  <div class="dw-kicker">Storytelling · № 02 · Vogue Runway</div>
+  <h1 class="dw-h1">Fashion Color Brand</h1>
   <div class="byline">BY DIO ARIADI · DATAWIZART.CO · AUGUST 2022</div>
 
-  <p>We looked at seven years of fashion show to find how each brand and each year changed their color theme.</p>
+  <p class="dw-body">We looked at seven years of fashion show to find how each brand and each year changed their color theme.</p>
 
-  <p>Each year fashion designer for each brand will held their fashion show. They will show new design that can become as a new trend, it is usually followed by new color scheme as well. New design can be tricky to investigate but we can retrieve information for color scheme. We curious how each brand change their color scheme through the years.</p>
+  <p class="dw-body">Each year fashion designer for each brand will held their fashion show. They will show new design that can become as a new trend, it is usually followed by new color scheme as well. New design can be tricky to investigate but we can retrieve information for color scheme. We curious how each brand change their color scheme through the years.</p>
 
-  <p>To investigate this we looked at the fashion show in the Vogue website.</p>
+  <p class="dw-body">To investigate this we looked at the fashion show in the Vogue website.</p>
 
-  <h2>How we gathering the data</h2>
+  <h2 class="dw-h2">How we gathering the data</h2>
 
-  <p>Using Vogue website we pick some of the brand such as Prada, Chanel, Louis Vuitton, and Gucci. For each brands we took all picture from 2015 until 2021 and each season. After we collected all possible photos, we use image classification to get specific area for example top, shoes, skirt and etc, on this analysis we decided to use only top section. Further after we split the photos into multiple section we use median cut algorithm to retrieve color for that specific area. For this analysis we will only took 10 colors for each photos.</p>
+  <p class="dw-body">Using Vogue website we pick some of the brand such as Prada, Chanel, Louis Vuitton, and Gucci. For each brands we took all picture from 2015 until 2021 and each season. After we collected all possible photos, we use image classification to get specific area for example top, shoes, skirt and etc, on this analysis we decided to use only top section. Further after we split the photos into multiple section we use median cut algorithm to retrieve color for that specific area. For this analysis we will only took 10 colors for each photos.</p>
 
   <p class="note">Note: if you aware in the process to get the color code (hex code) it still contain skins color due to limitation in the image classification. Skins color or background color can also appeared in the hex code due to second step, with hope we still retrieve important information of the cloth.</p>
 
-  <div class="figure">
-    <div class="fig-title">Gathering All Data</div>
-    <div class="fig-sub">From runway photo to top-section crop to ten extracted colors</div>
-    <img src="../assets/fashion/f02.png" alt="Pipeline from runway photos to extracted colors">
-    <div class="fig-src"><span>SOURCE: VOGUE RUNWAY · DATAWIZART RESEARCH</span><span>DATAWIZART.CO</span></div>
+  <div class="dw-chart">
+    <div class="dw-chart__head">
+      <span class="dw-label">Method</span>
+      <h3 class="dw-chart__title">Gathering All Data</h3>
+      <p class="dw-chart__subtitle">From runway photo to top-section crop to ten extracted colors</p>
+    </div>
+    <div class="dw-chart__plot"><img src="../assets/fashion/f02.png" alt="Pipeline from runway photos to extracted colors" loading="lazy"></div>
+    <div class="dw-chart__foot"><span class="dw-source">SOURCE: VOGUE RUNWAY · DATAWIZART RESEARCH</span><span class="dw-source">DATAWIZART.CO</span></div>
   </div>
 
-  <h2>Presenting the data</h2>
+  <h2 class="dw-h2">Presenting the data</h2>
 
-  <p>From hex code we convert it into rgb format then we change it into <a href="https://www.xrite.com/blog/lab-color-space" target="_blank" rel="noopener">LAB</a> format. We change it into that so all colors can be presented using two dimensional graph.</p>
+  <p class="dw-body">From hex code we convert it into rgb format then we change it into <a href="https://www.xrite.com/blog/lab-color-space" target="_blank" rel="noopener">LAB</a> format. We change it into that so all colors can be presented using two dimensional graph.</p>
 
-  <div class="figure">
-    <div class="fig-title">Format Data</div>
-    <div class="fig-sub">Hex → RGB → LAB, so every color fits on a two-dimensional chart</div>
-    <img class="narrow" src="../assets/fashion/f03.png" alt="Data format conversion from hex to LAB">
-    <div class="fig-src"><span>SOURCE: DATAWIZART RESEARCH</span><span>DATAWIZART.CO</span></div>
+  <div class="dw-chart">
+    <div class="dw-chart__head">
+      <span class="dw-label">Method</span>
+      <h3 class="dw-chart__title">Format Data</h3>
+      <p class="dw-chart__subtitle">Hex → RGB → LAB, so every color fits on a two-dimensional chart</p>
+    </div>
+    <div class="dw-chart__plot"><img class="narrow" src="../assets/fashion/f03.png" alt="Data format conversion from hex to LAB" loading="lazy"></div>
+    <div class="dw-chart__foot"><span class="dw-source">SOURCE: DATAWIZART RESEARCH</span><span class="dw-source">DATAWIZART.CO</span></div>
   </div>
 
-  <p>After that we can start analyze and visualize all the data point. Where a and b stands for:</p>
+  <p class="dw-body">After that we can start analyze and visualize all the data point. Where a and b stands for:</p>
   <ul>
     <li>a: Red/Green Value</li>
     <li>b: Blue/Yellow Value</li>
   </ul>
 
-  <h2>Investigate how the color scheme change throught the years</h2>
+  <h2 class="dw-h2">Investigate how the color scheme change throught the years</h2>
 
-  <p>Each dot represents the top 10 colors at a certain top. From here what is the most visible is how Chanel has a smaller area compared to others such as Gucci where this brand consistently has bold colors in its fashion. Second, we can see how the Louis Vuitton color scheme has changed over the years. After 2018 the colors will be brighter and bolder, this hypothesis will be confirmed using metric called saturation in the next section.</p>
+  <p class="dw-body">Each dot represents the top 10 colors at a certain top. From here what is the most visible is how Chanel has a smaller area compared to others such as Gucci where this brand consistently has bold colors in its fashion. Second, we can see how the Louis Vuitton color scheme has changed over the years. After 2018 the colors will be brighter and bolder, this hypothesis will be confirmed using metric called saturation in the next section.</p>
 
-  <div class="figure">
-    <div class="fig-title">Color Scheme by Brand and Year</div>
-    <div class="fig-sub">Every extracted color plotted in LAB space — one panel per brand per year</div>
-    <img src="../assets/fashion/f04.png" alt="LAB color scatter by brand and year">
-    <div class="fig-src"><span>SOURCE: VOGUE RUNWAY · DATAWIZART RESEARCH</span><span>DATAWIZART.CO</span></div>
+  <div class="dw-chart">
+    <div class="dw-chart__head">
+      <span class="dw-label">LAB colour space</span>
+      <h3 class="dw-chart__title">Color Scheme by Brand and Year</h3>
+      <p class="dw-chart__subtitle">Every extracted color plotted in LAB space — one panel per brand per year</p>
+    </div>
+    <div class="dw-chart__plot"><img src="../assets/fashion/f04.png" alt="LAB color scatter by brand and year" loading="lazy"></div>
+    <div class="dw-chart__foot"><span class="dw-source">SOURCE: VOGUE RUNWAY · DATAWIZART RESEARCH</span><span class="dw-source">DATAWIZART.CO</span></div>
   </div>
 
-  <h2>Different between season</h2>
+  <h2 class="dw-h2">Different between season</h2>
 
-  <div class="figure">
-    <div class="fig-title">Color Scheme by Season</div>
-    <div class="fig-sub">The same colors, split spring vs fall</div>
-    <img src="../assets/fashion/f05.png" alt="LAB color scatter by brand and season">
-    <div class="fig-src"><span>SOURCE: VOGUE RUNWAY · DATAWIZART RESEARCH</span><span>DATAWIZART.CO</span></div>
+  <div class="dw-chart">
+    <div class="dw-chart__head">
+      <span class="dw-label">LAB colour space</span>
+      <h3 class="dw-chart__title">Color Scheme by Season</h3>
+      <p class="dw-chart__subtitle">The same colors, split spring vs fall</p>
+    </div>
+    <div class="dw-chart__plot"><img src="../assets/fashion/f05.png" alt="LAB color scatter by brand and season" loading="lazy"></div>
+    <div class="dw-chart__foot"><span class="dw-source">SOURCE: VOGUE RUNWAY · DATAWIZART RESEARCH</span><span class="dw-source">DATAWIZART.CO</span></div>
   </div>
 
-  <h2>Distribution of saturation (boldness) each year</h2>
+  <h2 class="dw-h2">Distribution of saturation (boldness) each year</h2>
 
-  <p>Color saturation refers to the intensity of color in an image. As the saturation increases, the colors appear to be more pure. As the saturation decreases, the colors appear to be more washed-out or pale. Used this metric we can see that GUCCI has the highest saturation level compared to other. If we switched the graph into All season by year we can see that Louis Vuitton has increased their intensity in the last two years. While if we compared spring vs fall, except Prada all of the brand have a higher value in spring season.</p>
+  <p class="dw-body">Color saturation refers to the intensity of color in an image. As the saturation increases, the colors appear to be more pure. As the saturation decreases, the colors appear to be more washed-out or pale. Used this metric we can see that GUCCI has the highest saturation level compared to other. If we switched the graph into All season by year we can see that Louis Vuitton has increased their intensity in the last two years. While if we compared spring vs fall, except Prada all of the brand have a higher value in spring season.</p>
 
-  <div class="figure">
-    <div class="fig-title">Saturation Distribution</div>
-    <div class="fig-sub">Boldness of each brand's palette — switch tabs to slice it differently</div>
+  <div class="dw-chart">
+    <div class="dw-chart__head">
+      <span class="dw-label">Saturation</span>
+      <h3 class="dw-chart__title">Saturation Distribution</h3>
+      <p class="dw-chart__subtitle">Boldness of each brand's palette — switch tabs to slice it differently</p>
+    </div>
     <div class="tabs" id="tabs-sat"></div>
-    <img id="img-sat" src="../assets/fashion/f06.png" alt="Saturation distribution charts">
-    <div class="fig-src"><span>SOURCE: VOGUE RUNWAY · DATAWIZART RESEARCH</span><span>DATAWIZART.CO</span></div>
+    <div class="dw-chart__plot"><img id="img-sat" src="../assets/fashion/f06.png" alt="Saturation distribution charts" loading="lazy"></div>
+    <div class="dw-chart__foot"><span class="dw-source">SOURCE: VOGUE RUNWAY · DATAWIZART RESEARCH</span><span class="dw-source">DATAWIZART.CO</span></div>
   </div>
 
-  <h2>Distribution of lightness between Spring and Fall</h2>
+  <h2 class="dw-h2">Distribution of lightness between Spring and Fall</h2>
 
-  <p>Using box-plot we can see the distribution between Spring and Fall. As we can see for all brand during spring, usually had brightness color than fall.</p>
+  <p class="dw-body">Using box-plot we can see the distribution between Spring and Fall. As we can see for all brand during spring, usually had brightness color than fall.</p>
 
-  <div class="figure">
-    <div class="fig-title">Lightness: Spring vs Fall</div>
-    <div class="fig-sub">Distribution of lightness for each brand, by season</div>
-    <img src="../assets/fashion/f11.png" alt="Lightness distribution boxplot spring vs fall">
-    <div class="fig-src"><span>SOURCE: VOGUE RUNWAY · DATAWIZART RESEARCH</span><span>DATAWIZART.CO</span></div>
+  <div class="dw-chart">
+    <div class="dw-chart__head">
+      <span class="dw-label">Lightness</span>
+      <h3 class="dw-chart__title">Lightness: Spring vs Fall</h3>
+      <p class="dw-chart__subtitle">Distribution of lightness for each brand, by season</p>
+    </div>
+    <div class="dw-chart__plot"><img src="../assets/fashion/f11.png" alt="Lightness distribution boxplot spring vs fall" loading="lazy"></div>
+    <div class="dw-chart__foot"><span class="dw-source">SOURCE: VOGUE RUNWAY · DATAWIZART RESEARCH</span><span class="dw-source">DATAWIZART.CO</span></div>
   </div>
 
-  <h2>Distribution of value for Hue between brand across the year</h2>
+  <h2 class="dw-h2">Distribution of value for Hue between brand across the year</h2>
 
-  <p>Hue can be defined as the property of light by which the color of an object is classified as red, blue, green, or yellow in reference to the spectrum. <a href="https://www.dictionary.com/browse/the" target="_blank" rel="noopener">source</a></p>
+  <p class="dw-body">Hue can be defined as the property of light by which the color of an object is classified as red, blue, green, or yellow in reference to the spectrum. <a href="https://www.dictionary.com/browse/the" target="_blank" rel="noopener">source</a></p>
 
-  <p>This box-plot and the line in the middle show the median value of hue each brand by year. We can assume that 50% of the color is around that hue level. For example Channel in 2015, the median color is yellowish, then in 2016 changed it into dark blue.</p>
+  <p class="dw-body">This box-plot and the line in the middle show the median value of hue each brand by year. We can assume that 50% of the color is around that hue level. For example Channel in 2015, the median color is yellowish, then in 2016 changed it into dark blue.</p>
 
-  <div class="figure">
-    <div class="fig-title">Hue by Brand Across the Years</div>
-    <div class="fig-sub">Median hue per brand per year — the middle line is where half the colors sit</div>
+  <div class="dw-chart">
+    <div class="dw-chart__head">
+      <span class="dw-label">Hue</span>
+      <h3 class="dw-chart__title">Hue by Brand Across the Years</h3>
+      <p class="dw-chart__subtitle">Median hue per brand per year — the middle line is where half the colors sit</p>
+    </div>
     <div class="tabs" id="tabs-hue"></div>
-    <img id="img-hue" src="../assets/fashion/f12.png" alt="Hue distribution charts">
-    <div class="fig-src"><span>SOURCE: VOGUE RUNWAY · DATAWIZART RESEARCH</span><span>DATAWIZART.CO</span></div>
+    <div class="dw-chart__plot"><img id="img-hue" src="../assets/fashion/f12.png" alt="Hue distribution charts" loading="lazy"></div>
+    <div class="dw-chart__foot"><span class="dw-source">SOURCE: VOGUE RUNWAY · DATAWIZART RESEARCH</span><span class="dw-source">DATAWIZART.CO</span></div>
   </div>
 
-  <h2>Conclusion</h2>
+  <h2 class="dw-h2">Conclusion</h2>
 
-  <p>Color can be extracted and we can see the difference between brands and years. In this example we can see the most visible is how Chanel has a smaller range of color compared to others such as Gucci where this brand consistently has bold colors in its fashion. Also, we can see how the Louis Vuitton color scheme has changed over the years, where after 2018 the colors will be brighter and bolder. In term of saturation GUCCI has the highest saturation level compared to others, while for lightness usually spring is lighter compared to the fall season. The methodology itself can be improved if we can differentiate skin or backgrounds color more precisely.</p>
+  <p class="dw-body">Color can be extracted and we can see the difference between brands and years. In this example we can see the most visible is how Chanel has a smaller range of color compared to others such as Gucci where this brand consistently has bold colors in its fashion. Also, we can see how the Louis Vuitton color scheme has changed over the years, where after 2018 the colors will be brighter and bolder. In term of saturation GUCCI has the highest saturation level compared to others, while for lightness usually spring is lighter compared to the fall season. The methodology itself can be improved if we can differentiate skin or backgrounds color more precisely.</p>
 
-  <p>That's it thank you for reading !!</p>
+  <p class="dw-body">That's it thank you for reading !!</p>
 
 </article>
 
-<footer class="foot">
+<footer class="foot dw-on-dark">
   <div class="foot-inner">
-    <div class="foot-word">DATAWIZART</div>
+    <div class="dw-lockup" style="padding:0">
+      <img class="dw-mark" src="../assets/logo/dw-mark-gold.png" alt="DataWizart">
+      <span class="dw-wordmark" style="--wordmark-size:var(--text-lg);color:var(--dw-white)">Datawizart</span>
+    </div>
     <div class="foot-links">
       <a href="../index.html">HOME</a>
       <a href="https://instagram.com/datawizart" target="_blank" rel="noopener">INSTAGRAM ↗</a>
@@ -207,6 +213,7 @@ h3{font-family:var(--display);font-weight:600;font-size:25px;color:var(--deep);m
       <a href="mailto:dioariadi2025@gmail.com">EMAIL ↗</a>
     </div>
   </div>
+  <div class="dw-credit" style="margin-top:var(--space-6)">DATAWIZART · DIO ARIADI · VOGUE RUNWAY 2015–2021</div>
 </footer>
 
 <script>
@@ -215,11 +222,11 @@ function imageTabs(tabsId, imgId, defs) {
   const img = document.getElementById(imgId);
   defs.forEach((t, i) => {
     const b = document.createElement('button');
-    b.className = 'tab-btn' + (i === 0 ? ' active' : '');
+    b.className = 'dw-btn' + (i === 0 ? '' : ' dw-btn--ghost');
     b.textContent = t.label;
     b.onclick = () => {
-      tabsEl.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
-      b.classList.add('active');
+      tabsEl.querySelectorAll('button').forEach(x => x.className = 'dw-btn dw-btn--ghost');
+      b.className = 'dw-btn';
       img.src = '../assets/fashion/' + t.file;
     };
     tabsEl.append(b);

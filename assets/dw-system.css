@@ -1,0 +1,256 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   DATAWIZART DESIGN SYSTEM — v1.0
+   assets/dw-system.css
+   The single stylesheet every DataWizart HTML deliverable loads.
+   Tokens → logo → type → charts → scrollytelling → carousel.
+   Do not redefine colors, fonts, or spacing anywhere else.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=DM+Mono:wght@300;400;500&display=swap');
+
+/* ─── 1. TOKENS ─────────────────────────────────────────────────────────── */
+:root{
+  /* brand */
+  --dw-gold:#F2C438; --dw-gold-light:#F7D76A; --dw-gold-dark:#C99E18;
+  --dw-charcoal:#474747; --dw-charcoal-deep:#2E2E2E; --dw-charcoal-mid:#5C5C5C;
+  /* data hues */
+  --dw-teal:#3DC9C0; --dw-teal-dark:#27A39B; --dw-teal-deep:#1A7A74;
+  --dw-green:#5DB96B; --dw-green-light:#A0D8A8;
+  --dw-sand:#C4A882; --dw-red:#E05A5A;
+  /* neutrals */
+  --dw-gray-100:#F7F7F7; --dw-gray-200:#EFEFEF; --dw-gray-300:#DCDCDC;
+  --dw-gray-400:#B0B0B0; --dw-gray-500:#808080; --dw-gray-600:#555555;
+  --dw-gray-800:#2A2A2A; --dw-white:#FFFFFF; --dw-black:#111111;
+  /* story accents — a story may pick ONE of these as --story-accent (see below).
+     These are brand colours, not chart hues: never use them for a data series. */
+  --dw-plum:#7A4EA0; --dw-cream:#F5F1E8;
+
+  /* semantic surfaces */
+  --bg-primary:var(--dw-white); --bg-subtle:var(--dw-gray-100);
+  --bg-dark:var(--dw-charcoal); --bg-deep:var(--dw-charcoal-deep);
+  /* semantic foreground */
+  --fg-primary:var(--dw-gray-800); --fg-secondary:var(--dw-gray-600);
+  --fg-muted:var(--dw-gray-400); --fg-on-dark:var(--dw-white);
+  --accent:var(--dw-gold);
+  /* ordered chart palette — use in this order, never skip ahead */
+  --chart-1:var(--dw-teal); --chart-2:var(--dw-gold); --chart-3:var(--dw-green);
+  --chart-4:var(--dw-sand); --chart-5:var(--dw-red); --chart-6:var(--dw-charcoal-mid);
+  --chart-flat:var(--dw-gray-300);      /* un-highlighted data */
+  --chart-ink:var(--dw-charcoal-deep);  /* axes, outlines, labels */
+  --chart-grid:var(--dw-gray-200);
+  /* borders */
+  --border-subtle:var(--dw-gray-300); --border-strong:var(--dw-gray-800);
+
+  /* type */
+  --font-display:'Oswald','Arial Narrow',sans-serif;
+  --font-body:'DM Sans','Helvetica Neue',Arial,sans-serif;
+  --font-mono:'DM Mono','Courier New',monospace;
+  --text-xs:0.75rem; --text-sm:0.875rem; --text-base:1rem; --text-md:1.125rem;
+  --text-lg:1.25rem; --text-xl:1.5rem; --text-2xl:2rem; --text-3xl:2.5rem;
+  --text-4xl:3.5rem; --text-5xl:4.5rem;
+  --tracking-tight:-0.02em; --tracking-wide:0.08em; --tracking-widest:0.18em;
+
+  /* space — 4px base */
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px;
+  --space-6:24px; --space-8:32px; --space-10:40px; --space-12:48px;
+  --space-16:64px; --space-20:80px; --space-24:96px;
+
+  /* radius — DataWizart is a square-corner brand. Only pills for chips. */
+  --radius-none:0; --radius-sm:3px; --radius-pill:999px;
+
+  --shadow-card:0 2px 8px rgba(0,0,0,.08); --shadow-lg:0 8px 28px rgba(0,0,0,.16);
+  --ease-out:cubic-bezier(.22,1,.36,1);
+  --duration-fast:150ms; --duration-normal:250ms; --duration-slow:400ms;
+
+  /* measure */
+  --measure:64ch;
+
+  /* ─── STORY ACCENT ──────────────────────────────────────────────────────
+     Each story picks exactly ONE accent, by overriding --story-accent in a
+     single :root rule at the top of its page — always to an existing token,
+     never to a raw hex:
+
+       :root{ --story-accent: var(--dw-plum); }
+
+     Use it for the story's kicker rule, its active/current states and one
+     highlight. NOT for chart series — those use --chart-1..6 in order.
+     The two tints are derived, so a story never declares a colour of its own.
+     ───────────────────────────────────────────────────────────────────── */
+  --story-accent:var(--dw-gold);
+  --story-accent-soft:color-mix(in oklch,var(--story-accent) 14%,var(--dw-white));
+  --story-accent-wash:color-mix(in oklch,var(--story-accent) 6%,var(--dw-white));
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg-primary);color:var(--fg-primary);font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+a{color:var(--dw-teal-deep);text-decoration:none;border-bottom:1px solid color-mix(in oklch,var(--dw-teal-deep) 35%,transparent);transition:color var(--duration-fast) var(--ease-out)}
+a:hover{color:var(--dw-gold-dark);border-bottom-color:var(--dw-gold-dark)}
+.dw-on-dark a{color:var(--dw-gold)}
+.dw-on-dark a:hover{color:var(--dw-gold-light)}
+
+/* ─── 2. LOGO ───────────────────────────────────────────────────────────────
+   ALWAYS use the real mark from assets/logo/. Never redraw it in SVG,
+   never rotate, stretch, outline, or add effects to it.
+   Colorways: gold (primary, on charcoal/dark), charcoal (on light),
+   white (on photography), black (print/1-bit).
+   Minimum mark height 24px. Clear space = 25% of mark height on all sides.
+   ───────────────────────────────────────────────────────────────────────── */
+.dw-mark{display:block;width:auto;height:var(--mark-h,40px);aspect-ratio:1;object-fit:contain}
+.dw-lockup{display:flex;align-items:center;gap:var(--space-3);padding:calc(var(--mark-h,40px)*.25)}
+.dw-lockup--stack{flex-direction:column;gap:var(--space-2);text-align:center}
+/* Wordmark is outlined (hollow) letterforms, wide-tracked — matches the logo.
+   Outline version only at 16px and above; below that use --solid. */
+.dw-wordmark{font-family:var(--font-body);font-weight:400;letter-spacing:var(--tracking-widest);
+  text-transform:uppercase;font-size:var(--wordmark-size,var(--text-lg));line-height:1;
+  color:transparent;-webkit-text-stroke:1.2px currentColor;white-space:nowrap}
+.dw-wordmark--solid{color:currentColor;-webkit-text-stroke:0;font-weight:300}
+/* Byline / credit stamp — the standard sign-off on every deliverable. */
+.dw-credit{display:flex;align-items:center;gap:var(--space-3);font-family:var(--font-mono);
+  font-size:var(--text-xs);letter-spacing:.04em;color:var(--fg-muted)}
+
+/* ─── 3. TYPE ROLES ─────────────────────────────────────────────────────── */
+.dw-display{font-family:var(--font-display);font-weight:700;font-size:var(--text-5xl);line-height:.98;letter-spacing:var(--tracking-tight);color:var(--fg-primary);text-wrap:balance}
+.dw-h1{font-family:var(--font-display);font-weight:700;font-size:var(--text-4xl);line-height:1.02;letter-spacing:var(--tracking-tight);color:var(--fg-primary);text-wrap:balance}
+.dw-h2{font-family:var(--font-display);font-weight:600;font-size:var(--text-3xl);line-height:1.06;letter-spacing:var(--tracking-tight);color:var(--fg-primary);text-wrap:balance}
+.dw-h3{font-family:var(--font-display);font-weight:500;font-size:var(--text-xl);line-height:1.15;color:var(--fg-primary)}
+.dw-lede{font-family:var(--font-body);font-weight:300;font-style:italic;font-size:var(--text-md);line-height:1.5;color:var(--fg-secondary);max-width:var(--measure);text-wrap:pretty}
+.dw-body{font-family:var(--font-body);font-size:var(--text-base);line-height:1.7;color:var(--fg-primary);max-width:var(--measure);text-wrap:pretty}
+.dw-body-sm{font-family:var(--font-body);font-size:var(--text-sm);line-height:1.65;color:var(--fg-secondary);max-width:var(--measure)}
+.dw-label{font-family:var(--font-body);font-size:var(--text-xs);font-weight:600;letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--fg-secondary)}
+.dw-kicker{display:flex;align-items:center;gap:var(--space-3);font-family:var(--font-body);font-size:var(--text-xs);font-weight:700;letter-spacing:var(--tracking-widest);text-transform:uppercase;color:var(--dw-teal-deep)}
+.dw-kicker::before{content:"";width:32px;height:1px;background:currentColor;flex:none}
+.dw-mono{font-family:var(--font-mono);font-size:var(--text-sm);color:var(--fg-secondary);letter-spacing:.03em}
+.dw-source{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-muted);letter-spacing:.04em}
+.dw-on-dark{color:var(--fg-on-dark)}
+.dw-on-dark .dw-h1,.dw-on-dark .dw-h2,.dw-on-dark .dw-h3,.dw-on-dark .dw-display,.dw-on-dark .dw-body{color:var(--fg-on-dark)}
+.dw-on-dark .dw-lede,.dw-on-dark .dw-body-sm{color:var(--dw-gray-300)}
+.dw-on-dark .dw-kicker{color:var(--dw-gold)}
+/* Big number — the count-up figure. */
+.dw-figure{font-family:var(--font-display);font-weight:700;font-size:var(--text-5xl);line-height:.9;letter-spacing:var(--tracking-tight);color:var(--fg-primary);font-variant-numeric:tabular-nums}
+.dw-figure__unit{font-family:var(--font-body);font-weight:400;font-size:.32em;letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--fg-secondary);display:block;margin-top:var(--space-2)}
+mark,.dw-hl{background:color-mix(in oklch,var(--dw-gold) 55%,transparent);color:inherit;padding:0 .12em}
+
+/* ─── 4. CHART ANATOMY ──────────────────────────────────────────────────────
+   Every chart carries, in order: label → title → subtitle → plot → source.
+   Titles state the finding, not the variables.
+   ───────────────────────────────────────────────────────────────────────── */
+.dw-chart{display:flex;flex-direction:column;gap:var(--space-3);background:var(--bg-primary);border:1px solid var(--border-subtle);padding:var(--space-6)}
+.dw-chart--bare{border:0;padding:0;background:transparent}
+.dw-chart__head{border-bottom:1px solid var(--border-subtle);padding-bottom:var(--space-3);display:flex;flex-direction:column;gap:var(--space-1)}
+.dw-chart__title{font-family:var(--font-display);font-weight:600;font-size:var(--text-2xl);line-height:1.08;letter-spacing:-.01em;color:var(--dw-black);text-wrap:balance}
+.dw-chart__subtitle{font-family:var(--font-body);font-weight:300;font-style:italic;font-size:var(--text-sm);line-height:1.45;color:var(--fg-secondary);text-wrap:pretty}
+.dw-chart__plot{position:relative;min-width:0}
+.dw-chart__plot svg{display:block;width:100%;height:auto;overflow:visible}
+.dw-chart__foot{display:flex;flex-wrap:wrap;gap:var(--space-4);justify-content:space-between;align-items:center;border-top:1px solid var(--border-subtle);padding-top:var(--space-3)}
+.dw-legend{display:flex;flex-wrap:wrap;gap:var(--space-4);font-family:var(--font-body);font-size:var(--text-xs);color:var(--fg-secondary)}
+.dw-legend__item{display:flex;align-items:center;gap:var(--space-2)}
+.dw-legend__swatch{width:12px;height:12px;flex:none;background:var(--sw,var(--chart-1))}
+/* Dark contexts re-map the chart neutrals so plots stay legible. */
+.dw-on-dark,.dw-slide--dark,.dw-bleed{--chart-ink:var(--dw-gray-300);--chart-grid:rgba(255,255,255,.14);--chart-flat:var(--dw-charcoal-mid)}
+.dw-slide--gold{--chart-ink:var(--dw-black);--chart-grid:rgba(17,17,17,.16);--chart-flat:rgba(17,17,17,.28)}
+/* SVG primitives — use these classes, not inline fills */
+.dw-axis{stroke:var(--chart-ink);stroke-width:1}
+.dw-grid{stroke:var(--chart-grid);stroke-width:1}
+.dw-tick{font-family:var(--font-body);font-size:11px;fill:var(--dw-gray-500)}
+.dw-ann{font-family:var(--font-body);font-size:12px;fill:var(--chart-ink)}
+.dw-ann-line{stroke:var(--chart-ink);stroke-width:1}
+.dw-ann-dashed{stroke:var(--dw-red);stroke-width:1.5;stroke-dasharray:4 4;fill:none}
+.dw-series{fill:var(--chart-flat);stroke:var(--chart-ink);stroke-width:1}
+.dw-series--hl{fill:var(--chart-3);stroke:none}
+
+/* ─── 5. SCROLLYTELLING ─────────────────────────────────────────────────────
+   Structure: .dw-scrolly > .dw-scrolly__sticky (graphic) + .dw-scrolly__steps
+   Each .dw-step gets data-step="n"; the driver adds .is-active.
+   ───────────────────────────────────────────────────────────────────────── */
+.dw-article{max-width:1240px;margin:0 auto;padding:0 var(--space-6)}
+.dw-prose{max-width:var(--measure);margin:0 auto;display:flex;flex-direction:column;gap:var(--space-5)}
+.dw-hero{min-height:88vh;display:flex;flex-direction:column;justify-content:center;gap:var(--space-6);padding:var(--space-20) 0}
+.dw-rule{height:1px;background:var(--border-subtle);border:0;margin:0}
+.dw-rule--strong{height:2px;background:var(--dw-charcoal-deep)}
+
+.dw-scrolly{display:grid;grid-template-columns:1fr minmax(360px,42%);gap:var(--space-12);align-items:stretch}
+.dw-scrolly__col{min-width:0}
+.dw-scrolly__sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.dw-scrolly__steps{display:flex;flex-direction:column}
+.dw-step{min-height:82vh;display:flex;flex-direction:column;justify-content:center;gap:var(--space-4);opacity:.28;transition:opacity var(--duration-slow) var(--ease-out)}
+.dw-step.is-active{opacity:1}
+.dw-step__no{font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.1em;color:var(--fg-muted)}
+.dw-step__title{font-family:var(--font-display);font-weight:600;font-size:var(--text-2xl);line-height:1.08;letter-spacing:var(--tracking-tight);text-wrap:balance}
+.dw-step__body{font-family:var(--font-body);font-size:var(--text-md);line-height:1.65;color:var(--fg-secondary);text-wrap:pretty}
+.dw-step__body strong{color:var(--fg-primary);font-weight:600}
+@media(max-width:900px){
+  .dw-scrolly{grid-template-columns:1fr}
+  .dw-scrolly__col{order:-1}
+  .dw-scrolly__sticky{height:62vh;top:0;background:var(--bg-primary);z-index:2;padding-bottom:var(--space-4)}
+  .dw-step{min-height:70vh}
+}
+/* progress rail */
+.dw-progress{position:fixed;left:0;top:0;height:3px;background:var(--dw-gold);z-index:50;width:var(--p,0%);transition:width 90ms linear}
+/* full-bleed break */
+.dw-bleed{margin:var(--space-24) 0;padding:var(--space-20) var(--space-6);background:var(--bg-deep);color:var(--fg-on-dark)}
+.dw-bleed--image{padding:0;background:var(--dw-charcoal-deep)}
+.dw-bleed--image img{display:block;width:100%;height:auto}
+/* reader quiz */
+.dw-quiz{border:1px solid var(--border-subtle);border-top:3px solid var(--dw-gold);padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-4);background:var(--bg-subtle)}
+.dw-quiz__options{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+.dw-choice{font-family:var(--font-body);font-size:var(--text-sm);font-weight:600;letter-spacing:.02em;padding:10px 16px;background:var(--bg-primary);border:1.5px solid var(--dw-charcoal-deep);color:var(--dw-charcoal-deep);cursor:pointer;min-height:44px;transition:background var(--duration-fast) var(--ease-out),color var(--duration-fast) var(--ease-out)}
+.dw-choice:hover{background:var(--dw-gray-200)}
+.dw-choice.is-picked{background:var(--dw-charcoal-deep);color:var(--dw-white)}
+.dw-choice.is-right{background:var(--dw-green);border-color:var(--dw-green);color:var(--dw-black)}
+.dw-choice.is-wrong{background:var(--dw-gray-200);border-color:var(--dw-gray-400);color:var(--fg-muted)}
+.dw-quiz__result{font-family:var(--font-body);font-size:var(--text-sm);line-height:1.6;color:var(--fg-primary)}
+.dw-quiz__result[hidden]{display:none}
+/* horizontal timeline scroller */
+.dw-hscroll{overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;padding-bottom:var(--space-4)}
+.dw-hscroll__track{display:flex;gap:var(--space-5);min-width:max-content;padding:var(--space-2) 0}
+.dw-tl-card{scroll-snap-align:center;flex:none;width:180px;border-top:2px solid var(--dw-charcoal-deep);padding-top:var(--space-3);display:flex;flex-direction:column;gap:var(--space-2)}
+.dw-tl-card__year{font-family:var(--font-display);font-weight:700;font-size:var(--text-2xl);line-height:1;color:var(--dw-charcoal-deep)}
+.dw-tl-card__date{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--fg-secondary)}
+.dw-tl-card__bar{height:6px;background:var(--dw-gold);width:var(--w,100%)}
+/* buttons */
+.dw-btn{display:inline-flex;align-items:center;gap:var(--space-2);min-height:44px;padding:12px 18px;font-family:var(--font-body);font-size:var(--text-xs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;border:0;cursor:pointer;background:var(--dw-charcoal-deep);color:var(--dw-white)}
+.dw-btn:hover{background:var(--dw-black)}
+.dw-btn--ghost{background:transparent;color:var(--dw-charcoal-deep);border:1.5px solid var(--dw-charcoal-deep)}
+.dw-btn--ghost:hover{background:var(--dw-gray-200)}
+.dw-btn--accent{background:var(--dw-gold);color:var(--dw-black)}
+.dw-btn--accent:hover{background:var(--dw-gold-light)}
+.dw-chip{font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.04em;padding:4px 10px;border-radius:var(--radius-pill);background:var(--dw-gray-200);color:var(--fg-secondary)}
+
+/* ─── 6. CAROUSEL (square 1080×1080) ───────────────────────────────────────
+   .dw-slide is a fixed 1080px box. Never use viewport units inside it.
+   Minimum type size inside a slide: 26px. One idea per slide.
+   ───────────────────────────────────────────────────────────────────────── */
+.dw-slide{position:relative;width:1080px;height:1080px;flex:none;background:var(--bg-primary);color:var(--fg-primary);
+  display:flex;flex-direction:column;padding:88px;overflow:hidden;font-size:20px}
+.dw-slide--dark{background:var(--bg-deep);color:var(--fg-on-dark)}
+.dw-slide--gold{background:var(--dw-gold);color:var(--dw-black)}
+.dw-slide__head{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex:none}
+.dw-slide__body{flex:1;display:flex;flex-direction:column;justify-content:center;gap:28px;min-height:0}
+.dw-slide__foot{flex:none;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;padding-top:24px;border-top:1px solid var(--border-subtle)}
+.dw-slide--dark .dw-slide__foot,.dw-slide--gold .dw-slide__foot{border-top-color:rgba(255,255,255,.22)}
+.dw-slide--gold .dw-slide__foot{border-top-color:rgba(17,17,17,.25)}
+.dw-slide__no{font-family:var(--font-mono);font-size:26px;letter-spacing:.08em;opacity:.6}
+.dw-slide__kicker{font-family:var(--font-body);font-size:26px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--dw-teal-deep)}
+.dw-slide--dark .dw-slide__kicker,.dw-slide--gold .dw-slide__kicker{color:inherit;opacity:.75}
+.dw-slide__title{font-family:var(--font-display);font-weight:700;font-size:78px;line-height:1.02;letter-spacing:var(--tracking-tight);text-wrap:balance}
+.dw-slide__title--sm{font-size:58px;font-weight:600}
+.dw-slide__text{font-family:var(--font-body);font-size:32px;line-height:1.5;text-wrap:pretty;max-width:44ch}
+.dw-slide__text--muted{color:var(--fg-secondary);font-size:28px}
+.dw-slide--dark .dw-slide__text--muted{color:var(--dw-gray-300)}
+.dw-slide__figure{font-family:var(--font-display);font-weight:700;font-size:280px;line-height:.86;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.dw-slide__source{font-family:var(--font-mono);font-size:22px;letter-spacing:.04em;opacity:.65}
+.dw-slide .dw-mark{--mark-h:64px}
+/* the deck strip used to preview / export slides */
+.dw-deck{display:flex;flex-wrap:wrap;gap:32px;justify-content:center;padding:40px;background:var(--dw-gray-200)}
+.dw-slide-wrap{position:relative;width:calc(var(--slide-preview,420)*1px);height:calc(var(--slide-preview,420)*1px);overflow:hidden;box-shadow:var(--shadow-card);background:#fff}
+.dw-slide-wrap>.dw-slide{transform:scale(calc(var(--slide-preview,420)/1080));transform-origin:0 0}
+.dw-slide-wrap__tag{position:absolute;left:0;bottom:0;z-index:3;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;background:var(--dw-charcoal-deep);color:#fff;padding:4px 8px}
+
+/* ─── 7. UTILITIES ──────────────────────────────────────────────────────── */
+.dw-stack{display:flex;flex-direction:column}
+.dw-row{display:flex;align-items:center}
+.dw-gap-2{gap:var(--space-2)}.dw-gap-3{gap:var(--space-3)}.dw-gap-4{gap:var(--space-4)}
+.dw-gap-6{gap:var(--space-6)}.dw-gap-8{gap:var(--space-8)}.dw-gap-12{gap:var(--space-12)}
+.dw-between{justify-content:space-between}
+.dw-center{align-items:center}
+@media print{.dw-progress,.dw-deck{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
